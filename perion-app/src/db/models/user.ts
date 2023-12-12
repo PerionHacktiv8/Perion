@@ -1,10 +1,12 @@
-import { MongoServerError, ObjectId } from 'mongodb';
-import { getMongoClientInstance } from '../config';
-import { hashPass } from '../helpers/bcrypt';
-import { z } from 'zod';
+import { MongoServerError, ObjectId } from "mongodb";
+import { getMongoClientInstance } from "../config";
+import { hashPass } from "../helpers/bcrypt";
+import { z } from "zod";
+import { Invoice } from "xendit-node";
+import { CreateInvoiceRequest } from "xendit-node/invoice/models";
 
 const DB_NAME = process.env.MONGODB_DB_NAME;
-const COLLECTION_NAME = 'Users';
+const COLLECTION_NAME = "Users";
 
 export type UserModel = {
   _id: ObjectId;
@@ -13,38 +15,44 @@ export type UserModel = {
   email: string;
   password: string;
   address: string;
+  subscriptions: boolean;
 };
 
-type UserInputType = Omit<UserModel, '_id'>;
+type UserInputType = Omit<UserModel, "_id">;
 
 const userCreateSchema = z.object({
   name: z
     .string({
-      required_error: 'Please input your full name',
-      invalid_type_error: 'Please input your full name',
+      required_error: "Please input your full name",
+      invalid_type_error: "Please input your full name",
     })
-    .min(1, 'Please input your full name'),
+    .min(1, "Please input your full name"),
   username: z
     .string({
-      required_error: 'Please to input your username',
-      invalid_type_error: 'Please to input your username',
+      required_error: "Please to input your username",
+      invalid_type_error: "Please to input your username",
     })
-    .min(1, 'Please to input your username'),
+    .min(1, "Please to input your username"),
   email: z
     .string({
-      required_error: 'Please to input your email',
-      invalid_type_error: 'Please to input your email',
+      required_error: "Please to input your email",
+      invalid_type_error: "Please to input your email",
     })
-    .email('Need to be an Email Address'),
+    .email("Need to be an Email Address"),
   password: z
     .string({
-      required_error: 'Please to input your password',
-      invalid_type_error: 'Please input your password',
+      required_error: "Please to input your password",
+      invalid_type_error: "Please input your password",
     })
-    .min(6, 'Password need to be more than 6 character long'),
+    .min(6, "Password need to be more than 6 character long"),
   address: z
-    .string({ invalid_type_error: 'Please input your address' })
-    .min(1, 'Please input your address'),
+    .string({ invalid_type_error: "Please input your address" })
+    .min(1, "Please input your address"),
+  subscriptions: z
+    .boolean({
+      invalid_type_error: "You should subscriptions!",
+    })
+    .default(false),
 });
 
 export class Users {
@@ -95,11 +103,12 @@ export class Users {
       await collection.createIndex({ email: 1 }, { unique: true });
 
       const data = {
-        name: input.get('name'),
-        username: input.get('username'),
-        email: input.get('email'),
-        password: input.get('password'),
-        address: input.get('address'),
+        name: input.get("name"),
+        username: input.get("username"),
+        email: input.get("email"),
+        password: input.get("password"),
+        address: input.get("address"),
+        subscriptions: input.get("subscriptions") === "true",
       };
 
       const parsedData = userCreateSchema.parse(data);
@@ -113,7 +122,7 @@ export class Users {
 
       return created;
     } catch (err) {
-      let error: string = 'Internal Server Error';
+      let error: string = "Internal Server Error";
       let statusCode: number = 500;
 
       if (err instanceof z.ZodError) {
@@ -122,13 +131,39 @@ export class Users {
       }
 
       if (err instanceof MongoServerError) {
-        if (Object.keys(err.keyPattern)[0] === 'email')
-          error = 'Email already been used';
-        if (Object.keys(err.keyPattern)[0] === 'username')
-          error = 'Username already been used';
+        if (Object.keys(err.keyPattern)[0] === "email")
+          error = "Email already been used";
+        if (Object.keys(err.keyPattern)[0] === "username")
+          error = "Username already been used";
       }
 
       throw error;
+    }
+  }
+
+  static async invoiceXendit() {
+    try {
+      const invoiceService = new Invoice({
+        secretKey: process.env.SECRET_API_XENDIT as string,
+      });
+
+      const data: CreateInvoiceRequest = {
+        amount: 200,
+        invoiceDuration: "172800",
+        externalId: `A-${new Date().getTime()}`,
+        description: "Bayar Penginapan",
+        currency: "IDR",
+        reminderTime: 1,
+      };
+
+      const response = await invoiceService.createInvoice({
+        data,
+      });
+      console.log(response);
+
+      return response;
+    } catch (error) {
+      console.log(error);
     }
   }
 
