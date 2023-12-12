@@ -23,9 +23,11 @@ export default function Home() {
   return (
     <main className='flex min-h-screen flex-col gap-4 p-10'>
       <h1>test pdf upload</h1>
-      <form action={upload}>
+      <form className='flex flex-col gap-2 w-fit' action={upload}>
         <input type='file' name='file' />
-        <button type='submit'>submit</button>
+        <button className='w-fit' type='submit'>
+          submit
+        </button>
       </form>
     </main>
   );
