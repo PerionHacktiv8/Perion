@@ -8,6 +8,7 @@ import {
   IconButtonMT,
 } from '@/components/MaterialTailwind'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export function NavbarDefault() {
   const [openNav, setOpenNav] = React.useState(false)
@@ -62,7 +63,7 @@ export function NavbarDefault() {
         className="flex items-center gap-x-2 p-1 font-semibold font-lg"
       >
         <a href="#" className="flex items-center">
-          Careers
+          Projects
         </a>
       </TypographyMT>
     </ul>
@@ -75,32 +76,39 @@ export function NavbarDefault() {
           placeholder={''}
           as="a"
           href="#"
-          className="mr-4 cursor-pointer py-1.5 font-2xl font-extrabold"
+          className="flex flex-cols items-center mr-4 cursor-pointer py-1.5 text-2xl font-extrabold"
         >
+          <Image
+            src="https://ik.imagekit.io/naufalrafi/Parion%20Logo%20(1).png?updatedAt=1702368775661"
+            alt="logo"
+            width={40}
+            height={40}
+            className="mr-2"
+          />
           Parion
         </TypographyMT>
         <div className="hidden lg:block">{navList}</div>
         <div className="flex items-center gap-x-1">
           <Link href="/login">
             <ButtonMT
-                placeholder={''}
-                variant="text"
-                size="sm"
-                className="hidden lg:inline-block"
+              placeholder={''}
+              variant="text"
+              size="sm"
+              className="hidden lg:inline-block"
             >
-                <span>Log In</span>
+              <span>Log In</span>
             </ButtonMT>
           </Link>
           <Link href="/register">
             <ButtonMT
-                placeholder={''}
-                variant="gradient"
-                size="sm"
-                className="hidden lg:inline-block"
+              placeholder={''}
+              variant="gradient"
+              size="sm"
+              className="hidden lg:inline-block"
             >
-                <span>Sign up</span>
+              <span>Sign up</span>
             </ButtonMT>
-          </Link>  
+          </Link>
         </div>
         <IconButtonMT
           placeholder={''}

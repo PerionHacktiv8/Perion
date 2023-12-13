@@ -37,9 +37,7 @@ const LoginPage: FunctionComponent = () => {
           height={100}
           objectFit="contain"
         />
-        <h1 className="text-5xl text-white font-bold lg:ml-4">
-          Parion
-        </h1>
+        <h1 className="text-5xl text-white font-bold lg:ml-4">Parion</h1>
       </div>
       {/* Card for sign in */}
       <div className="flex w-full lg:w-1/2 items-center justify-center p-4">
@@ -48,14 +46,29 @@ const LoginPage: FunctionComponent = () => {
           shadow={false}
           className="w-full max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl h-auto py-8 px-4 sm:px-12"
         >
-          <div className='flex justify-between'>
+          <div className="flex justify-between">
             <Typography placeholder={''} variant="h2" color="blue-gray">
               Sign in
             </Typography>
             <Link href="/">
-              <IconButton placeholder={''} variant="text" className="rounded-full">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+              <IconButton
+                placeholder={''}
+                variant="text"
+                className="rounded-full"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15.75 19.5L8.25 12l7.5-7.5"
+                  />
                 </svg>
               </IconButton>
               Back To Home
@@ -68,7 +81,7 @@ const LoginPage: FunctionComponent = () => {
           >
             Dont have an account?{' '}
             <Link href="/register" className="font-medium text-gray-900">
-                Sign Up
+              Sign Up
             </Link>
           </Typography>
           <div className="flex justify-start gap-4 mt-3">
