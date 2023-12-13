@@ -141,7 +141,7 @@ export class Users {
     }
   }
 
-  static async invoiceXendit() {
+  static async invoiceXendit(userId: number) {
     try {
       const invoiceService = new Invoice({
         secretKey: process.env.SECRET_API_XENDIT as string,
@@ -150,16 +150,20 @@ export class Users {
       const data: CreateInvoiceRequest = {
         amount: 200,
         invoiceDuration: "172800",
+        // email
+        payerEmail: "mail@mail.com",
         externalId: `A-${new Date().getTime()}`,
         description: "Bayar Penginapan",
         currency: "IDR",
         reminderTime: 1,
+        // link redirect nya
+        successRedirectUrl: "http://localhost:3000",
+        failureRedirectUrl: "http://localhost:3000",
       };
 
       const response = await invoiceService.createInvoice({
         data,
       });
-      console.log(response);
 
       return response;
     } catch (error) {

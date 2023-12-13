@@ -12,10 +12,9 @@ type MyResponse<T> = {
 export const POST = async (req: NextRequest) => {
   try {
     const data = await req.json();
-    console.log(data, 14);
 
     const payment = await Users.invoiceXendit(data);
-    console.log(payment, 17);
+
     return NextResponse.json<MyResponse<unknown>>({
       statusCode: 201,
       data: payment,
