@@ -4,6 +4,7 @@ import { hashPass } from "../helpers/bcrypt";
 import { z } from "zod";
 import { Invoice } from "xendit-node";
 import { CreateInvoiceRequest } from "xendit-node/invoice/models";
+import { InvoiceCallback } from "xendit-node/invoice/models";
 
 const DB_NAME = process.env.MONGODB_DB_NAME;
 const COLLECTION_NAME = "Users";
@@ -153,7 +154,7 @@ export class Users {
         // email
         payerEmail: "mail@mail.com",
         externalId: `A-${new Date().getTime()}`,
-        description: "Bayar Penginapan",
+        description: "Subscriptions",
         currency: "IDR",
         reminderTime: 1,
         // link redirect nya
@@ -166,6 +167,18 @@ export class Users {
       });
 
       return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  static async getInvoiceXendit() {
+    try {
+      const invoiceService = new Invoice({
+        secretKey: process.env.SECRET_API_XENDIT as string,
+      });
+
+      const response = await invoiceService.getInvoices();
+      // console.log(response);
     } catch (error) {
       console.log(error);
     }

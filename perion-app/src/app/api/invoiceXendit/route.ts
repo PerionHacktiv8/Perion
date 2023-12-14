@@ -12,6 +12,7 @@ type MyResponse<T> = {
 export const POST = async (req: NextRequest) => {
   try {
     const data = await req.json();
+    console.log(data);
 
     const payment = await Users.invoiceXendit(data);
 
