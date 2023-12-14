@@ -8,15 +8,40 @@ import {
   Input,
   IconButton,
 } from '@material-tailwind/react'
+import { signInWithGoogle } from "../../db/config/Sign-InFunction";
+import { signInWithGithub } from "../../db/config/Sign-InFunction";
+import { signInWithFacebook } from "../../db/config/Sign-InFunction";
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 const LoginPage: FunctionComponent = () => {
-  const [email, setEmail] = useState('')
+  const router = useRouter()
+  const handleSignInWithGoogle = async () => {
+    try {
+      await signInWithGoogle();
+      router.push('/');
+    } catch (error) {
+      console.error("Error signing in with Google:", error);
+    }
+  };
 
-  const handleSignIn = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-    // Handle sign-in logic here
-  }
+  const handleSignInWithGithub = async () => {
+    try {
+      await signInWithGithub();
+      router.push('/');
+    } catch (error) {
+      console.error("Error signing in with GitHub:", error);
+    }
+  };
+
+  const handleSignInWithFacebook = async () => {
+    try {
+      await signInWithFacebook();
+      router.push('/');
+    } catch (error) {
+      console.error("Error signing in with Facebook:", error);
+    }
+  };
 
   return (
     <div className="relative flex flex-col lg:flex-row justify-center items-center bg-cover w-full min-h-screen">
@@ -77,6 +102,7 @@ const LoginPage: FunctionComponent = () => {
               color="white"
               variant="outlined"
               className="border-2 border-gray-300 rounded-full p-3"
+              onClick={() => handleSignInWithGoogle()}
             >
               <Image
                 src="https://docs.material-tailwind.com/icons/google.svg"
@@ -90,6 +116,7 @@ const LoginPage: FunctionComponent = () => {
               color="white"
               variant="outlined"
               className="border-2 border-gray-300 rounded-full p-3"
+              onClick={() => handleSignInWithGithub()}
             >
               <Image
                 src="https://cdns.iconmonstr.com/wp-content/releases/preview/2012/240/iconmonstr-github-1.png"
@@ -103,6 +130,7 @@ const LoginPage: FunctionComponent = () => {
               color="white"
               variant="outlined"
               className="border-2 border-gray-300 rounded-full p-3"
+              onClick={() => handleSignInWithFacebook()}
             >
               <Image
                 src="https://www.vectorlogo.zone/logos/facebook/facebook-icon.svg"

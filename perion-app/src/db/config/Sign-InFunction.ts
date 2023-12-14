@@ -1,6 +1,14 @@
 // src/app/config/Sign-InFunction.ts
 import { signInWithPopup, GoogleAuthProvider, GithubAuthProvider, FacebookAuthProvider } from 'firebase/auth';
 import { auth } from './firebaseConfig';
+import { redirect } from 'next/navigation'
+
+type MyResponse<T> = {
+    statusCode: number;
+    message: string;
+    data?: T;
+    error?: string;
+};
 
 export const signInWithFacebook = async () => {
     try {
@@ -8,11 +16,8 @@ export const signInWithFacebook = async () => {
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
         const token = await user.getIdToken();
-        const providers = await user.providerData;
 
-        console.log(providers);
-
-        await fetch('http://localhost:3000/api/auth', {
+        const response = await fetch('http://localhost:3000/api/auth', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -24,10 +29,16 @@ export const signInWithFacebook = async () => {
             }),
         });
 
-        return {
-            status: 'success',
-            data: user,
-        };
+        const responseJson: MyResponse<unknown> = await response.json();
+
+        if (!response.ok) {
+            let message = responseJson.error ?? "Something went wrong!";
+
+            return redirect(`/error?message=${message}`);
+        }
+
+
+        return redirect("/");
     } catch (error) {
         console.error('Error during Facebook Sign-In:', error);
         throw error;
@@ -41,7 +52,7 @@ export const signInWithGithub = async () => {
         const user = result.user;
         const token = await user.getIdToken();
 
-        await fetch('http://localhost:3000/api/auth', {
+        const response = await fetch('http://localhost:3000/api/auth', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -53,15 +64,20 @@ export const signInWithGithub = async () => {
             }),
         });
 
-        return {
-            status: 'success',
-            data: user,
-        };
+        const responseJson: MyResponse<unknown> = await response.json();
+
+        if (!response.ok) {
+            let message = responseJson.error ?? "Something went wrong!";
+
+            return redirect(`/error?message=${message}`);
+        }
+
+        return redirect("/");
     } catch (error) {
-        console.error('Error during GitHub Sign-In:', error);
+        console.error('Error during Github Sign-In:', error);
         throw error;
     }
-};
+}
 
 
 export const signInWithGoogle = async () => {
@@ -71,7 +87,7 @@ export const signInWithGoogle = async () => {
         const user = result.user;
         const token = await user.getIdToken();
 
-        await fetch('http://localhost:3000/api/auth', {
+        const response = await fetch('http://localhost:3000/api/auth', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -83,12 +99,18 @@ export const signInWithGoogle = async () => {
             }),
         });
 
-        return {
-            status: 'success',
-            data: user,
+        const responseJson: MyResponse<unknown> = await response.json();
+
+        if (!response.ok) {
+            let message = responseJson.error ?? "Something went wrong!";
+
+            return redirect(`/error?message=${message}`);
         }
+
+        return redirect("/");
     } catch (error) {
         console.error('Error during Google Sign-In:', error);
         throw error;
     }
-};
+}
+

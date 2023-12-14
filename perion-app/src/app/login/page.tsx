@@ -1,5 +1,5 @@
 'use client'
-import { useState, FunctionComponent } from 'react'
+import { FunctionComponent } from 'react'
 import Image from 'next/image'
 import {
   Card,
@@ -8,16 +8,12 @@ import {
   Input,
   IconButton,
 } from '@material-tailwind/react'
+import { signInWithGoogle } from "../../db/config/Sign-InFunction";
+import { signInWithGithub } from "../../db/config/Sign-InFunction";
+import { signInWithFacebook } from "../../db/config/Sign-InFunction";
 import Link from 'next/link'
 
 const LoginPage: FunctionComponent = () => {
-  const [email, setEmail] = useState('')
-
-  const handleSignIn = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-    // Handle sign-in logic here
-  }
-
   return (
     <div className="relative flex flex-col lg:flex-row justify-center items-center bg-cover w-full min-h-screen">
       <Image
@@ -77,6 +73,7 @@ const LoginPage: FunctionComponent = () => {
               color="white"
               variant="outlined"
               className="border-2 border-gray-300 rounded-full p-3"
+              onClick={signInWithGoogle}
             >
               <Image
                 src="https://docs.material-tailwind.com/icons/google.svg"
@@ -90,6 +87,7 @@ const LoginPage: FunctionComponent = () => {
               color="white"
               variant="outlined"
               className="border-2 border-gray-300 rounded-full p-3"
+              onClick={signInWithGithub}
             >
               <Image
                 src="https://cdns.iconmonstr.com/wp-content/releases/preview/2012/240/iconmonstr-github-1.png"
@@ -103,6 +101,7 @@ const LoginPage: FunctionComponent = () => {
               color="white"
               variant="outlined"
               className="border-2 border-gray-300 rounded-full p-3"
+              onClick={signInWithFacebook}
             >
               <Image
                 src="https://www.vectorlogo.zone/logos/facebook/facebook-icon.svg"

@@ -1,9 +1,10 @@
 // src/app/components/signInWithAuth.tsx
 "use client";
 import React from "react";
-import { signInWithGoogle } from "../config/Sign-InFunction";
-import { signInWithGithub } from "../config/Sign-InFunction";
-import { signInWithFacebook } from "../config/Sign-InFunction";
+import { signInWithGoogle } from "../db/config/Sign-InFunction";
+import { signInWithGithub } from "../db/config/Sign-InFunction";
+import { signInWithFacebook } from "../db/config/Sign-InFunction";
+
 
 const SignInButton: React.FC = () => {
   const handleSignInWithGoogle = async () => {
@@ -27,7 +28,7 @@ const SignInButton: React.FC = () => {
   const handleSignInWithFacebook = async () => {
     try {
       const user = await signInWithFacebook();
-      console.log(user.status, user.data);
+      console.log("Signed in user:", user);
     } catch (error) {
       console.error("Error signing in with Facebook:", error);
     }
