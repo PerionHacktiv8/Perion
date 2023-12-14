@@ -183,7 +183,21 @@ export class Users {
       console.log(error);
     }
   }
+  static async getInvoiceByIdXendit() {
+    try {
+      const invoiceService = new Invoice({
+        secretKey: process.env.SECRET_API_XENDIT as string,
+      });
 
+      const response = await invoiceService.getInvoiceById({
+        // di ganti dengan invoice id yg di dapat
+        invoiceId: "62efe4c33e45294d63f585f2",
+      });
+      // console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   static async upPDF() {
     try {
     } catch (err) {
