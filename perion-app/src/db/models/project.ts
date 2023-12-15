@@ -108,4 +108,13 @@ export class Project {
       throw error;
     }
   }
+  static async readProjects() {
+    try {
+      const collection = await this.connection();
+      const projects = (await collection.find({}).toArray()) as ProjectModel[];
+      return projects;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }

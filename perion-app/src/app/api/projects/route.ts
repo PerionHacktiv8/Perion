@@ -41,3 +41,39 @@ export const POST = async (req: NextRequest) => {
     }
   }
 };
+
+export const GET = async () => {
+  try {
+    const projects = await Project.readProjects();
+    if (!projects) {
+      throw new Error("Cannot find data");
+    }
+
+    return NextResponse.json<MyResponse<ProjectModel[]>>(
+      {
+        statusCode: 200,
+        message: "Pong from GET /api/projects !",
+        data: projects,
+      },
+      {
+        status: 200,
+      }
+    );
+  } catch (err) {
+    if (err instanceof z.ZodError) {
+      console.log(err);
+      const errPath = err.issues[0].path[0];
+      const errMessage = err.issues[0].message;
+
+      return NextResponse.json<MyResponse<never>>(
+        {
+          statusCode: 400,
+          error: `${errPath} - ${errMessage}`,
+        },
+        {
+          status: 400,
+        }
+      );
+    }
+  }
+};
