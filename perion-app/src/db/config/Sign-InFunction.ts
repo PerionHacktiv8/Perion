@@ -109,7 +109,7 @@ export const signInWithGoogle = async () => {
             return redirect(`/error?message=${message}`);
         }
 
-        NextResponse.redirect(new URL('/', 'http://localhost:3000').href);
+        return redirect("/");
     } catch (error) {
         console.error('Error during Google Sign-In:', error);
         throw error;

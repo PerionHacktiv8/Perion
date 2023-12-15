@@ -8,9 +8,12 @@ import {
   IconButtonMT,
 } from '@/components/MaterialTailwind'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export function NavbarDefault() {
   const [openNav, setOpenNav] = React.useState(false)
+  const [navbarBackground, setNavbarBackground] = React.useState('transparent');
+
 
   React.useEffect(() => {
     window.addEventListener(
@@ -19,13 +22,29 @@ export function NavbarDefault() {
     )
   }, [])
 
+  React.useEffect(() => {
+    const changeNavbarBackground = () => {
+      if (window.scrollY >= 80) {
+        setNavbarBackground('white');
+      } else {
+        setNavbarBackground('transparent');
+      }
+    };
+
+    window.addEventListener('scroll', changeNavbarBackground);
+
+    // Clean up the event listener
+    return () => window.removeEventListener('scroll', changeNavbarBackground);
+  }, []);
+
+  const textColor = navbarBackground === 'transparent' ? 'text-white' : 'text-gray-800';
+
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       <TypographyMT
         placeholder={''}
         as="li"
         variant="small"
-        color="blue-gray"
         className="flex items-center gap-x-2 p-1 font-semibold font-lg"
       >
         <a href="#" className="flex items-center">
@@ -36,7 +55,6 @@ export function NavbarDefault() {
         placeholder={''}
         as="li"
         variant="small"
-        color="blue-gray"
         className="flex items-center gap-x-2 p-1 font-semibold font-lg"
       >
         <a href="#" className="flex items-center">
@@ -47,60 +65,66 @@ export function NavbarDefault() {
         placeholder={''}
         as="li"
         variant="small"
-        color="blue-gray"
         className="flex items-center gap-x-2 p-1 font-semibold font-lg"
       >
-        <a href="#" className="flex items-center">
+        <Link href="/recruit" className="flex items-center">
           Recruit
-        </a>
+        </Link>
       </TypographyMT>
       <TypographyMT
         placeholder={''}
         as="li"
         variant="small"
-        color="blue-gray"
         className="flex items-center gap-x-2 p-1 font-semibold font-lg"
       >
         <a href="#" className="flex items-center">
-          Careers
+          Projects
         </a>
       </TypographyMT>
     </ul>
   )
 
   return (
-    <NavbarMT placeholder={''} className="max-w-full">
-      <div className="container mx-auto flex items-center justify-between text-blue-gray-900">
-        <TypographyMT
-          placeholder={''}
-          as="a"
-          href="#"
-          className="mr-4 cursor-pointer py-1.5 font-2xl font-extrabold"
-        >
-          Parion
-        </TypographyMT>
+    <NavbarMT placeholder={""} className={`fixed max-w-full border-none z-50 ${navbarBackground === 'transparent' ? 'bg-transparent' : 'bg-white'} ${textColor}`}>
+      <div className="container mx-auto flex items-center justify-between">
+        <Link href="/">
+          <TypographyMT
+            placeholder={''}
+            as="p"
+            className="flex flex-cols items-center mr-4 cursor-pointer py-1.5 text-2xl font-extrabold"
+          >
+            <Image
+              src="https://ik.imagekit.io/naufalrafi/Parion%20Logo%20(1).png?updatedAt=1702368775661"
+              alt="logo"
+              width={40}
+              height={40}
+              className="mr-2"
+            />
+            Parion
+          </TypographyMT>
+        </Link>
         <div className="hidden lg:block">{navList}</div>
         <div className="flex items-center gap-x-1">
           <Link href="/login">
             <ButtonMT
-                placeholder={''}
-                variant="text"
-                size="sm"
-                className="hidden lg:inline-block"
+              placeholder={''}
+              variant="text"
+              size="sm"
+              className={`hidden lg:inline-block ${textColor}`}
             >
-                <span>Log In</span>
+              <span>Log In</span>
             </ButtonMT>
           </Link>
           <Link href="/register">
             <ButtonMT
-                placeholder={''}
-                variant="gradient"
-                size="sm"
-                className="hidden lg:inline-block"
+              placeholder={''}
+              variant="gradient"
+              size="sm"
+              className="hidden lg:inline-block"
             >
-                <span>Sign up</span>
+              <span>Sign up</span>
             </ButtonMT>
-          </Link>  
+          </Link>
         </div>
         <IconButtonMT
           placeholder={''}
@@ -144,16 +168,19 @@ export function NavbarDefault() {
       <MobileNavMT open={openNav}>
         <div className="container mx-auto">
           {navList}
-          <div className="flex items-center gap-x-1">
+          <div className="flex items-center justify-center gap-x-1">
+            <Link href="/login" className='w-full'>
             <ButtonMT
               placeholder={''}
               fullWidth
               variant="text"
               size="sm"
-              className=""
+              className={`${textColor}`}
             >
               <span>Log In</span>
             </ButtonMT>
+            </Link>
+            <Link href="/register" className='w-full'>
             <ButtonMT
               placeholder={''}
               fullWidth
@@ -161,8 +188,9 @@ export function NavbarDefault() {
               size="sm"
               className=""
             >
-              <span>Sign in</span>
+              <span>Sign Up</span>
             </ButtonMT>
+            </Link>
           </div>
         </div>
       </MobileNavMT>
