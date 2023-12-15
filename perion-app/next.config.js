@@ -12,6 +12,10 @@ const nextConfig = {
       'images.unsplash.com',
     ],
   },
+    experimental: {
+    serverComponentsExternalPackages: ['pdfreader'],
+  },
 }
 
-module.exports = nextConfig
+
+module.exports = nextConfig;
