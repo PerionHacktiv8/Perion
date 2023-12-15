@@ -79,10 +79,6 @@ export const GET = async () => {
   }
 };
 
-export const PUT = async (req: NextRequest) => {
-  try {
-  } catch (error) {}
-};
 export const DELETE = async (req: NextRequest) => {
   try {
     const data = await req.json();

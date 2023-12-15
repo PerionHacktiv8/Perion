@@ -94,7 +94,6 @@ export class Project {
         experience: input.get("experience"),
         benefits: input.get("benefits"),
       };
-      console.log(data);
 
       const parsedInput = ProjectCreateSchema.parse(data);
 
@@ -136,6 +135,41 @@ export class Project {
       const project = await collection.deleteOne({
         _id: new ObjectId(id),
       });
+      return project;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+  static async editProject(id: ObjectId, input: FormData) {
+    try {
+      const collection = await this.connection();
+
+      let data = {
+        title: input.get("title"),
+        projectDescription: input.get("projectDescription"),
+        workDescription: input.get("workDescription"),
+        position: input.get("position"),
+        location: input.get("location"),
+        jobType: input.get("jobType"),
+        experience: input.get("experience"),
+        benefits: input.get("benefits"),
+      };
+
+      const parsedInput = ProjectCreateSchema.parse(data);
+
+      const project = await collection.updateOne(
+        {
+          _id: new ObjectId(id),
+        },
+        {
+          $set: {
+            ...parsedInput,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          },
+        }
+      );
       return project;
     } catch (error) {
       console.log(error);

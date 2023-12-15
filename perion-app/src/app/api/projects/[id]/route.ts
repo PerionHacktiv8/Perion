@@ -42,3 +42,36 @@ export const GET = async (_: NextRequest, { params }: Props) => {
     }
   }
 };
+
+export const PUT = async (req: NextRequest, { params }: Props) => {
+  try {
+    const id = params.id;
+    const data = await req.formData();
+    await Project.editProject(id, data);
+    return NextResponse.json<MyResponse<unknown>>(
+      {
+        statusCode: 200,
+        message: "Project Has Updated",
+      },
+      {
+        status: 200,
+      }
+    );
+  } catch (err) {
+    if (err instanceof z.ZodError) {
+      console.log(err);
+      const errPath = err.issues[0].path[0];
+      const errMessage = err.issues[0].message;
+
+      return NextResponse.json<MyResponse<never>>(
+        {
+          statusCode: 400,
+          error: `${errPath} - ${errMessage}`,
+        },
+        {
+          status: 400,
+        }
+      );
+    }
+  }
+};
