@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { MyResponse } from "../route";
 import { Project, ProjectModel } from "@/db/models/project";
-import { z } from "zod";
+import { ZodError, z } from "zod";
 import { ObjectId } from "mongodb";
 
 type Props = {
@@ -25,30 +25,38 @@ export const GET = async (_: NextRequest, { params }: Props) => {
       }
     );
   } catch (err) {
-    if (err instanceof z.ZodError) {
-      console.log(err);
-      const errPath = err.issues[0].path[0];
-      const errMessage = err.issues[0].message;
+    let errCode = 500;
+    let errMsg = "Internal Server Error";
 
-      return NextResponse.json<MyResponse<never>>(
-        {
-          statusCode: 400,
-          error: `${errPath} - ${errMessage}`,
-        },
-        {
-          status: 400,
-        }
-      );
+    if (err instanceof z.ZodError) {
+      errCode = 400;
+      errMsg = err.issues[0].message;
     }
+
+    if (err instanceof Error) {
+      errCode = 404;
+      errMsg = err.message;
+    }
+
+    return NextResponse.json<MyResponse<unknown>>(
+      {
+        statusCode: errCode,
+        error: errMsg,
+      },
+      {
+        status: errCode,
+      }
+    );
   }
 };
 
 export const PUT = async (req: NextRequest, { params }: Props) => {
   try {
     const id = params.id;
+
     const data = await req.formData();
     await Project.editProject(id, data);
-    return NextResponse.json<MyResponse<unknown>>(
+    return NextResponse.json<MyResponse<string>>(
       {
         statusCode: 200,
         message: "Project Has Updated",
@@ -58,20 +66,27 @@ export const PUT = async (req: NextRequest, { params }: Props) => {
       }
     );
   } catch (err) {
-    if (err instanceof z.ZodError) {
-      console.log(err);
-      const errPath = err.issues[0].path[0];
-      const errMessage = err.issues[0].message;
+    let errCode = 500;
+    let errMsg = "Internal Server Error";
 
-      return NextResponse.json<MyResponse<never>>(
-        {
-          statusCode: 400,
-          error: `${errPath} - ${errMessage}`,
-        },
-        {
-          status: 400,
-        }
-      );
+    if (err instanceof z.ZodError) {
+      errCode = 400;
+      errMsg = err.issues[0].message;
     }
+
+    if (err instanceof Error) {
+      errCode = 404;
+      errMsg = err.message;
+    }
+
+    return NextResponse.json<MyResponse<unknown>>(
+      {
+        statusCode: errCode,
+        error: errMsg,
+      },
+      {
+        status: errCode,
+      }
+    );
   }
 };

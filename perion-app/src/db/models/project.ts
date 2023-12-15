@@ -120,6 +120,15 @@ export class Project {
   static async readDetailProject(id: ObjectId) {
     try {
       const collection = await this.connection();
+
+      const checkData = await collection.findOne({
+        _id: new ObjectId(id),
+      });
+
+      if (!checkData) {
+        throw new Error("Project Not Found");
+      }
+
       const project = (await collection.findOne({
         _id: new ObjectId(id),
       })) as ProjectModel;
@@ -132,6 +141,15 @@ export class Project {
   static async deleteProject(id: ObjectId) {
     try {
       const collection = await this.connection();
+
+      const checkData = await collection.findOne({
+        _id: new ObjectId(id),
+      });
+
+      if (!checkData) {
+        throw new Error("Project Not Found");
+      }
+
       const project = await collection.deleteOne({
         _id: new ObjectId(id),
       });
@@ -157,6 +175,14 @@ export class Project {
       };
 
       const parsedInput = ProjectCreateSchema.parse(data);
+
+      const checkData = await collection.findOne({
+        _id: new ObjectId(id),
+      });
+
+      if (!checkData) {
+        throw new Error("Project Not Found");
+      }
 
       const project = await collection.updateOne(
         {
