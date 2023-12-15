@@ -1,7 +1,7 @@
 export function HeroSection() {
   return (
     <div
-      className="relative h-auto md:h-50vh"
+      className="relative h-auto md:h-50vh pt-16"
       style={{
         backgroundImage:
           'url(https://images.unsplash.com/photo-1512514076443-1eef59c260b0?q=80&w=2448&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)',

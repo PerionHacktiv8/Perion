@@ -21,10 +21,7 @@ export function CardComponent() {
   }
 
   return (
-    <div className="flex justify-center py-10 px-4 sm:px-10">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        {/* Card */}
-        <Card placeholder={''} className="max-w-[24rem] overflow-hidden">
+        <Card placeholder={''} className="max-w-[24rem] overflow-hidden transition duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-xl">
           <CardHeader
             placeholder={''}
             floated={false}
@@ -160,7 +157,5 @@ export function CardComponent() {
             </div>
           </CardFooter>
         </Card>
-      </div>
-    </div>
   )
 }
