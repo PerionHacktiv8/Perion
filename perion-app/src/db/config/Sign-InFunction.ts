@@ -1,7 +1,8 @@
 // src/app/config/Sign-InFunction.ts
-import { signInWithPopup, GoogleAuthProvider, GithubAuthProvider, FacebookAuthProvider } from 'firebase/auth';
+import { signInWithPopup, GoogleAuthProvider, GithubAuthProvider, FacebookAuthProvider, signInWithRedirect } from 'firebase/auth';
 import { auth } from './firebaseConfig';
 import { redirect } from 'next/navigation'
+import { NextResponse } from 'next/server'
 
 type MyResponse<T> = {
     statusCode: number;
@@ -38,7 +39,7 @@ export const signInWithFacebook = async () => {
         }
 
 
-        return redirect("/");
+        NextResponse.redirect(new URL('/', 'http://localhost:3000').href);
     } catch (error) {
         console.error('Error during Facebook Sign-In:', error);
         throw error;
@@ -72,7 +73,8 @@ export const signInWithGithub = async () => {
             return redirect(`/error?message=${message}`);
         }
 
-        return redirect("/");
+        NextResponse.redirect(new URL('/', 'http://localhost:3000').href);
+
     } catch (error) {
         console.error('Error during Github Sign-In:', error);
         throw error;
@@ -107,7 +109,7 @@ export const signInWithGoogle = async () => {
             return redirect(`/error?message=${message}`);
         }
 
-        return redirect("/");
+        NextResponse.redirect(new URL('/', 'http://localhost:3000').href);
     } catch (error) {
         console.error('Error during Google Sign-In:', error);
         throw error;
