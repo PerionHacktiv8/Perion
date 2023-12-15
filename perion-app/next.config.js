@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    serverActions: true,
-  },
   images: {
     domains: [
       'static.vecteezy.com',
@@ -14,5 +11,4 @@ const nextConfig = {
   },
 }
 
-module.exports = nextConfig;
-
+module.exports = nextConfig

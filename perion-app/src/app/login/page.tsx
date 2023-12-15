@@ -1,4 +1,5 @@
 'use client'
+
 import { FunctionComponent } from 'react'
 import Image from 'next/image'
 import {
@@ -8,40 +9,40 @@ import {
   Input,
   IconButton,
 } from '@material-tailwind/react'
-import { signInWithGoogle } from "../../db/config/Sign-InFunction";
-import { signInWithGithub } from "../../db/config/Sign-InFunction";
-import { signInWithFacebook } from "../../db/config/Sign-InFunction";
+import { signInWithGoogle } from '../../db/config/Sign-InFunction'
+import { signInWithGithub } from '../../db/config/Sign-InFunction'
+import { signInWithFacebook } from '../../db/config/Sign-InFunction'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 const LoginPage: FunctionComponent = () => {
-    const router = useRouter()
-    const handleSignInWithGoogle = async () => {
-      try {
-        await signInWithGoogle();
-        router.push('/');
-      } catch (error) {
-        console.error("Error signing in with Google:", error);
-      }
-    };
-  
-    const handleSignInWithGithub = async () => {
-      try {
-        await signInWithGithub();
-        router.push('/');
-      } catch (error) {
-        console.error("Error signing in with GitHub:", error);
-      }
-    };
-  
-    const handleSignInWithFacebook = async () => {
-      try {
-        await signInWithFacebook();
-        router.push('/');
-      } catch (error) {
-        console.error("Error signing in with Facebook:", error);
-      }
-    };
+  const router = useRouter()
+  const handleSignInWithGoogle = async () => {
+    try {
+      await signInWithGoogle()
+      router.push('/')
+    } catch (error) {
+      console.error('Error signing in with Google:', error)
+    }
+  }
+
+  const handleSignInWithGithub = async () => {
+    try {
+      await signInWithGithub()
+      router.push('/')
+    } catch (error) {
+      console.error('Error signing in with GitHub:', error)
+    }
+  }
+
+  const handleSignInWithFacebook = async () => {
+    try {
+      await signInWithFacebook()
+      router.push('/')
+    } catch (error) {
+      console.error('Error signing in with Facebook:', error)
+    }
+  }
   return (
     <div className="relative flex flex-col lg:flex-row justify-center items-center bg-cover w-full min-h-screen">
       <Image
