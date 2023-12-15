@@ -13,7 +13,7 @@ export const POST = async (req: NextRequest) => {
   try {
     const input = await req.formData();
 
-    const created = await Project.createProject(input);
+    await Project.createProject(input);
 
     return NextResponse.json<MyResponse<string>>(
       {
