@@ -2,6 +2,10 @@ import { MongoServerError, ObjectId } from 'mongodb';
 import { getMongoClientInstance } from '../config';
 import { hashPass } from '../helpers/bcrypt';
 import { z } from 'zod';
+import fireStorage from '../config/firebase';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { openai } from '../config/openai';
+import { PdfReader } from 'pdfreader';
 
 const DB_NAME = process.env.MONGODB_DB_NAME;
 const COLLECTION_NAME = 'Users';
@@ -132,8 +136,59 @@ export class Users {
     }
   }
 
-  static async upPDF() {
+  static async extractPDF(file: File) {
     try {
+      const fileArrBuff = await file.arrayBuffer();
+      const fileBuff = Buffer.from(fileArrBuff);
+      const result: string[] = [];
+
+      const pdfreader = new PdfReader({});
+      pdfreader.parseBuffer(fileBuff, (err, item) => {
+        if (err) console.error('error:', err);
+        else if (!item) return this.sumPDF(result.join(' '));
+        else if (item.text) {
+          result.push(item.text);
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  static async sumPDF(val: string) {
+    try {
+      const ai = await openai.chat.completions.create({
+        model: 'gpt-4',
+        messages: [
+          {
+            role: 'user',
+            content: `can you summarize this cv into four excact points divided by a dash in a line, that is his name, his total work experience in number of years, if less than a year put 1 year, and his skills strict only his skills, his number of projects, this is the cv, ${val}`,
+          },
+        ],
+      });
+
+      console.log(ai.choices[0].message.content as string);
+
+      const data = (ai.choices[0].message.content as string).split(' - ');
+
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  static async upPDF(file: File) {
+    try {
+      const storageRef = ref(fireStorage, file.name);
+      const upload = uploadBytes(storageRef, file);
+
+      const data = await upload.then(async (snapshot) => {
+        return getDownloadURL(snapshot.ref).then((dataUrl) => {
+          return dataUrl;
+        });
+      });
+
+      return data;
     } catch (err) {
       console.log(err);
     }
