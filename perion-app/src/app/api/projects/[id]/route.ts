@@ -2,21 +2,22 @@ import { NextRequest, NextResponse } from "next/server";
 import { MyResponse } from "../route";
 import { Project, ProjectModel } from "@/db/models/project";
 import { z } from "zod";
+import { ObjectId } from "mongodb";
 
 type Props = {
   params: {
-    _id: number;
+    id: ObjectId;
   };
 };
 
 export const GET = async (_: NextRequest, { params }: Props) => {
   try {
-    const _id = params._id;
-    const project = await Project.readDetailProject(_id);
+    const id = params.id;
+    const project = await Project.readDetailProject(id);
     return NextResponse.json<MyResponse<ProjectModel>>(
       {
         statusCode: 200,
-        message: `Pong, GET api/projects/${_id} `,
+        message: `Pong, GET api/projects/${id} `,
         data: project,
       },
       {

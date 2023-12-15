@@ -7,7 +7,7 @@ const postXendit = async () => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ userId: 1000 as number }),
+    body: JSON.stringify({ userId: 100001237 as number }),
   });
   console.log(response);
 

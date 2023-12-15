@@ -118,12 +118,24 @@ export class Project {
       throw error;
     }
   }
-  static async readDetailProject(_id: number) {
+  static async readDetailProject(id: ObjectId) {
     try {
       const collection = await this.connection();
       const project = (await collection.findOne({
-        _id: new ObjectId(_id),
+        _id: new ObjectId(id),
       })) as ProjectModel;
+      return project;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+  static async deleteProject(id: ObjectId) {
+    try {
+      const collection = await this.connection();
+      const project = await collection.deleteOne({
+        _id: new ObjectId(id),
+      });
       return project;
     } catch (error) {
       console.log(error);
