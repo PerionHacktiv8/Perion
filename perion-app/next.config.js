@@ -1,8 +1,21 @@
-/** @type {import('next').NextConfig} */
+/**
+ * @type {import('next').NextConfig}
+ */
+
 const nextConfig = {
-  experimental: {
+  images: {
+    domains: [
+      'static.vecteezy.com',
+      'docs.material-tailwind.com',
+      'cdns.iconmonstr.com',
+      'ik.imagekit.io',
+      'images.unsplash.com',
+    ],
+  },
+    experimental: {
     serverComponentsExternalPackages: ['pdfreader'],
   },
-};
+}
+
 
 module.exports = nextConfig;

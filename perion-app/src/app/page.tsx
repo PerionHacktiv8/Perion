@@ -1,29 +1,31 @@
-import { Users } from '@/db/models/user';
-import { writeFile } from 'fs/promises';
-import { join } from 'path';
+import { NavbarDefault } from '@/components/navbar/navbarComponent'
+import { CardComponent } from '@/components/card/cardComponent'
+import { HeroSection } from '@/components/hero/heroHome'
+import { NavbarWithMenu } from '@/components/navbar/navMenu'
 
 export default function Home() {
-  const upload = async (data: FormData) => {
-    'use server';
-    const file: File | null = data.get('file') as unknown as File;
-
-    if (!file) {
-      throw new Error('No file');
-    }
-
-    await Users.extractPDF(file);
-    // await Users.upPDF(file);
-  };
-
   return (
-    <main className='flex min-h-screen flex-col gap-4 p-10'>
-      <h1>test pdf upload</h1>
-      <form className='flex flex-col gap-2 w-fit' action={upload}>
-        <input type='file' accept='application/pdf' name='file' />
-        <button className='w-fit' type='submit'>
-          submit
-        </button>
-      </form>
-    </main>
-  );
+    <div className="flex flex-col min-h-screen">
+      <header className="bg-gray-800 text-white">
+        <NavbarDefault />
+      </header>
+      
+      <main className="flex-grow">
+        <HeroSection />
+        
+        <section className="bg-gray-100">
+          <NavbarWithMenu />
+        </section>
+
+        <section className="py-8">
+          <div className="flex justify-center py-10 px-4 sm:px-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              <CardComponent />
+            </div>
+          </div>
+        </section>
+      </main>
+
+    </div>
+  )
 }
