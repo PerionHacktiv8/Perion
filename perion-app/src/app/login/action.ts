@@ -1,11 +1,10 @@
+import { authN } from '@/db/config/firebaseConfig'
 import {
   signInWithPopup,
   GoogleAuthProvider,
   GithubAuthProvider,
   FacebookAuthProvider,
-  signInWithRedirect,
 } from 'firebase/auth'
-import { auth } from './firebaseConfig'
 import { redirect } from 'next/navigation'
 
 type MyResponse<T> = {
@@ -18,7 +17,7 @@ type MyResponse<T> = {
 export const signInWithFacebook = async () => {
   try {
     const provider = new FacebookAuthProvider()
-    const result = await signInWithPopup(auth, provider)
+    const result = await signInWithPopup(authN, provider)
     const user = result.user
     const token = await user.getIdToken()
 
@@ -36,8 +35,6 @@ export const signInWithFacebook = async () => {
 
     const responseJson: MyResponse<unknown> = await response.json()
 
-    console.log(responseJson)
-
     if (!response.ok) {
       let message = responseJson.error ?? 'Something went wrong!'
 
@@ -54,7 +51,7 @@ export const signInWithFacebook = async () => {
 export const signInWithGithub = async () => {
   try {
     const provider = new GithubAuthProvider()
-    const result = await signInWithPopup(auth, provider)
+    const result = await signInWithPopup(authN, provider)
     const user = result.user
     const token = await user.getIdToken()
 
@@ -88,8 +85,9 @@ export const signInWithGithub = async () => {
 export const signInWithGoogle = async () => {
   try {
     const provider = new GoogleAuthProvider()
-    const result = await signInWithPopup(auth, provider)
+    const result = await signInWithPopup(authN, provider)
     const user = result.user
+    console.log(user)
     const token = await user.getIdToken()
 
     const response = await fetch('http://localhost:3000/api/auth', {
@@ -105,6 +103,8 @@ export const signInWithGoogle = async () => {
     })
 
     const responseJson: MyResponse<unknown> = await response.json()
+
+    console.log(responseJson)
 
     if (!response.ok) {
       let message = responseJson.error ?? 'Something went wrong!'

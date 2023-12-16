@@ -5,18 +5,11 @@ import { NavbarWithMenu } from '@/components/navbar/navMenu'
 
 const Home: React.FC = () => {
   return (
-    <div className="flex flex-col min-h-screen">
-      <header className="bg-gray-800 text-white">
-        <NavbarDefault />
-      </header>
-      
+    <div className="flex flex-col bg-[#f5f5f5] min-h-screen">
+      <NavbarDefault />
       <main className="flex-grow">
         <HeroSection />
-        
-        <section className="bg-gray-100">
-          <NavbarWithMenu />
-        </section>
-
+        <NavbarWithMenu />
         <section className="py-8">
           <div className="flex justify-center py-10 px-4 sm:px-10">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -25,7 +18,6 @@ const Home: React.FC = () => {
           </div>
         </section>
       </main>
-
     </div>
   )
 }
