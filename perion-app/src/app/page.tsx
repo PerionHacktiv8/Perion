@@ -1,13 +1,13 @@
-import { writeFile } from 'fs/promises';
-import { join } from 'path';
+import { writeFile } from "fs/promises";
+import { join } from "path";
 
 export default function Home() {
   const upload = async (data: FormData) => {
-    'use server';
-    const file: File | null = data.get('file') as unknown as File;
+    "use server";
+    const file: File | null = data.get("file") as unknown as File;
 
     if (!file) {
-      throw new Error('No file');
+      throw new Error("No file");
     }
 
     const bytes = await file.arrayBuffer();
@@ -21,11 +21,11 @@ export default function Home() {
     return { success: true };
   };
   return (
-    <main className='flex min-h-screen flex-col gap-4 p-10'>
+    <main className="flex min-h-screen flex-col gap-4 p-10">
       <h1>test pdf upload</h1>
       <form action={upload}>
-        <input type='file' name='file' />
-        <button type='submit'>submit</button>
+        <input type="file" name="file" />
+        <button type="submit">submit</button>
       </form>
     </main>
   );
