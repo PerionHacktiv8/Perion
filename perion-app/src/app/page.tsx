@@ -2,6 +2,7 @@ import { NavbarDefault } from '@/components/navbar/navbarComponent'
 import { CardComponent } from '@/components/card/cardComponent'
 import { HeroSection } from '@/components/hero/heroHome'
 import { NavbarWithMenu } from '@/components/navbar/navMenu'
+import { DialogDefault } from '@/components/modalChoose'
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
         </section>
 
         <section className="py-8">
+          <DialogDefault />
           <aside className="bg-gray-200 w-1/4 hidden sm:block">
             {/* Tambahkan konten sidebar di sini */}
           </aside>
