@@ -10,9 +10,12 @@ const nextConfig = {
       'cdns.iconmonstr.com',
       'ik.imagekit.io',
       'images.unsplash.com',
+      'avatars.githubusercontent.com',
+      'lh3.googleusercontent.com',
+      'bg3.wiki',
+      'assets.stickpng.com',
     ],
   },
 }
 
-module.exports = nextConfig;
-
+module.exports = nextConfig

@@ -42,7 +42,7 @@ export const signInWithFacebook = async () => {
         }
 
 
-        NextResponse.redirect(new URL('/', 'http://localhost:3000').href);
+        return responseJson;
     } catch (error) {
         console.error('Error during Facebook Sign-In:', error);
         throw error;
@@ -76,7 +76,7 @@ export const signInWithGithub = async () => {
             return redirect(`/error?message=${message}`);
         }
 
-        NextResponse.redirect(new URL('/', 'http://localhost:3000').href);
+        return responseJson;
 
     } catch (error) {
         console.error('Error during Github Sign-In:', error);
@@ -109,7 +109,7 @@ export const signInWithGoogle = async () => {
 
         const responseJson: MyResponse<unknown> = await response.json();
 
-        console.log(responseJson);
+        console.log(responseJson.data);
 
 
         if (!response.ok) {
@@ -118,7 +118,7 @@ export const signInWithGoogle = async () => {
             return redirect(`/error?message=${message}`);
         }
 
-        NextResponse.redirect(new URL('/', 'http://localhost:3000').href);
+        return responseJson;
     } catch (error) {
         console.error('Error during Google Sign-In:', error);
         throw error;

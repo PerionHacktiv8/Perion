@@ -9,10 +9,10 @@ const Home: React.FC = () => {
       <header className="bg-gray-800 text-white">
         <NavbarDefault />
       </header>
-      
+
       <main className="flex-grow">
         <HeroSection />
-        
+
         <section className="bg-gray-100">
           <NavbarWithMenu />
         </section>
@@ -25,7 +25,6 @@ const Home: React.FC = () => {
           </div>
         </section>
       </main>
-
     </div>
   )
 }
