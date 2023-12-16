@@ -55,6 +55,8 @@ export const signInWithGithub = async () => {
     const user = result.user
     const token = await user.getIdToken()
 
+    console.log(user.email)
+
     const response = await fetch('http://localhost:3000/api/auth', {
       method: 'POST',
       headers: {
@@ -85,9 +87,10 @@ export const signInWithGithub = async () => {
 export const signInWithGoogle = async () => {
   try {
     const provider = new GoogleAuthProvider()
+    provider.addScope('email')
     const result = await signInWithPopup(authN, provider)
     const user = result.user
-    console.log(user)
+    console.log(user.email)
     const token = await user.getIdToken()
 
     const response = await fetch('http://localhost:3000/api/auth', {
