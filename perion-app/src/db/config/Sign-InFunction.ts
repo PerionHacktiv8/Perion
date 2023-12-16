@@ -30,6 +30,9 @@ export const signInWithFacebook = async () => {
             }),
         });
 
+        console.log(response);
+
+
         const responseJson: MyResponse<unknown> = await response.json();
 
         if (!response.ok) {
@@ -101,7 +104,13 @@ export const signInWithGoogle = async () => {
             }),
         });
 
+        console.log(response);
+
+
         const responseJson: MyResponse<unknown> = await response.json();
+
+        console.log(responseJson);
+
 
         if (!response.ok) {
             let message = responseJson.error ?? "Something went wrong!";
@@ -109,7 +118,7 @@ export const signInWithGoogle = async () => {
             return redirect(`/error?message=${message}`);
         }
 
-        return redirect("/");
+        NextResponse.redirect(new URL('/', 'http://localhost:3000').href);
     } catch (error) {
         console.error('Error during Google Sign-In:', error);
         throw error;
