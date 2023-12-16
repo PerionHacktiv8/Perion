@@ -10,6 +10,7 @@ if (!connectionString) {
 
 console.log("MongoDB connected");
 
+
 let client: MongoClient;
 
 export const getMongoClientInstance = async () => {
@@ -20,4 +21,5 @@ export const getMongoClientInstance = async () => {
   }
 
   return client.db(dbName);
+
 };
