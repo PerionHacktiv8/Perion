@@ -20,6 +20,7 @@ export const signInWithFacebook = async () => {
     const provider = new FacebookAuthProvider()
     const result = await signInWithPopup(authN, provider)
     const user = result.user
+
     const token = await user.getIdToken()
 
     const response = await fetch('http://localhost:3000/api/auth', {
@@ -54,9 +55,8 @@ export const signInWithGithub = async () => {
     const provider = new GithubAuthProvider()
     const result = await signInWithPopup(authN, provider)
     const user = result.user
-    const token = await user.getIdToken()
 
-    console.log(user.email)
+    const token = await user.getIdToken()
 
     const response = await fetch('http://localhost:3000/api/auth', {
       method: 'POST',
@@ -90,6 +90,7 @@ export const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider()
     const result = await signInWithPopup(authN, provider)
     const user = result.user
+
     const token = await user.getIdToken()
 
     const response = await fetch('http://localhost:3000/api/auth', {

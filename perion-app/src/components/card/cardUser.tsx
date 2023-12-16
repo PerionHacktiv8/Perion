@@ -37,17 +37,12 @@ export function CardUser() {
       className="w-full max-w-sm md:max-w-md transition duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-xl mb-5"
     >
       <CardHeader
-        children
         placeholder={''}
         color="transparent"
         className="border-0 p-4 text-center h-40"
-        style={{
-          backgroundImage:
-            "url('https://static.vecteezy.com/system/resources/previews/002/312/383/non_2x/highway-road-mountain-free-vector.jpg')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      ></CardHeader>
+      >
+        <img src="https://seek-app-three.vercel.app" alt="" />
+      </CardHeader>
       <div className="-mt-9 flex justify-center">
         <Avatar
           placeholder={''}

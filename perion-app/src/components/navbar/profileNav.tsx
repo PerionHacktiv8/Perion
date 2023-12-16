@@ -15,6 +15,8 @@ import Link from 'next/link'
 export function ProfileMenu({ textColor }: { textColor: string }) {
   const [pic, setPic] = useState<string>('')
 
+  console.log(pic)
+
   const userData = async () => {
     const res = await fetch('http://localhost:3000/api/user')
     const resJson = (await res.json()) as ResponseAPIType<string>

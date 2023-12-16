@@ -70,6 +70,8 @@ export class Users {
         { projection: { password: 0 } },
       )) as UserModel
 
+      console.log(user)
+
       return user.picture
     } catch (err) {
       throw err

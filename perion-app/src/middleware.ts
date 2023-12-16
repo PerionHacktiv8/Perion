@@ -26,6 +26,8 @@ export const middleware = async (req: NextRequest) => {
       email: string
     }>(token.value)
 
+    console.log(tokenData)
+
     const requestHeaders = new Headers(req.headers)
 
     requestHeaders.set('x-user-id', tokenData.id)
