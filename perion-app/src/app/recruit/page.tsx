@@ -1,10 +1,10 @@
-import { NavbarDefault } from '@/components/navbar/navbarComponent';
-import { CardUser } from '@/components/card/cardUser';
-import { HeroRecruit } from '@/components/hero/heroRecruit';
+import { NavbarDefault } from '@/components/navbar/navbarComponent'
+import { CardUser } from '@/components/card/cardUser'
+import { HeroRecruit } from '@/components/hero/heroRecruit'
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col bg-[#f5f5f5] min-h-screen">
       <NavbarDefault />
 
       <main className="flex-grow">
@@ -24,5 +24,5 @@ export default function Home() {
         </div>
       </main>
     </div>
-  );
+  )
 }

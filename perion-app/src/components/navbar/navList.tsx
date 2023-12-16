@@ -88,7 +88,7 @@ function NavListMenu() {
   ))
 
   return (
-    <React.Fragment>
+    <>
       <Menu
         open={isMenuOpen}
         handler={setIsMenuOpen}
@@ -137,7 +137,7 @@ function NavListMenu() {
       <div className="block lg:hidden">
         <Collapse open={isMobileMenuOpen}>{renderItems}</Collapse>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 
@@ -162,7 +162,7 @@ function NavListMenu1() {
   ))
 
   return (
-    <React.Fragment>
+    <>
       <Menu
         open={isMenuOpen}
         handler={setIsMenuOpen}
@@ -211,7 +211,7 @@ function NavListMenu1() {
       <div className="block lg:hidden">
         <Collapse open={isMobileMenuOpen}>{renderItems}</Collapse>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 
@@ -236,7 +236,7 @@ function NavListMenu2() {
   ))
 
   return (
-    <React.Fragment>
+    <>
       <Menu
         open={isMenuOpen}
         handler={setIsMenuOpen}
@@ -285,7 +285,7 @@ function NavListMenu2() {
       <div className="block lg:hidden">
         <Collapse open={isMobileMenuOpen}>{renderItems}</Collapse>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 
@@ -310,7 +310,7 @@ function NavListMenu3() {
   ))
 
   return (
-    <React.Fragment>
+    <>
       <Menu
         open={isMenuOpen}
         handler={setIsMenuOpen}
@@ -359,7 +359,7 @@ function NavListMenu3() {
       <div className="block lg:hidden">
         <Collapse open={isMobileMenuOpen}>{renderItems}</Collapse>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

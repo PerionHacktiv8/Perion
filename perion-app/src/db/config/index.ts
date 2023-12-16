@@ -1,17 +1,25 @@
-import { MongoClient } from 'mongodb';
+//db/config/index.tsx
+import { MongoClient } from "mongodb";
 
 const connectionString = process.env.MONGODB_CONNECTION_STRING;
+const dbName = "FinalProjext";
 
 if (!connectionString) {
-  throw new Error('MONGODB_CONNECTION_STRING is not defined');
+  throw new Error("MONGODB_CONNECTION_STRING is not defined");
 }
+
+console.log("MongoDB connected");
+
 
 let client: MongoClient;
 
 export const getMongoClientInstance = async () => {
   if (!client) {
     client = await MongoClient.connect(connectionString);
+
     await client.connect();
   }
-  return client;
+
+  return client.db(dbName);
+
 };
