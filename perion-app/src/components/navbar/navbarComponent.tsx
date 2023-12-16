@@ -11,6 +11,7 @@ import {
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
+import { ProfileMenu } from './profileNav'
 
 export function NavbarDefault() {
   const pathName = usePathname().split('/')[1]
@@ -106,26 +107,7 @@ export function NavbarDefault() {
         </Link>
         <div className="hidden lg:block">{navList}</div>
         <div className="flex items-center gap-x-1">
-          <Link href="/login">
-            <Button
-              placeholder={''}
-              variant="text"
-              size="sm"
-              className={`hidden lg:inline-block ${textColor}`}
-            >
-              <span>Log In</span>
-            </Button>
-          </Link>
-          <Link href="/register">
-            <Button
-              placeholder={''}
-              variant="gradient"
-              size="sm"
-              className="hidden lg:inline-block"
-            >
-              <span>Sign up</span>
-            </Button>
-          </Link>
+          <ProfileMenu textColor={textColor} />
         </div>
         <IconButton
           placeholder={''}
