@@ -20,7 +20,7 @@ const LoginPage: FunctionComponent = () => {
       const res = await signInWithGoogle()
 
       if (res.message === 'success') {
-        // router.push('/')
+        router.push('/')
       }
     } catch (error) {
       console.error('Error signing in with Google:', error)
