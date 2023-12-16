@@ -1,6 +1,6 @@
-import { NavbarDefault } from '@/components/navbar/navbarComponent';
-import { CardUser } from '@/components/card/cardUser';
-import { HeroRecruit } from '@/components/hero/heroRecruit';
+import { NavbarDefault } from '@/components/navbar/navbarComponent'
+import { CardUser } from '@/components/card/cardUser'
+import { HeroRecruit } from '@/components/hero/heroRecruit'
 
 export default function Home() {
   return (
@@ -24,5 +24,5 @@ export default function Home() {
         </div>
       </main>
     </div>
-  );
+  )
 }
