@@ -1,26 +1,36 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Button,
   Dialog,
   DialogHeader,
   DialogBody,
-  DialogFooter,
   Card,
   CardBody,
   CardFooter,
 } from '@material-tailwind/react'
+import { ResponseAPIType, SetupData } from '@/app/api/user/route'
 
 export function DialogDefault() {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
 
-  const handleOpen = () => setOpen(!open)
+  const firstTime = async () => {
+    const res = await fetch('http://localhost:3000/api/user')
+    const resJson = (await res.json()) as ResponseAPIType<SetupData>
+
+    if (resJson && resJson.data) {
+      setOpen(resJson.data.firstTime)
+    }
+  }
+
+  useEffect(() => {
+    firstTime()
+  }, [])
+
+  const handleOpen = () => open
 
   return (
     <>
-      <Button placeholder={''} onClick={handleOpen} variant="gradient">
-        Open Dialog
-      </Button>
       <Dialog
         placeholder={''}
         open={open}

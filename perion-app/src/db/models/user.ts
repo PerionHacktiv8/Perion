@@ -17,9 +17,10 @@ export type UserModel = {
   password: string
   address: string
   picture: string
+  firstTime: boolean
 }
 
-type UserInputType = Omit<UserModel, '_id' | 'picture'>
+type UserInputType = Omit<UserModel, '_id' | 'picture' | 'firstTime'>
 
 const userCreateSchema = z.object({
   name: z
@@ -67,10 +68,10 @@ export class Users {
         {
           _id: new ObjectId(val),
         },
-        { projection: { password: 0 } },
+        { projection: { picture: 1, firstTime: 1 } },
       )) as UserModel
 
-      return user.picture
+      return { picture: user.picture, firstTime: user.firstTime }
     } catch (err) {
       throw err
     }

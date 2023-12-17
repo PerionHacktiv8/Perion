@@ -1,4 +1,4 @@
-import { ResponseAPIType } from '@/app/api/user/route'
+import { ResponseAPIType, SetupData } from '@/app/api/user/route'
 import {
   Menu,
   MenuHandler,
@@ -17,9 +17,10 @@ export function ProfileMenu({ textColor }: { textColor: string }) {
 
   const userData = async () => {
     const res = await fetch('http://localhost:3000/api/user')
-    const resJson = (await res.json()) as ResponseAPIType<string>
+    const resJson = (await res.json()) as ResponseAPIType<SetupData>
 
-    if (resJson && resJson.data) setPic(resJson.data)
+    if (resJson && resJson.data && resJson.data.picture)
+      setPic(resJson.data.picture)
   }
 
   useEffect(() => {

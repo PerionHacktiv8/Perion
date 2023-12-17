@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
     const password = hashPass('authPass')
     const role = 'user'
     const subscription = false
-    const firstTime = true
+    // const firstTime = false
 
     const res = await db.collection('users').findOneAndUpdate(
       { email },
@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
           password,
           role,
           subscription,
-          firstTime,
+          // firstTime,
           createdAt: new Date(),
           updatedAt: new Date(),
           picture,
