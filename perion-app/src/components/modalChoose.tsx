@@ -1,77 +1,69 @@
 'use client'
-import React from 'react'
-import {
-  Button,
-  Dialog,
-  DialogHeader,
-  DialogBody,
-  DialogFooter,
-  Card,
-  CardBody,
-  CardFooter,
-} from '@material-tailwind/react'
+import React, { useState } from 'react';
 
 export function DialogDefault() {
-  const [open, setOpen] = React.useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(true);
 
-  const handleOpen = () => setOpen(!open)
+  const closeModal = () => setIsModalOpen(false);
 
   return (
     <>
-      <Button placeholder={''} onClick={handleOpen} variant="gradient">
-        Open Dialog
-      </Button>
-      <Dialog
-        placeholder={''}
-        open={open}
-        handler={handleOpen}
-        size={'xl'}
-        className="h-[35rem]"
-      >
-        <DialogHeader placeholder={''}>Its a simple dialog.</DialogHeader>
-        <DialogBody placeholder={''}>
-          <div className="flex justify-center items-center mt-20 md:h-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-full md:w-3/4 lg:w-3/5">
-              <section>
-                {/* Card 1 */}
-                <Card placeholder={''} className="w-full flex items-center">
-                  <CardBody placeholder={''}>
-                    <h5 className="mb-2 font-bold text-xl text-center">
-                      UI/UX Review Check
-                    </h5>
-                    <p>
-                      The place is close to Barceloneta Beach and bus stop just
-                      2 min by walk and near to &quot;Naviglio&quot; where you
-                      can enjoy the main night life in Barcelona.
-                    </p>
-                  </CardBody>
-                  <CardFooter placeholder={''} className="pt-0">
-                    <Button placeholder={''}>Choose</Button>
-                  </CardFooter>
-                </Card>
-              </section>
-              <section>
-                {/* Card 2 */}
-                <Card placeholder={''} className="w-full flex items-center">
-                  <CardBody placeholder={''}>
-                    <h5 className="mb-2 font-bold text-xl text-center">
-                      UI/UX Review Check
-                    </h5>
-                    <p>
-                      The place is close to Barceloneta Beach and bus stop just
-                      2 min by walk and near to &quot;Naviglio&quot; where you
-                      can enjoy the main night life in Barcelona.
-                    </p>
-                  </CardBody>
-                  <CardFooter placeholder={''} className="pt-0">
-                    <Button placeholder={''}>Choose</Button>
-                  </CardFooter>
-                </Card>
-              </section>
+      {isModalOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+          aria-labelledby="modal-title"
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="bg-white p-6 rounded-lg max-w-4xl mx-auto text-gray-900 shadow-lg">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold">Choose your plan</h2>
+              <button onClick={closeModal} className="text-gray-500 hover:text-gray-700">
+                <span className="sr-only">Close</span>
+                ✕
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Free Plan */}
+              <div className="bg-gray-100 p-6 rounded-lg">
+                <h3 className="text-lg font-semibold mb-2">Free</h3>
+                <p className="text-gray-500 mb-4">USD $0</p>
+                <button className="bg-gray-200 w-full py-2 rounded text-sm mb-4">Choose Plan</button>
+                <p className="text-gray-700 mb-4">For people just getting started with Parion</p>
+                <ul className="text-sm text-gray-700">
+                  <li>✓ Unlimited messages, interactions, and history</li>
+                  <li>✓ Access to our Parion model</li>
+                  <li>✓ Access on Web, iOS, and Android</li>
+                </ul>
+              </div>
+
+              {/* Plus Plan */}
+              <div className="bg-gray-100 p-6 rounded-lg">
+                <h3 className="text-lg font-semibold text-green-600 mb-2">Plus</h3>
+                <p className="text-gray-500 mb-4">USD $20</p>
+                <button className="bg-green-500 w-full py-2 rounded text-white text-sm mb-4">Choose Plan</button>
+                <p className="text-gray-700 mb-4">Everything in Free, and:</p>
+                <ul className="text-sm text-gray-700">
+                  <li>✓ Access to Parion, our most capable model</li>
+                  <li>✓ Browse, create, and use Parion</li>
+                  <li>✓ Access to additional tools like DALL-E, Browsing, Advanced Data Analysis and more</li>
+                </ul>
+              </div>
             </div>
           </div>
-        </DialogBody>
-      </Dialog>
+        </div>
+      )}
+
+      {/* The rest of your page content */}
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+        >
+          Show Plans
+        </button>
+      </div>
     </>
-  )
+  );
 }
