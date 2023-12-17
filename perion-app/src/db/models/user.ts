@@ -1,25 +1,25 @@
-import { MongoServerError, ObjectId } from 'mongodb';
-import { getMongoClientInstance } from '../config';
-import { hashPass } from '../helpers/bcrypt';
-import { z } from 'zod';
-import fireStorage from '../config/firebase';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { openai } from '../config/openai';
-import { PdfReader } from 'pdfreader';
+import { MongoServerError, ObjectId } from 'mongodb'
+import { getMongoClientInstance } from '../config'
+import { hashPass } from '../helpers/bcrypt'
+import { z } from 'zod'
+import fireStorage from '../config/firebase'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
+import { openai } from '../config/openai'
+import { PdfReader } from 'pdfreader'
 
-const DB_NAME = process.env.MONGODB_DB_NAME;
-const COLLECTION_NAME = 'Users';
+const COLLECTION_NAME = 'users'
 
 export type UserModel = {
-  _id: ObjectId;
-  name: string;
-  username: string;
-  email: string;
-  password: string;
-  address: string;
-};
+  _id: ObjectId
+  name: string
+  username: string
+  email: string
+  password: string
+  address: string
+  picture: string
+}
 
-type UserInputType = Omit<UserModel, '_id'>;
+type UserInputType = Omit<UserModel, '_id' | 'picture'>
 
 const userCreateSchema = z.object({
   name: z
@@ -49,54 +49,53 @@ const userCreateSchema = z.object({
   address: z
     .string({ invalid_type_error: 'Please input your address' })
     .min(1, 'Please input your address'),
-});
+})
 
 export class Users {
   static async connection() {
-    const client = await getMongoClientInstance();
-    const db = client.db(DB_NAME);
-    const connection = db.collection(COLLECTION_NAME);
+    const client = await getMongoClientInstance()
+    const connection = client.collection(COLLECTION_NAME)
 
-    return connection;
+    return connection
   }
 
   static async findOneUser(val: string) {
     try {
-      const collection = await this.connection();
+      const collection = await this.connection()
 
-      const users = (await collection.findOne(
+      const user = (await collection.findOne(
         {
           _id: new ObjectId(val),
         },
-        { projection: { password: 0 } }
-      )) as UserModel;
+        { projection: { password: 0 } },
+      )) as UserModel
 
-      return users;
+      return user.picture
     } catch (err) {
-      throw err;
+      throw err
     }
   }
 
   static async login(email: string) {
     try {
-      const collection = await this.connection();
+      const collection = await this.connection()
 
       const user = (await collection.findOne({
         email,
-      })) as UserModel;
+      })) as UserModel
 
-      return user;
+      return user
     } catch (err) {
-      throw err;
+      throw err
     }
   }
 
   static async createUsers(input: FormData) {
     try {
-      const collection = await this.connection();
+      const collection = await this.connection()
 
-      await collection.createIndex({ username: 1 }, { unique: true });
-      await collection.createIndex({ email: 1 }, { unique: true });
+      await collection.createIndex({ username: 1 }, { unique: true })
+      await collection.createIndex({ email: 1 }, { unique: true })
 
       const data = {
         name: input.get('name'),
@@ -104,54 +103,54 @@ export class Users {
         email: input.get('email'),
         password: input.get('password'),
         address: input.get('address'),
-      };
+      }
 
-      const parsedData = userCreateSchema.parse(data);
+      const parsedData = userCreateSchema.parse(data)
 
       const alteredInput: UserInputType = {
         ...parsedData,
         password: hashPass(parsedData.password),
-      };
+      }
 
-      const created = await collection.insertOne(alteredInput);
+      const created = await collection.insertOne(alteredInput)
 
-      return created;
+      return created
     } catch (err) {
-      let error: string = 'Internal Server Error';
-      let statusCode: number = 500;
+      let error: string = 'Internal Server Error'
+      let statusCode: number = 500
 
       if (err instanceof z.ZodError) {
-        statusCode = 400;
-        error = err.issues[0].message;
+        statusCode = 400
+        error = err.issues[0].message
       }
 
       if (err instanceof MongoServerError) {
         if (Object.keys(err.keyPattern)[0] === 'email')
-          error = 'Email already been used';
+          error = 'Email already been used'
         if (Object.keys(err.keyPattern)[0] === 'username')
-          error = 'Username already been used';
+          error = 'Username already been used'
       }
 
-      throw error;
+      throw error
     }
   }
 
   static async extractPDF(file: File) {
     try {
-      const fileArrBuff = await file.arrayBuffer();
-      const fileBuff = Buffer.from(fileArrBuff);
-      const result: string[] = [];
+      const fileArrBuff = await file.arrayBuffer()
+      const fileBuff = Buffer.from(fileArrBuff)
+      const result: string[] = []
 
-      const pdfreader = new PdfReader({});
+      const pdfreader = new PdfReader({})
       pdfreader.parseBuffer(fileBuff, (err, item) => {
-        if (err) console.error('error:', err);
-        else if (!item) return this.sumPDF(result.join(' '));
+        if (err) console.error('error:', err)
+        else if (!item) return this.sumPDF(result.join(' '))
         else if (item.text) {
-          result.push(item.text);
+          result.push(item.text)
         }
-      });
+      })
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
   }
 
@@ -165,32 +164,32 @@ export class Users {
             content: `can you summarize this cv into four excact points divided by a dash in a line, that is his name, his total work experience in number of years, if less than a year put 1 year, and his skills strict only his skills, his number of projects, this is the cv, ${val}`,
           },
         ],
-      });
+      })
 
-      console.log(ai.choices[0].message.content as string);
+      console.log(ai.choices[0].message.content as string)
 
-      const data = (ai.choices[0].message.content as string).split(' - ');
+      const data = (ai.choices[0].message.content as string).split(' - ')
 
-      console.log(data);
+      console.log(data)
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
   }
 
   static async upPDF(file: File) {
     try {
-      const storageRef = ref(fireStorage, file.name);
-      const upload = uploadBytes(storageRef, file);
+      const storageRef = ref(fireStorage, file.name)
+      const upload = uploadBytes(storageRef, file)
 
       const data = await upload.then(async (snapshot) => {
         return getDownloadURL(snapshot.ref).then((dataUrl) => {
-          return dataUrl;
-        });
-      });
+          return dataUrl
+        })
+      })
 
-      return data;
+      return data
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
   }
 }

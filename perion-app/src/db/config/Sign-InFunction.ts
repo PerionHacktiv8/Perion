@@ -5,7 +5,7 @@ import {
   FacebookAuthProvider,
   signInWithRedirect,
 } from 'firebase/auth'
-import { auth } from './firebaseConfig'
+import { authN } from './firebaseConfig'
 import { redirect } from 'next/navigation'
 
 type MyResponse<T> = {
@@ -18,7 +18,7 @@ type MyResponse<T> = {
 export const signInWithFacebook = async () => {
   try {
     const provider = new FacebookAuthProvider()
-    const result = await signInWithPopup(auth, provider)
+    const result = await signInWithPopup(authN, provider)
     const user = result.user
     const token = await user.getIdToken()
 
@@ -54,7 +54,7 @@ export const signInWithFacebook = async () => {
 export const signInWithGithub = async () => {
   try {
     const provider = new GithubAuthProvider()
-    const result = await signInWithPopup(auth, provider)
+    const result = await signInWithPopup(authN, provider)
     const user = result.user
     const token = await user.getIdToken()
 
@@ -88,7 +88,7 @@ export const signInWithGithub = async () => {
 export const signInWithGoogle = async () => {
   try {
     const provider = new GoogleAuthProvider()
-    const result = await signInWithPopup(auth, provider)
+    const result = await signInWithPopup(authN, provider)
     const user = result.user
     const token = await user.getIdToken()
 

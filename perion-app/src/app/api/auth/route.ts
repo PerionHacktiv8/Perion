@@ -1,7 +1,10 @@
-// src/pages/api/auth/route.ts
 import { getMongoClientInstance } from '../../../db/config/index'
 import { admin } from '../../../db/config/firebaseAdminInit'
 import { NextResponse, NextRequest } from 'next/server'
+import { ObjectId } from 'mongodb'
+import { cookies } from 'next/headers'
+import { createToken } from '@/libs/jwt'
+import { hashPass } from '@/db/helpers/bcrypt'
 
 type Request = {
   headers: {
@@ -13,6 +16,11 @@ type MyResponse<T> = {
   status: number
   message: string
   data?: T
+}
+
+export type data = {
+  _id: ObjectId
+  email: string
 }
 
 // POST handler
@@ -28,25 +36,51 @@ export async function POST(request: NextRequest) {
   try {
     const decodedToken = await admin.auth().verifyIdToken(token)
 
-    const { email, uid } = decodedToken
+    const { email, picture } = decodedToken
     const db = await getMongoClientInstance()
 
-    await admin
-      .auth()
-      .getUser(uid)
-      .then((user) => console.log(user))
+    const username = email?.split('@')[0]
+    const password = hashPass('authPass')
+    const role = 'user'
+    const subscription = false
+    const firstTime = true
 
-    const result = await db
-      .collection('users')
-      .findOneAndUpdate({ uid }, { $set: { email, uid } }, { upsert: true })
+    const res = await db.collection('users').findOneAndUpdate(
+      { email },
+      {
+        $set: {
+          username,
+          email,
+          password,
+          role,
+          subscription,
+          firstTime,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          picture,
+        },
+      },
+      { upsert: true, returnDocument: 'after' },
+    )
 
-    console.log(result)
-    console.log(decodedToken)
+    const _id = res?._id
 
-    return NextResponse.json(<MyResponse<unknown>>{
+    const jwt_token = createToken({
+      id: res?._id,
+      email: res?.email,
+    })
+
+    cookies().set('token', jwt_token, {
+      httpOnly: true,
+      secure: false,
+      expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7 * 30),
+      sameSite: 'strict',
+    })
+
+    return NextResponse.json(<MyResponse<data>>{
       status: 200,
       message: 'success',
-      data: { email, uid },
+      data: { email, _id },
     })
   } catch (error) {
     return NextResponse.json(<MyResponse<unknown>>{

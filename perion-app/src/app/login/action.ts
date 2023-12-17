@@ -6,6 +6,7 @@ import {
   FacebookAuthProvider,
 } from 'firebase/auth'
 import { redirect } from 'next/navigation'
+import { data } from '../api/auth/route'
 
 type MyResponse<T> = {
   statusCode: number
@@ -19,6 +20,7 @@ export const signInWithFacebook = async () => {
     const provider = new FacebookAuthProvider()
     const result = await signInWithPopup(authN, provider)
     const user = result.user
+
     const token = await user.getIdToken()
 
     const response = await fetch('http://localhost:3000/api/auth', {
@@ -33,7 +35,7 @@ export const signInWithFacebook = async () => {
       }),
     })
 
-    const responseJson: MyResponse<unknown> = await response.json()
+    const responseJson: MyResponse<data> = await response.json()
 
     if (!response.ok) {
       let message = responseJson.error ?? 'Something went wrong!'
@@ -53,6 +55,7 @@ export const signInWithGithub = async () => {
     const provider = new GithubAuthProvider()
     const result = await signInWithPopup(authN, provider)
     const user = result.user
+
     const token = await user.getIdToken()
 
     const response = await fetch('http://localhost:3000/api/auth', {
@@ -87,7 +90,7 @@ export const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider()
     const result = await signInWithPopup(authN, provider)
     const user = result.user
-    console.log(user)
+
     const token = await user.getIdToken()
 
     const response = await fetch('http://localhost:3000/api/auth', {
@@ -102,9 +105,7 @@ export const signInWithGoogle = async () => {
       }),
     })
 
-    const responseJson: MyResponse<unknown> = await response.json()
-
-    console.log(responseJson)
+    const responseJson: MyResponse<data> = await response.json()
 
     if (!response.ok) {
       let message = responseJson.error ?? 'Something went wrong!'
