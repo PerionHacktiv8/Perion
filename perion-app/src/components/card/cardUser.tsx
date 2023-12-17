@@ -106,6 +106,14 @@ export function CardUser() {
               0 Projects
             </Typography>
           </li>
+          <li className="flex items-center gap-4">
+            <span className="rounded-full border border-white/20 bg-white/20 p-1">
+              <CheckIcon />
+            </span>
+            <Typography placeholder={''} className="font-normal">
+              1 Years Experients
+            </Typography>
+          </li>
         </ul>
       </CardBody>
       <CardFooter placeholder={''} className="flex justify-center p-4">
