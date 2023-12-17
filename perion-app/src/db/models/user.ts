@@ -2,12 +2,9 @@ import { MongoServerError, ObjectId } from 'mongodb'
 import { getMongoClientInstance } from '../config'
 import { hashPass } from '../helpers/bcrypt'
 import { z } from 'zod'
-import fireStorage from '../config/firebase'
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
-import { openai } from '../config/openai'
-import { PdfReader } from 'pdfreader'
 
-const COLLECTION_NAME = 'users'
+const DB_NAME = process.env.MONGODB_DB_NAME
+const COLLECTION_NAME = 'Users'
 
 export type UserModel = {
   _id: ObjectId
@@ -130,9 +127,43 @@ export class Users {
           error = 'Email already been used'
         if (Object.keys(err.keyPattern)[0] === 'username')
           error = 'Username already been used'
+        if (Object.keys(err.keyPattern)[0] === 'email')
+          error = 'Email already been used'
+        if (Object.keys(err.keyPattern)[0] === 'username')
+          error = 'Username already been used'
       }
 
       throw error
+    }
+  }
+
+  static async invoiceXendit(userId: number) {
+    try {
+      const invoiceService = new Invoice({
+        secretKey: process.env.SECRET_API_XENDIT as string,
+      })
+
+      const data: CreateInvoiceRequest = {
+        amount: 200,
+        invoiceDuration: '172800',
+        // email
+        payerEmail: 'mail@mail.com',
+        externalId: `A-${new Date().getTime()}`,
+        description: 'Bayar Penginapan',
+        currency: 'IDR',
+        reminderTime: 1,
+        // link redirect nya
+        successRedirectUrl: 'http://localhost:3000',
+        failureRedirectUrl: 'http://localhost:3000',
+      }
+
+      const response = await invoiceService.createInvoice({
+        data,
+      })
+
+      return response
+    } catch (error) {
+      console.log(error)
     }
   }
 
