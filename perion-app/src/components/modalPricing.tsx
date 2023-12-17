@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 
-export function DialogDefault() {
+export function ModalPricing() {
   const [isModalOpen, setIsModalOpen] = useState(true);
 
   const closeModal = () => setIsModalOpen(false);
