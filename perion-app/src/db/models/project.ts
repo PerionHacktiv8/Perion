@@ -3,7 +3,7 @@ import { getMongoClientInstance } from "../config";
 import { z } from "zod";
 
 const DB_NAME = process.env.MONGODB_DB_NAME;
-const COLLECTION_NAME = "Projects";
+const COLLECTION_NAME = "projects";
 
 export type ProjectModel = {
   _id: ObjectId;
@@ -11,7 +11,8 @@ export type ProjectModel = {
   projectDescription: string;
   workDescription: string;
   position: string;
-  location: string;
+  onSiteRequired: string;
+  jobLocation: string;
   jobType: string;
   experience: string;
   benefits: string;
@@ -30,46 +31,52 @@ const ProjectCreateSchema = z.object({
     .min(1, "You should be input the title"),
   projectDescription: z
     .string({
-      required_error: "You should be input the title",
-      invalid_type_error: "You should be input the title",
+      required_error: "You should be input the Project Description",
+      invalid_type_error: "You should be input the Project Description",
     })
-    .min(1, "You should be input the title"),
+    .min(1, "You should be input the Project Description"),
   workDescription: z
     .string({
-      required_error: "You should be input the title",
-      invalid_type_error: "You should be input the title",
+      required_error: "You should be input the Work Description",
+      invalid_type_error: "You should be input the Work Description",
     })
-    .min(1, "You should be input the title"),
+    .min(1, "You should be input the Work Description"),
   position: z
     .string({
-      required_error: "You should be input the title",
-      invalid_type_error: "You should be input the title",
+      required_error: "You should be input the Position",
+      invalid_type_error: "You should be input the Position",
     })
-    .min(1, "You should be input the title"),
-  location: z
+    .min(1, "You should be input the Position"),
+  jobLocation: z
     .string({
-      required_error: "You should be input the title",
-      invalid_type_error: "You should be input the title",
+      required_error: "You should be input the Job Location",
+      invalid_type_error: "You should be input the Job Location",
     })
-    .min(1, "You should be input the title"),
+    .min(1, "You should be input the Job Location"),
+  onSiteRequired: z
+    .string({
+      required_error: "You should be input the On Site Required",
+      invalid_type_error: "You should be input the On Site Required",
+    })
+    .min(1, "You should be input the On Site Required"),
   jobType: z
     .string({
-      required_error: "You should be input the title",
-      invalid_type_error: "You should be input the title",
+      required_error: "You should be input the Job Type",
+      invalid_type_error: "You should be input the Job Type",
     })
-    .min(1, "You should be input the title"),
+    .min(1, "You should be input the Job Type"),
   experience: z
     .string({
-      required_error: "You should be input the title",
-      invalid_type_error: "You should be input the title",
+      required_error: "You should be input the Experience",
+      invalid_type_error: "You should be input the Experience",
     })
-    .min(1, "You should be input the title"),
+    .min(1, "You should be input the Experience"),
   benefits: z
     .string({
-      required_error: "You should be input the title",
-      invalid_type_error: "You should be input the title",
+      required_error: "You should be input the Benefits",
+      invalid_type_error: "You should be input the Benefits",
     })
-    .min(1, "You should be input the title"),
+    .min(1, "You should be input the Benefits"),
 });
 
 export class Project {
@@ -89,7 +96,8 @@ export class Project {
         projectDescription: input.get("projectDescription"),
         workDescription: input.get("workDescription"),
         position: input.get("position"),
-        location: input.get("location"),
+        jobLocation: input.get("jobLocation"),
+        onSiteRequired: input.get("onSiteRequired"),
         jobType: input.get("jobType"),
         experience: input.get("experience"),
         benefits: input.get("benefits"),
@@ -168,7 +176,8 @@ export class Project {
         projectDescription: input.get("projectDescription"),
         workDescription: input.get("workDescription"),
         position: input.get("position"),
-        location: input.get("location"),
+        jobLocation: input.get("jobLocation"),
+        onSiteRequired: input.get("onSiteRequired"),
         jobType: input.get("jobType"),
         experience: input.get("experience"),
         benefits: input.get("benefits"),
