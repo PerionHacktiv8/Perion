@@ -4,6 +4,7 @@ import { NextResponse, NextRequest } from 'next/server'
 import { ObjectId } from 'mongodb'
 import { cookies } from 'next/headers'
 import { createToken } from '@/libs/jwt'
+import { hashPass } from '@/db/helpers/bcrypt'
 
 type Request = {
   headers: {
@@ -35,16 +36,32 @@ export async function POST(request: NextRequest) {
   try {
     const decodedToken = await admin.auth().verifyIdToken(token)
 
-    const { email, uid, picture } = decodedToken
+    const { email, picture } = decodedToken
     const db = await getMongoClientInstance()
 
-    const res = await db
-      .collection('users')
-      .findOneAndUpdate(
-        { uid },
-        { $set: { email, uid, picture } },
-        { upsert: true },
-      )
+    const username = email?.split('@')[0]
+    const password = hashPass('authPass')
+    const role = 'user'
+    const subscription = false
+    const firstTime = true
+
+    const res = await db.collection('users').findOneAndUpdate(
+      { email },
+      {
+        $set: {
+          username,
+          email,
+          password,
+          role,
+          subscription,
+          firstTime,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          picture,
+        },
+      },
+      { upsert: true, returnDocument: 'after' },
+    )
 
     const _id = res?._id
 

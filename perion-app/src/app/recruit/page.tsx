@@ -14,11 +14,11 @@ export default function Home() {
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 py-10 px-7">
               <CardUser />
+              {/* <CardUser />
               <CardUser />
               <CardUser />
               <CardUser />
-              <CardUser />
-              <CardUser />
+              <CardUser /> */}
             </div>
           </div>
         </div>
