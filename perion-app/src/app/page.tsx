@@ -4,20 +4,14 @@ import { HeroSection } from '@/components/hero/heroHome'
 import { NavbarWithMenu } from '@/components/navbar/navMenu'
 import { DialogDefault } from '@/components/modalChoose'
 
-export default function Home() {
+const Home: React.FC = () => {
   return (
-    <div className="flex flex-col min-h-screen">
-      <header className="bg-gray-800 text-white">
-        <NavbarDefault />
-      </header>
 
+    <div className="flex flex-col bg-[#f5f5f5] min-h-screen">
+      <NavbarDefault />
       <main className="flex-grow">
         <HeroSection />
-
-        <section className="bg-gray-100">
-          <NavbarWithMenu />
-        </section>
-
+        <NavbarWithMenu />
         <section className="py-8">
           <DialogDefault />
           <aside className="bg-gray-200 w-1/4 hidden sm:block">
@@ -33,3 +27,5 @@ export default function Home() {
     </div>
   )
 }
+
+export default Home

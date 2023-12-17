@@ -1,4 +1,5 @@
 'use client'
+
 import {
   Card,
   CardHeader,
@@ -39,14 +40,15 @@ export function CardUser() {
       <CardHeader
         placeholder={''}
         color="transparent"
-        className="border-0 p-4 text-center h-40"
-        style={{
-          backgroundImage:
-            "url('https://static.vecteezy.com/system/resources/previews/002/312/383/non_2x/highway-road-mountain-free-vector.jpg')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      ></CardHeader>
+        className="border-0 text-center h-44 inline-block overflow-hidden relative"
+      >
+        <div className="relative origin-[0_0] scale-[0.39] zoom: 0.39 -o-transform: scale(0.39) -o-transform-origin: 0 0 -webkit-transform: scale(0.39) -webkit-transform-origin: 0 0 after:content-[''] after:block after:absolute after:inset-0">
+          <iframe
+            src="https://seek-app-three.vercel.app"
+            className="relative h-[1440px] w-[900px] block"
+          ></iframe>
+        </div>
+      </CardHeader>
       <div className="-mt-9 flex justify-center">
         <Avatar
           placeholder={''}
