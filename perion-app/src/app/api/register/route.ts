@@ -17,6 +17,8 @@ export type data = {
 }
 
 type LoginInput = {
+  name: string
+  username: string
   email: string
   password: string
 }
@@ -25,7 +27,7 @@ export async function POST(req: NextRequest) {
   try {
     const data = (await req.json()) as LoginInput
 
-    const res = (await Users.login(data.email, data.password)) as UserModel
+    const res = await Users.createUsers(data)
 
     const jwt_token = createToken({
       id: res?._id,

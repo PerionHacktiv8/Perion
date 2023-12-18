@@ -23,8 +23,8 @@ const Home = async () => {
           </aside>
           <div className="flex justify-center py-10 px-4 sm:px-10">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {data.map((datum) => (
-                <CardComponent datum={datum} />
+              {data.map((datum, idx) => (
+                <CardComponent key={idx} datum={datum} />
               ))}
             </div>
           </div>

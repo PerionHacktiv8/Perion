@@ -17,7 +17,6 @@ export type UserModel = {
   username: string
   email: string
   password: string
-  address: string
   picture: string
   firstTime: boolean
 }
@@ -49,9 +48,6 @@ const userCreateSchema = z.object({
       invalid_type_error: 'Please input your password',
     })
     .min(6, 'Password need to be more than 6 character long'),
-  address: z
-    .string({ invalid_type_error: 'Please input your address' })
-    .min(1, 'Please input your address'),
 })
 
 const loginSchema = z.object({
@@ -118,50 +114,41 @@ export class Users {
     }
   }
 
-  static async createUsers(input: FormData) {
+  static async createUsers(input: Object) {
     try {
       const collection = await this.connection()
 
-      await collection.createIndex({ username: 1 }, { unique: true })
-      await collection.createIndex({ email: 1 }, { unique: true })
+      const parsedData = userCreateSchema.parse(input)
 
-      const data = {
-        name: input.get('name'),
-        username: input.get('username'),
-        email: input.get('email'),
-        password: input.get('password'),
-        address: input.get('address'),
-      }
-
-      const parsedData = userCreateSchema.parse(data)
-
-      const alteredInput: UserInputType = {
+      const alteredInput = {
         ...parsedData,
         password: hashPass(parsedData.password),
+        subscription: false,
+        firstTime: true,
+        picture:
+          'https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png',
+        updatedAt: new Date(),
+        createdAt: new Date(),
       }
 
-      const created = await collection.insertOne(alteredInput)
+      const { insertedId } = await collection.insertOne(alteredInput)
 
-      return created
+      const data = await collection.findOne({ _id: insertedId })
+
+      return data
     } catch (err) {
       let error: string = 'Internal Server Error'
       let statusCode: number = 500
 
       if (err instanceof z.ZodError) {
-        statusCode = 400
         error = err.issues[0].message
       }
 
       if (err instanceof MongoServerError) {
-        if (Object.keys(err.keyPattern)[0] === 'email')
-          error = 'Email already been used'
-        if (Object.keys(err.keyPattern)[0] === 'username')
-          error = 'Username already been used'
-        if (Object.keys(err.keyPattern)[0] === 'email')
-          error = 'Email already been used'
-        if (Object.keys(err.keyPattern)[0] === 'username')
-          error = 'Username already been used'
+        error = `${Object.keys(err.keyPattern)[0]} already been use`
       }
+
+      console.log(error)
 
       throw error
     }
