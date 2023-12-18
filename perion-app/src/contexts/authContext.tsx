@@ -7,7 +7,7 @@ import React, {
   useState,
   ReactNode,
 } from 'react'
-import { auth } from '../db/config/firebaseConfig'
+import { authN } from '../db/config/firebaseConfig'
 import { onAuthStateChanged } from 'firebase/auth'
 
 type AuthUser = {
@@ -40,7 +40,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(authN, (user) => {
       setCurrentUser(
         user
           ? { uid: user.uid, email: user.email, photoURL: user.photoURL }

@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    serverActions: true,
-  },
   images: {
     domains: [
       'static.vecteezy.com',
@@ -15,6 +12,9 @@ const nextConfig = {
       'bg3.wiki',
       'assets.stickpng.com',
     ],
+  },
+  experimental: {
+    serverComponentsExternalPackages: ['pdfreader'],
   },
 }
 

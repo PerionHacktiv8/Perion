@@ -1,28 +1,28 @@
+'use server'
+
 import { NavbarDefault } from '@/components/navbar/navbarComponent'
 import { CardComponent } from '@/components/card/cardComponent'
 import { HeroSection } from '@/components/hero/heroHome'
 import { NavbarWithMenu } from '@/components/navbar/navMenu'
 import { ModalPricing } from '@/components/modalPricing'
+import { Project } from '@/db/models/project'
 
-const Home: React.FC = () => {
+const Home = async () => {
+  const data = await Project.readProjects()
+
   return (
-    <div className="flex flex-col min-h-screen">
-      <header className="bg-gray-800 text-white">
-        <NavbarDefault />
-      </header>
-
+    <div className="flex flex-col bg-[#f5f5f5] min-h-screen">
+      <NavbarDefault />
       <main className="flex-grow">
         <HeroSection />
-
-        <section className="bg-gray-100">
-          <NavbarWithMenu />
-        </section>
-
+        <NavbarWithMenu />
         <section className="py-8">
           <ModalPricing />
           <div className="flex justify-center py-10 px-4 sm:px-10">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              <CardComponent />
+              {data.map((datum) => (
+                <CardComponent datum={datum} />
+              ))}
             </div>
           </div>
         </section>

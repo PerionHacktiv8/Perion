@@ -1,365 +1,198 @@
 'use client'
-import React, { useState, useEffect, useRef } from 'react'
-import { Avatar, Button, IconButton, Textarea } from '@material-tailwind/react'
-import { useAuth } from '../../contexts/authContext'
+import React, { useState, useEffect, useCallback } from 'react'
 import {
-  createRoom,
-  sendMessage,
-  onRoomUpdate,
-  onMessageUpdate,
+  getChatRooms,
+  postMessage,
+  subscribeToChat,
+  createOrJoinRoom,
   Room,
   Message,
-  UserProfile,
+  setTypingStatus,
+  subscribeToTyping,
 } from '../../db/config/firestoreService'
+import { authN } from '../../db/config/firebaseConfig'
 import Image from 'next/image'
 
 const ChatComponent: React.FC = () => {
   const [currentRoom, setCurrentRoom] = useState<string | null>(null)
   const [rooms, setRooms] = useState<Room[]>([])
-  const [roomUserProfiles, setRoomUserProfiles] = useState<
-    Record<string, UserProfile[]>
-  >({})
   const [messages, setMessages] = useState<Message[]>([])
   const [newMessage, setNewMessage] = useState<string>('')
-  const { currentUser } = useAuth()
-  const bottomListRef = useRef<HTMLDivElement>(null)
+  const [roomName, setRoomName] = useState<string>('')
+  const [typing, setTyping] = useState<Record<string, boolean>>({})
+  const user = authN.currentUser
 
   useEffect(() => {
-    if (currentUser && currentUser.uid === 'userId1') {
-      const unsubscribe = onRoomUpdate(
-        currentUser.uid,
-        async (updatedRooms) => {
-          setRooms(updatedRooms)
-
-          // Check if userId1 is in any room
-          const isUserInRoom = updatedRooms.some((room) =>
-            room.userIds.includes(currentUser.uid),
-          )
-
-          if (!isUserInRoom) {
-            // No rooms available for userId1, create or join one
-            let newRoomId =
-              updatedRooms.length > 0 ? updatedRooms[0].id : await createRoom()
-            setCurrentRoom(newRoomId)
-          } else if (!currentRoom) {
-            // Auto-connect to the first room if already a member
-            setCurrentRoom(updatedRooms[0].id)
-          }
-        },
-      )
-      return () => unsubscribe()
+    if (user?.uid) {
+      getChatRooms(user.uid).then(setRooms)
     }
-  }, [currentUser, currentRoom])
+  }, [user?.uid])
 
   useEffect(() => {
     if (currentRoom) {
-      const unsubscribe = onMessageUpdate(currentRoom, setMessages)
-      return () => unsubscribe()
+      setMessages([])
+      const unsubscribe = subscribeToChat(currentRoom, setMessages)
+      const unsubscribeTyping = subscribeToTyping(currentRoom, setTyping)
+      return () => {
+        unsubscribe()
+        unsubscribeTyping()
+      }
     }
   }, [currentRoom])
 
-  useEffect(() => {
-    const fetchUserProfiles = async () => {
-      const profilesByRoom: Record<string, UserProfile[]> = {}
-      for (const room of rooms) {
-        const profiles = (await getUserProfiles(room.userIds)).filter(
-          (profile) => profile !== null, // This filter ensures that only non-null profiles are included
-        ) as UserProfile[]
-        profilesByRoom[room.id] = profiles
+  const handleSendMessage = useCallback(async () => {
+    if (newMessage.trim() && currentRoom && user?.displayName) {
+      try {
+        await postMessage(currentRoom, user.uid, user.displayName)
+        setNewMessage('')
+      } catch (error) {
+        console.error('Error sending message:', error)
       }
-      setRoomUserProfiles(profilesByRoom)
     }
+  }, [newMessage, currentRoom, user?.uid, user?.displayName])
 
-    if (rooms.length > 0) {
-      fetchUserProfiles()
-    }
-  }, [rooms])
-
-  const handleSendMessage = async () => {
-    if (newMessage.trim() && currentUser && currentRoom) {
-      await sendMessage(
-        currentRoom,
-        currentUser.uid,
-        newMessage,
-        currentUser.email || 'unknown',
-        currentUser.photoURL || '/default-profile.jpg',
-      )
-      setNewMessage('')
-      bottomListRef.current?.scrollIntoView({ behavior: 'smooth' })
+  const handleKeyDown = async (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && currentRoom) {
+      e.preventDefault()
+      await handleSendMessage()
     }
   }
 
-  const handleRoomSelection = async (roomId: string) => {
-    setCurrentRoom(roomId)
+  const handleTyping = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewMessage(e.target.value)
+    if (currentRoom && user?.uid) {
+      setTypingStatus(currentRoom, user.uid, e.target.value !== '')
+    }
   }
 
-  const handleCreateRoom = async () => {
-    try {
-      const newRoomId = await createRoom()
-      setCurrentRoom(newRoomId)
-    } catch (error) {
-      console.error('Error while creating room:', error)
+  const handleRoomCreation = async () => {
+    if (roomName.trim() && user?.uid) {
+      const roomId = await createOrJoinRoom(roomName, user.uid)
+      setCurrentRoom(roomId)
+      setRoomName('')
+      getChatRooms(user.uid).then(setRooms)
     }
   }
 
   return (
-    <div className="w-full h-screen p-10">
-      <div className="w-full h-full bg-white rounded-lg">
-        {isChatRoomOpen && (
-          <div className="w-full h-full flex flex-col pl-4">
-            <div className="py-4 flex flex-row">
-              <div className="flex-1">
-                <span className="xl:hidden inline-block text-gray-700 hover:text-gray-900 align-bottom">
-                  <span className="block h-6 w-6 p-1 rounded-full hover:bg-gray-400">
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                  </span>
-                </span>
-                <span className="lg:hidden inline-block ml-8 text-gray-700 hover:text-gray-900 align-bottom">
-                  <span className="block h-6 w-6 p-1 rounded-full hover:bg-gray-400">
-                    <svg
-                      className="h-4 w-4"
-                      fill="none"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                    </svg>
-                  </span>
-                </span>
-              </div>
-            </div>
+    <div className="flex h-screen">
+      <div className="flex flex-col w-full max-w-4xl mx-auto shadow-lg">
+        <header className="bg-gray-800 p-4 flex justify-between items-center text-white">
+          <div className="flex items-center">
+            <Image
+              src={user?.photoURL || '/images/default-avatar.png'}
+              alt="avatar"
+              width={40}
+              height={40}
+              className="rounded-full"
+            />
+            <span className="ml-4 font-semibold">{user?.displayName}</span>
+          </div>
+          <button
+            className="bg-red-500 hover:bg-red-700 font-semibold py-2 px-4 rounded"
+            onClick={() => authN.signOut()}
+          >
+            Logout
+          </button>
+        </header>
 
-            <div className="flex flex-1">
-              <div className="hidden lg:flex w-1/3 flex-col pr-6">
-                {/* Search bar */}
-                <div className="flex items-center pb-6 px-2">
-                  <Link href="/">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-6 h-6"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
-                      />
-                    </svg>
-                  </Link>
+        <div className="flex-grow flex">
+          <aside className="w-1/4 bg-gray-900 p-4 border-r">
+            <h2 className="text-lg font-semibold mb-4 text-white">Rooms</h2>
+            <ul className="overflow-auto">
+              {rooms.map((room) => (
+                <li
+                  key={room.id}
+                  className={`p-3 hover:bg-gray-700 cursor-pointer ${
+                    currentRoom === room.id
+                      ? 'bg-gray-700 text-white font-semibold'
+                      : 'text-gray-400'
+                  }`}
+                  onClick={() => setCurrentRoom(room.id)}
+                >
+                  {room.name}
+                  <span className="text-xs text-gray-500">
+                    {' '}
+                    ({room.userIds.length})
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </aside>
+
+          <main className="flex-grow p-4 bg-gray-200">
+            <div className="h-full flex flex-col">
+              {!currentRoom && (
+                <div className="p-4">
+                  {/* Room creation input and button */}
                   <input
                     type="text"
-                    className="outline-none py-2 block w-full bg-transparent border-b-2 border-gray-200 ml-2"
-                    placeholder="Search"
+                    placeholder="Room name"
+                    className="border p-2 w-full rounded focus:outline-none focus:ring-2 focus:ring-gray-600"
+                    value={roomName}
+                    onChange={(e) => setRoomName(e.target.value)}
                   />
+                  <button
+                    className="bg-gray-700 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded mt-4"
+                    onClick={handleRoomCreation}
+                  >
+                    Create/Join Room
+                  </button>
                 </div>
-                {/* Chat entries */}
-                <div className="flex-1 h-full overflow-auto px-2">
-                  {chatEntries.map((entry, index) => (
-                    <div
-                      key={index}
-                      className="entry cursor-pointer transform hover:scale-105 duration-300 transition-transform bg-white mb-4 rounded p-4 flex shadow-md"
-                    >
-                      <div className="flex-2">
-                        <div className="w-12 h-12 relative">
-                          <Avatar
-                            placeholder={''}
-                            src="https://docs.material-tailwind.com/img/face-2.jpg"
-                            alt="avatar"
-                          />
-                        </div>
-                      </div>
-                      <div className="flex-1 px-2">
-                        <div className="truncate w-32">
-                          <span className="text-gray-800">{entry.name}</span>
-                        </div>
-                        <div>
-                          <small className="text-gray-600">
-                            {entry.message}
-                          </small>
-                        </div>
-                      </div>
-                      <div className="flex-2 text-right">
-                        <div>
-                          <small className="text-gray-500">{entry.date}</small>
-                        </div>
-                        {/* Display unread messages if any */}
-                        {entry.unreadMessages > 0 && (
-                          <div>
-                            <small className="text-xs bg-red-500 text-white rounded-full h-6 w-6 leading-6 text-center inline-block">
-                              {entry.unreadMessages}
-                            </small>
-                          </div>
-                        )}
-                      </div>
+              )}
+
+              <div className="flex-grow overflow-auto">
+                {messages.map((message) => (
+                  <div
+                    key={message.id}
+                    className={`mb-4 p-3 rounded-lg shadow ${
+                      message.userId === user?.uid
+                        ? `ml-auto bg-gray-900 text-black`
+                        : `mr-auto bg-gray-100 text-white`
+                    }`}
+                  >
+                    <p className="text-sm text-indigo-500 font-semibold">
+                      {message.userId === user?.uid ? 'You' : user?.displayName}
+                      : {''}
+                      {message.text}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      {message.createdAt.toDate().toLocaleString()}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-4">
+                {Object.entries(typing)
+                  .filter(
+                    ([userId, isTyping]) => isTyping && userId !== user?.uid,
+                  )
+                  .map(([userId]) => (
+                    <div key={userId} className="text-sm text-gray-500">
+                      {user?.displayName} is typing...
                     </div>
                   ))}
-                </div>
               </div>
-              {/* Chat area */}
-              <div className="w-full flex flex-col">
-                <div className="flex items-center gap-4">
-                  <Avatar
-                    placeholder={''}
-                    src="https://docs.material-tailwind.com/img/face-2.jpg"
-                    alt="avatar"
+
+              {currentRoom && (
+                <div className="mt-4 border-t pt-4">
+                  <input
+                    type="text"
+                    placeholder="Type a message"
+                    className="border p-2 w-full rounded focus:outline-none focus:ring-2 focus:ring-gray-600"
+                    value={newMessage}
+                    onChange={handleTyping}
+                    onKeyDown={handleKeyDown}
                   />
-                  <h2 className="text-xl py-1">
-                    <p className="text-black font-semibold">Naufal Rafi</p>
-                  </h2>
                 </div>
-                <div className="border-t-2 border-gray-200 my-3"></div>
-                <div className="messages flex-1 overflow-auto">
-                  <div className="message mb-4 flex">
-                    <div className="flex-2">
-                      <div className="w-12 h-12 relative">
-                        <Avatar
-                          placeholder={''}
-                          src="https://docs.material-tailwind.com/img/face-2.jpg"
-                          alt="avatar"
-                        />
-                      </div>
-                    </div>
-                    <div className="flex-1 px-2">
-                      <div className="inline-block bg-gray-300 rounded-full p-2 px-6 text-gray-700">
-                        <span>
-                          Hey there. We would like to invite you over to our
-                          office for a visit. How about it?
-                        </span>
-                      </div>
-                      <div className="pl-4">
-                        <small className="text-gray-500">15 April</small>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="message mb-4 flex">
-                    <div className="flex-2">
-                      <div className="w-12 h-12 relative">
-                        <Avatar
-                          placeholder={''}
-                          src="https://docs.material-tailwind.com/img/face-2.jpg"
-                          alt="avatar"
-                        />
-                      </div>
-                    </div>
-                    <div className="flex-1 px-2">
-                      <div className="inline-block bg-gray-300 rounded-full p-2 px-6 text-gray-700">
-                        <span>
-                          All travel expenses are covered by us of course :D
-                        </span>
-                      </div>
-                      <div className="pl-4">
-                        <small className="text-gray-500">15 April</small>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="message me mb-4 flex text-right">
-                    <div className="flex-1 px-2">
-                      <div className="inline-block bg-blue-600 rounded-full p-2 px-6 text-white">
-                        <span>Its like a dream come true</span>
-                      </div>
-                      <div className="pr-4">
-                        <small className="text-gray-500">15 April</small>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="message me mb-4 flex text-right">
-                    <div className="flex-1 px-2">
-                      <div className="inline-block bg-blue-600 rounded-full p-2 px-6 text-white">
-                        <span>I accept. Thank you very much.</span>
-                      </div>
-                      <div className="pr-4">
-                        <small className="text-gray-500">15 April</small>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="message mb-4 flex">
-                    <div className="flex-2">
-                      <div className="w-12 h-12 relative">
-                        <Avatar
-                          placeholder={''}
-                          src="https://docs.material-tailwind.com/img/face-2.jpg"
-                          alt="avatar"
-                        />
-                      </div>
-                    </div>
-                    <div className="flex-1 px-2">
-                      <div className="inline-block bg-gray-300 rounded-full p-2 px-6 text-gray-700">
-                        <span>You are welome. We will stay in touch.</span>
-                      </div>
-                      <div className="pl-4">
-                        <small className="text-gray-500">15 April</small>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex-2 pt-4 pb-10 mr-4">
-                  <div className="flex w-full flex-row items-center gap-2 rounded-md border border-gray-900/10 bg-whit4e p-2">
-                    <Textarea
-                      rows={1}
-                      placeholder="Your Message"
-                      className="min-h-full !border-0 focus:border-transparent"
-                      containerProps={{
-                        className: 'grid h-full',
-                      }}
-                      labelProps={{
-                        className: 'before:content-none after:content-none',
-                      }}
-                    />
-                    <div>
-                      <IconButton
-                        placeholder={''}
-                        variant="text"
-                        className="rounded-full"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          strokeWidth={2}
-                          className="h-5 w-5"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
-                          />
-                        </svg>
-                      </IconButton>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              )}
             </div>
-          </div>
-        )}
+          </main>
+        </div>
       </div>
-      {/* Collapsible button
-            <div className="p-4 flex justify-end">
-                <Button
-                    placeholder={""}
-                    color="light-blue"
-                    onClick={toggleChatRoom}
-                >
-                    {isChatRoomOpen ? 'Hide Chat Room' : 'Show Chat Room'}
-                </Button>
-            </div> */}
     </div>
   )
 }
+
+export default ChatComponent
