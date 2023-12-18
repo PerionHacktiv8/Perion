@@ -68,7 +68,6 @@ export class Portfolio {
 
       return created;
     } catch (err) {
-      console.log(err);
       throw err;
     }
   }
@@ -80,7 +79,74 @@ export class Portfolio {
         .toArray()) as PortfolioModel[];
       return portfolios;
     } catch (err) {
-      console.log(err);
+      throw err;
+    }
+  }
+  static async deletePortfolio(id: ObjectId) {
+    try {
+      const collection = await this.connection();
+      const checkData = await collection.findOne({
+        _id: new ObjectId(id),
+      });
+
+      if (!checkData) {
+        throw new Error("Portfolios Not Found");
+      }
+
+      await collection.deleteOne({
+        _id: new ObjectId(id),
+      });
+
+      return checkData;
+    } catch (err) {
+      throw err;
+    }
+  }
+  static async detailPortfolio(id: ObjectId) {
+    try {
+      const collection = await this.connection();
+      const findOne = (await collection.findOne({
+        _id: new ObjectId(id),
+      })) as PortfolioModel;
+      return findOne;
+    } catch (err) {
+      throw err;
+    }
+  }
+  static async editPortfolio(id: ObjectId, input: FormData) {
+    try {
+      const collection = await this.connection();
+
+      let data = {
+        title: input.get("title"),
+        description: input.get("description"),
+        link: input.get("link"),
+      };
+
+      const parsedInput = PortfolioCreateSchema.parse(data);
+
+      const checkData = await collection.findOne({
+        _id: new ObjectId(id),
+      });
+
+      if (!checkData) {
+        throw new Error("Portfolios Not Found");
+      }
+
+      const edited = await collection.updateOne(
+        {
+          _id: new ObjectId(id),
+        },
+        {
+          $set: {
+            ...parsedInput,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          },
+        }
+      );
+      return edited;
+    } catch (err) {
       throw err;
     }
   }

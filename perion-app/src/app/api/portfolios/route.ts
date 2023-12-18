@@ -53,8 +53,48 @@ export const GET = async () => {
     return NextResponse.json<MyResponse<PortfolioModel[]>>(
       {
         statusCode: 200,
-        message: "Pong from DELETE /api/projects !",
+        message: "Pong from GET /api/portfolios !",
         data: portfolios,
+      },
+      {
+        status: 200,
+      }
+    );
+  } catch (err) {
+    let errCode = 500;
+    let errMsg = "INTERNAL SERVER ERROR";
+
+    if (err instanceof z.ZodError) {
+      errCode = 400;
+      errMsg = err.issues[0].message;
+    }
+    if (err instanceof Error) {
+      errCode = 404;
+      errMsg = err.message;
+    }
+    return NextResponse.json<MyResponse<unknown>>(
+      {
+        statusCode: errCode,
+        error: errMsg,
+      },
+      {
+        status: errCode,
+      }
+    );
+  }
+};
+
+export const DELETE = async (req: NextRequest) => {
+  try {
+    const data = await req.json();
+    const id = data._id;
+
+    await Portfolio.deletePortfolio(id);
+
+    return NextResponse.json<MyResponse<string>>(
+      {
+        statusCode: 200,
+        message: "Pong from DELETE /api/portfolios !",
       },
       {
         status: 200,
