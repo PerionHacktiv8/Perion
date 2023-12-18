@@ -1,16 +1,18 @@
 'use client'
 import React from 'react'
 import {
-  NavbarMT,
-  MobileNavMT,
-  TypographyMT,
-  ButtonMT,
-  IconButtonMT,
-} from '@/components/MaterialTailwind'
+  Navbar,
+  MobileNav,
+  Typography,
+  Button,
+  IconButton,
+} from '@material-tailwind/react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { Avatar, Menu, MenuItem } from '@material-tailwind/react'
+import { ProfileMenu } from '../avatarProfile'
 
-export function NavbarDefault() {
+export function NavbarUser() {
   const [openNav, setOpenNav] = React.useState(false)
   const [navbarBackground, setNavbarBackground] = React.useState('transparent')
 
@@ -41,17 +43,17 @@ export function NavbarDefault() {
 
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-      <TypographyMT
+      <Typography
         placeholder={''}
         as="li"
         variant="small"
         className="flex items-center gap-x-2 p-1 font-semibold font-lg"
       >
-        <a href="/" className="flex items-center">
+        <a href="#" className="flex items-center">
           Home
         </a>
-      </TypographyMT>
-      <TypographyMT
+      </Typography>
+      <Typography
         placeholder={''}
         as="li"
         variant="small"
@@ -60,18 +62,8 @@ export function NavbarDefault() {
         <a href="#" className="flex items-center">
           Explore
         </a>
-      </TypographyMT>
-      <TypographyMT
-        placeholder={''}
-        as="li"
-        variant="small"
-        className="flex items-center gap-x-2 p-1 font-semibold font-lg"
-      >
-        <a href="#" className="flex items-center">
-          Projects
-        </a>
-      </TypographyMT>
-      <TypographyMT
+      </Typography>
+      <Typography
         placeholder={''}
         as="li"
         variant="small"
@@ -80,12 +72,22 @@ export function NavbarDefault() {
         <Link href="/recruit" className="flex items-center">
           Recruit
         </Link>
-      </TypographyMT>
+      </Typography>
+      <Typography
+        placeholder={''}
+        as="li"
+        variant="small"
+        className="flex items-center gap-x-2 p-1 font-semibold font-lg"
+      >
+        <a href="#" className="flex items-center">
+          Projects
+        </a>
+      </Typography>
     </ul>
   )
 
   return (
-    <NavbarMT
+    <Navbar
       placeholder={''}
       className={`fixed max-w-full border-none z-50 ${
         navbarBackground === 'transparent' ? 'bg-transparent' : 'bg-white'
@@ -93,7 +95,7 @@ export function NavbarDefault() {
     >
       <div className="container mx-auto flex items-center justify-between">
         <Link href="/">
-          <TypographyMT
+          <Typography
             placeholder={''}
             as="p"
             className="flex flex-cols items-center mr-4 cursor-pointer py-1.5 text-2xl font-extrabold"
@@ -106,32 +108,13 @@ export function NavbarDefault() {
               className="mr-2"
             />
             Parion
-          </TypographyMT>
+          </Typography>
         </Link>
         <div className="hidden lg:block">{navList}</div>
         <div className="flex items-center gap-x-1">
-          <Link href="/login">
-            <ButtonMT
-              placeholder={''}
-              variant="text"
-              size="sm"
-              className={`hidden lg:inline-block ${textColor}`}
-            >
-              <span>Log In</span>
-            </ButtonMT>
-          </Link>
-          <Link href="/register">
-            <ButtonMT
-              placeholder={''}
-              variant="gradient"
-              size="sm"
-              className="hidden lg:inline-block"
-            >
-              <span>Sign up</span>
-            </ButtonMT>
-          </Link>
+          <ProfileMenu />
         </div>
-        <IconButtonMT
+        <IconButton
           placeholder={''}
           variant="text"
           className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
@@ -168,14 +151,14 @@ export function NavbarDefault() {
               />
             </svg>
           )}
-        </IconButtonMT>
+        </IconButton>
       </div>
-      <MobileNavMT open={openNav}>
+      <MobileNav open={openNav}>
         <div className="container mx-auto">
           {navList}
           <div className="flex items-center justify-center gap-x-1">
             <Link href="/login" className="w-full">
-              <ButtonMT
+              <Button
                 placeholder={''}
                 fullWidth
                 variant="text"
@@ -183,10 +166,10 @@ export function NavbarDefault() {
                 className={`${textColor}`}
               >
                 <span>Log In</span>
-              </ButtonMT>
+              </Button>
             </Link>
             <Link href="/register">
-              <ButtonMT
+              <Button
                 placeholder={''}
                 fullWidth
                 variant="gradient"
@@ -194,11 +177,11 @@ export function NavbarDefault() {
                 className=""
               >
                 <span>Sign Up</span>
-              </ButtonMT>
+              </Button>
             </Link>
           </div>
         </div>
-      </MobileNavMT>
-    </NavbarMT>
+      </MobileNav>
+    </Navbar>
   )
 }
