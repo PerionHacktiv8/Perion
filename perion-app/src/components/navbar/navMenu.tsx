@@ -20,8 +20,11 @@ export function NavbarWithMenu() {
   }, [openNav])
 
   return (
-    <Navbar placeholder={''} className="max-w-full lg:px-8 lg:py-4">
-      <div className="flex items-center justify-between text-blue-gray-900">
+    <Navbar
+      placeholder={''}
+      className="!sticky top-[3.4rem] z-20 max-w-full !bg-white rounded-none shadow-sm h-fit lg:px-1 lg:py-1"
+    >
+      <div className="flex items-center justify-around text-blue-gray-900">
         {/* Mobile Icon Button */}
         <IconButton
           placeholder={''}
@@ -61,37 +64,21 @@ export function NavbarWithMenu() {
             </svg>
           )}
         </IconButton>
-
-        <div className="relative flex w-full lg:w-auto lg:flex-grow gap-2 mb-4">
-          <Input
-            crossOrigin={''}
-            type="search"
-            placeholder="Search The Project"
-            containerProps={{
-              className: 'min-w-[288px]',
-            }}
-            className="!border-t-blue-gray-300 pl-14 pt-4 bg-gray-100 focus:font-bold focus:text-lg placeholder:text-gray-700 placeholder:font-bold placeholder:text-lg focus:!border-blue-gray-300 rounded-full h-14"
-            labelProps={{
-              className: 'before:content-none after:content-none',
-            }}
+        <div className="flex items-center ml-10 w-1/3">
+          <img
+            src="https://img.icons8.com/ios-glyphs/30/search--v1.png"
+            alt=""
+            width={16}
+            height={16}
           />
-          {/* Search Icon */}
-          <div className="!absolute left-5 top-[17px]">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-              />
-            </svg>
-          </div>
+          <input
+            type="text"
+            id="search"
+            name="search"
+            className="w-full bg-transparent text-gray-900 text-md focus:outline-none focus:ring-0 focus:border-none p-2.5"
+            placeholder="Search..."
+            autoComplete="off"
+          />
         </div>
 
         {/* Desktop NavList */}
