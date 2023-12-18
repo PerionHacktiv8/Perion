@@ -1,11 +1,14 @@
 'use client'
 
-import { ChatRoom } from '@/components/chat/ChatRoom'
+import ChatComponent from '../../components/ChatComponent'
+import { AuthProvider } from '../../contexts/authContext'
 
 export default function Profile() {
   return (
     <div className="flex justify-center">
-      <ChatRoom />
+      <AuthProvider>
+        <ChatComponent />
+      </AuthProvider>
     </div>
   )
 }

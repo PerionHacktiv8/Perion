@@ -1,24 +1,106 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Avatar, Button, IconButton, Textarea } from '@material-tailwind/react'
-import Link from 'next/link'
+import { useAuth } from '../../contexts/authContext'
+import {
+  createRoom,
+  sendMessage,
+  onRoomUpdate,
+  onMessageUpdate,
+  Room,
+  Message,
+  UserProfile,
+} from '../../db/config/firestoreService'
+import Image from 'next/image'
 
-export function ChatRoom() {
-  const [isChatRoomOpen, setIsChatRoomOpen] = useState(true)
+const ChatComponent: React.FC = () => {
+  const [currentRoom, setCurrentRoom] = useState<string | null>(null)
+  const [rooms, setRooms] = useState<Room[]>([])
+  const [roomUserProfiles, setRoomUserProfiles] = useState<
+    Record<string, UserProfile[]>
+  >({})
+  const [messages, setMessages] = useState<Message[]>([])
+  const [newMessage, setNewMessage] = useState<string>('')
+  const { currentUser } = useAuth()
+  const bottomListRef = useRef<HTMLDivElement>(null)
 
-  const toggleChatRoom = () => {
-    setIsChatRoomOpen(!isChatRoomOpen)
+  useEffect(() => {
+    if (currentUser && currentUser.uid === 'userId1') {
+      const unsubscribe = onRoomUpdate(
+        currentUser.uid,
+        async (updatedRooms) => {
+          setRooms(updatedRooms)
+
+          // Check if userId1 is in any room
+          const isUserInRoom = updatedRooms.some((room) =>
+            room.userIds.includes(currentUser.uid),
+          )
+
+          if (!isUserInRoom) {
+            // No rooms available for userId1, create or join one
+            let newRoomId =
+              updatedRooms.length > 0 ? updatedRooms[0].id : await createRoom()
+            setCurrentRoom(newRoomId)
+          } else if (!currentRoom) {
+            // Auto-connect to the first room if already a member
+            setCurrentRoom(updatedRooms[0].id)
+          }
+        },
+      )
+      return () => unsubscribe()
+    }
+  }, [currentUser, currentRoom])
+
+  useEffect(() => {
+    if (currentRoom) {
+      const unsubscribe = onMessageUpdate(currentRoom, setMessages)
+      return () => unsubscribe()
+    }
+  }, [currentRoom])
+
+  useEffect(() => {
+    const fetchUserProfiles = async () => {
+      const profilesByRoom: Record<string, UserProfile[]> = {}
+      for (const room of rooms) {
+        const profiles = (await getUserProfiles(room.userIds)).filter(
+          (profile) => profile !== null, // This filter ensures that only non-null profiles are included
+        ) as UserProfile[]
+        profilesByRoom[room.id] = profiles
+      }
+      setRoomUserProfiles(profilesByRoom)
+    }
+
+    if (rooms.length > 0) {
+      fetchUserProfiles()
+    }
+  }, [rooms])
+
+  const handleSendMessage = async () => {
+    if (newMessage.trim() && currentUser && currentRoom) {
+      await sendMessage(
+        currentRoom,
+        currentUser.uid,
+        newMessage,
+        currentUser.email || 'unknown',
+        currentUser.photoURL || '/default-profile.jpg',
+      )
+      setNewMessage('')
+      bottomListRef.current?.scrollIntoView({ behavior: 'smooth' })
+    }
   }
 
-  const chatEntries = [
-    {
-      name: 'Ryann Remo',
-      message: 'Yea, Sure!',
-      date: '15 April',
-      status: 'online',
-      unreadMessages: 23,
-    },
-  ]
+  const handleRoomSelection = async (roomId: string) => {
+    setCurrentRoom(roomId)
+  }
+
+  const handleCreateRoom = async () => {
+    try {
+      const newRoomId = await createRoom()
+      setCurrentRoom(newRoomId)
+    } catch (error) {
+      console.error('Error while creating room:', error)
+    }
+  }
 
   return (
     <div className="w-full h-screen p-10">
