@@ -72,11 +72,18 @@ export function NavbarDefault() {
       >
         Recruit
       </Link>
-      <p className="flex items-center gap-x-2 p-1 font-semibold font-lg">
-        <a href="#" className="flex items-center">
-          Projects
-        </a>
-      </p>
+      <Link
+        href="/project"
+        className={`flex font-bold items-center ${
+          pathName === 'project'
+            ? `scale-125 border-b-2 ${
+                navbarBackground === 'transparent' ? '' : 'border-black'
+              }`
+            : ''
+        }`}
+      >
+        Project
+      </Link>
     </ul>
   )
 
