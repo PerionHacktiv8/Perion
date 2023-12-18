@@ -2,7 +2,7 @@ import { NavbarDefault } from '@/components/navbar/navbarComponent'
 import { CardUser } from '@/components/card/cardUser'
 import { HeroRecruit } from '@/components/hero/heroRecruit'
 
-export default function Home() {
+export default function Recruit() {
   return (
     <div className="flex flex-col bg-[#f5f5f5] min-h-screen">
       <NavbarDefault />

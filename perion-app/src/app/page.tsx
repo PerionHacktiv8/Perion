@@ -18,9 +18,6 @@ const Home = async () => {
         <NavbarWithMenu />
         <section className="py-8">
           <DialogDefault />
-          <aside className="bg-gray-200 w-1/4 hidden sm:block">
-            {/* Tambahkan konten sidebar di sini */}
-          </aside>
           <div className="flex justify-center py-10 px-4 sm:px-10">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {data.map((datum, idx) => (
