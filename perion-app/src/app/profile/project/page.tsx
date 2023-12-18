@@ -1,6 +1,7 @@
 'use client'
-import { CreateBoxPorto } from '@/components/profile/boxPorto'
-import { CreateBox } from '@/components/profile/boxProject'
+import { CreateBoxPorto } from '@/components/portofolio/boxPorto'
+import { CreateBox } from '@/components/project/boxProject'
+import { CardProject } from '@/components/project/cardProject'
 import { ProfileCard } from '@/components/profile/profileCard'
 import { ProfileNav } from '@/components/profile/profileNav'
 
@@ -21,6 +22,7 @@ export default function Profile() {
 
           <div className="px-4">
             <CreateBox />
+            <CardProject/>
           </div>
         </div>
       </div>
