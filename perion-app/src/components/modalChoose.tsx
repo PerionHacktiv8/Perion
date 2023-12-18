@@ -8,7 +8,6 @@ import { useRouter } from 'next/navigation'
 
 export function DialogDefault() {
   const [open, setOpen] = useState(false)
-  const [paymentLink, setPaymentLink] = useState<string>('')
   const router = useRouter()
 
   const firstTime = async () => {
@@ -72,7 +71,6 @@ export function DialogDefault() {
                 Plus
               </h3>
               <p className="text-white mb-4">USD $20</p>
-              <Link type="submit" href={paymentLink}>
                 <button
                   onClick={xendit}
                   type="submit"
@@ -80,7 +78,6 @@ export function DialogDefault() {
                 >
                   Choose Plan
                 </button>
-              </Link>
               <p className="text-white mb-4">Everything in Free, and:</p>
               <ul className="flex flex-col gap-4 text-sm text-white">
                 <li>✓ Access to Parion, our most capable model</li>
