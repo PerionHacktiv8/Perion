@@ -31,7 +31,10 @@ export function ModalPricing() {
               <div className="bg-gray-100 p-6 rounded-lg">
                 <h3 className="text-lg font-semibold mb-2">Free</h3>
                 <p className="text-gray-500 mb-4">USD $0</p>
-                <button className="bg-gray-200 w-full py-2 rounded text-sm mb-4" onClick={closeModal}>
+                <button
+                  className="bg-gray-200 w-full py-2 rounded text-sm mb-4"
+                  onClick={closeModal}
+                >
                   Choose Plan
                 </button>
                 <p className="text-gray-700 mb-4">

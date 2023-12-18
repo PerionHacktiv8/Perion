@@ -333,13 +333,22 @@ export function ProfileCard() {
           </Typography>
           <div className="rounded-md border border-gray-200 w-full p-2">
             <div className="flex flex-col">
-              <a href="#link1" className="text-gray-500 border-b hover:text-black hover:bg-gray-100 hover:rounded p-2 ">
+              <a
+                href="#link1"
+                className="text-gray-500 border-b hover:text-black hover:bg-gray-100 hover:rounded p-2 "
+              >
                 Website 1
               </a>
-              <a href="#link1" className="text-gray-500 border-b hover:text-black hover:bg-gray-100 hover:rounded p-2 ">
+              <a
+                href="#link1"
+                className="text-gray-500 border-b hover:text-black hover:bg-gray-100 hover:rounded p-2 "
+              >
                 Website 2
               </a>
-              <a href="#link1" className="text-gray-500 hover:text-black hover:bg-gray-100 hover:rounded p-2 ">
+              <a
+                href="#link1"
+                className="text-gray-500 hover:text-black hover:bg-gray-100 hover:rounded p-2 "
+              >
                 Website 3
               </a>
             </div>
