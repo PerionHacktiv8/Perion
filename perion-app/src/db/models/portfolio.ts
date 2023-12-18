@@ -3,7 +3,7 @@ import { getMongoClientInstance } from "../config";
 import { z } from "zod";
 
 const DB_NAME = process.env.MONGODB_DB_NAME;
-const COLLECTION_NAME = "projects";
+const COLLECTION_NAME = "portfolios";
 
 export type PortfolioModel = {
   _id: ObjectId;
@@ -19,7 +19,7 @@ type PortfoliosModelInput = Omit<
   "_id" | "createdAt" | "updatedAt"
 >;
 
-const PortfolioInputSchema = z.object({
+const PortfolioCreateSchema = z.object({
   title: z
     .string({
       required_error: "You should be input the Title",
@@ -50,11 +50,38 @@ export class Portfolio {
   }
   static async createPortfolio(input: FormData) {
     try {
-      console.log(input, 53);
-
       const collection = await this.connection();
-    } catch (error) {
-      console.log(error);
+
+      const data = {
+        title: input.get("title"),
+        description: input.get("description"),
+        link: input.get("link"),
+      };
+
+      const parsedData = PortfolioCreateSchema.parse(data);
+
+      const created = await collection.insertOne({
+        ...parsedData,
+        createdAt: new Date(),
+        updateAt: new Date(),
+      });
+
+      return created;
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
+  static async readPortfolios() {
+    try {
+      const collection = await this.connection();
+      const portfolios = (await collection
+        .find({})
+        .toArray()) as PortfolioModel[];
+      return portfolios;
+    } catch (err) {
+      console.log(err);
+      throw err;
     }
   }
 }

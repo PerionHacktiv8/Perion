@@ -1,4 +1,4 @@
-import { Portfolio } from "@/db/models/portfolio";
+import { Portfolio, PortfolioModel } from "@/db/models/portfolio";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -30,6 +30,47 @@ export const POST = async (req: NextRequest) => {
     if (err instanceof z.ZodError) {
       errCode = 400;
       errMsg = err.issues[0].message;
+    }
+    return NextResponse.json<MyResponse<unknown>>(
+      {
+        statusCode: errCode,
+        error: errMsg,
+      },
+      {
+        status: errCode,
+      }
+    );
+  }
+};
+
+export const GET = async () => {
+  try {
+    const portfolios = await Portfolio.readPortfolios();
+    if (!portfolios) {
+      throw new Error("Porfolios Not Found");
+    }
+
+    return NextResponse.json<MyResponse<PortfolioModel[]>>(
+      {
+        statusCode: 200,
+        message: "Pong from DELETE /api/projects !",
+        data: portfolios,
+      },
+      {
+        status: 200,
+      }
+    );
+  } catch (err) {
+    let errCode = 500;
+    let errMsg = "INTERNAL SERVER ERROR";
+
+    if (err instanceof z.ZodError) {
+      errCode = 400;
+      errMsg = err.issues[0].message;
+    }
+    if (err instanceof Error) {
+      errCode = 404;
+      errMsg = err.message;
     }
     return NextResponse.json<MyResponse<unknown>>(
       {
