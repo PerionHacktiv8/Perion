@@ -48,8 +48,10 @@ export class Portfolio {
 
     return connection;
   }
-  static async createPortfolio() {
+  static async createPortfolio(input: FormData) {
     try {
+      console.log(input, 53);
+
       const collection = await this.connection();
     } catch (error) {
       console.log(error);
