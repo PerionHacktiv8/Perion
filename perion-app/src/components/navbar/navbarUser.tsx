@@ -1,21 +1,18 @@
 'use client'
-
 import React from 'react'
 import {
   Navbar,
-  Collapse,
+  MobileNav,
   Typography,
   Button,
   IconButton,
 } from '@material-tailwind/react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { usePathname } from 'next/navigation'
-import { ProfileMenu } from './profileNav'
+import { Avatar, Menu, MenuItem } from '@material-tailwind/react'
+import { ProfileMenu } from '../avatarProfile'
 
-export function NavbarDefault() {
-  const pathName = usePathname().split('/')[1]
-
+export function NavbarUser() {
   const [openNav, setOpenNav] = React.useState(false)
   const [navbarBackground, setNavbarBackground] = React.useState('transparent')
 
@@ -45,53 +42,54 @@ export function NavbarDefault() {
     navbarBackground === 'transparent' ? 'text-white' : 'text-gray-800'
 
   const navList = (
-    <ul className="flex flex-col items-center gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-      <p className="flex items-center gap-x-2 p-1 font-semibold font-lg">
-        <Link
-          href="/"
-          className={`flex items-center ${
-            pathName === ''
-              ? `scale-125 border-b-2 ${
-                  navbarBackground === 'transparent' ? '' : 'border-black'
-                } `
-              : ''
-          }`}
-        >
+    <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+      <Typography
+        placeholder={''}
+        as="li"
+        variant="small"
+        className="flex items-center gap-x-2 p-1 font-semibold font-lg"
+      >
+        <a href="#" className="flex items-center">
+          Home
+        </a>
+      </Typography>
+      <Typography
+        placeholder={''}
+        as="li"
+        variant="small"
+        className="flex items-center gap-x-2 p-1 font-semibold font-lg"
+      >
+        <a href="#" className="flex items-center">
           Explore
+        </a>
+      </Typography>
+      <Typography
+        placeholder={''}
+        as="li"
+        variant="small"
+        className="flex items-center gap-x-2 p-1 font-semibold font-lg"
+      >
+        <Link href="/recruit" className="flex items-center">
+          Recruit
         </Link>
-      </p>
-      <Link
-        href="/recruit"
-        className={`flex font-bold items-center ${
-          pathName === 'recruit'
-            ? `scale-125 border-b-2 ${
-                navbarBackground === 'transparent' ? '' : 'border-black'
-              }`
-            : ''
-        }`}
+      </Typography>
+      <Typography
+        placeholder={''}
+        as="li"
+        variant="small"
+        className="flex items-center gap-x-2 p-1 font-semibold font-lg"
       >
-        Recruit
-      </Link>
-      <Link
-        href="/project"
-        className={`flex font-bold items-center ${
-          pathName === 'project'
-            ? `scale-125 border-b-2 ${
-                navbarBackground === 'transparent' ? '' : 'border-black'
-              }`
-            : ''
-        }`}
-      >
-        Project
-      </Link>
+        <a href="#" className="flex items-center">
+          Projects
+        </a>
+      </Typography>
     </ul>
   )
 
   return (
     <Navbar
       placeholder={''}
-      blurred={false}
-      className={`fixed h-fit max-w-full rounded-none p-2 transition-all duration-600 ease-in-out shadow-none z-50 ${
+      className={`fixed max-w-full border-none z-50 ${
         navbarBackground === 'transparent' ? 'bg-transparent' : 'bg-white'
       } ${textColor}`}
     >
@@ -100,13 +98,13 @@ export function NavbarDefault() {
           <Typography
             placeholder={''}
             as="p"
-            className="flex flex-cols items-center mr-4 cursor-pointer py-1.5 text-xl font-extrabold"
+            className="flex flex-cols items-center mr-4 cursor-pointer py-1.5 text-2xl font-extrabold"
           >
             <Image
               src="https://ik.imagekit.io/naufalrafi/Parion%20Logo%20(1).png?updatedAt=1702368775661"
               alt="logo"
-              width={24}
-              height={24}
+              width={40}
+              height={40}
               className="mr-2"
             />
             Parion
@@ -114,7 +112,7 @@ export function NavbarDefault() {
         </Link>
         <div className="hidden lg:block">{navList}</div>
         <div className="flex items-center gap-x-1">
-          <ProfileMenu textColor={textColor} />
+          <ProfileMenu />
         </div>
         <IconButton
           placeholder={''}
@@ -155,7 +153,7 @@ export function NavbarDefault() {
           )}
         </IconButton>
       </div>
-      <Collapse open={openNav}>
+      <MobileNav open={openNav}>
         <div className="container mx-auto">
           {navList}
           <div className="flex items-center justify-center gap-x-1">
@@ -170,7 +168,7 @@ export function NavbarDefault() {
                 <span>Log In</span>
               </Button>
             </Link>
-            <Link href="/register" className="w-full">
+            <Link href="/register">
               <Button
                 placeholder={''}
                 fullWidth
@@ -183,7 +181,7 @@ export function NavbarDefault() {
             </Link>
           </div>
         </div>
-      </Collapse>
+      </MobileNav>
     </Navbar>
   )
 }

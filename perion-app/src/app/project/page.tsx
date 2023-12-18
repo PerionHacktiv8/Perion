@@ -12,7 +12,6 @@ const Home = async () => {
 
   return (
     <div className="flex flex-col bg-[#f5f5f5] min-h-screen">
-      <NavbarDefault />
       <main className="flex-grow">
         <HeroSection />
         <NavbarWithMenu />

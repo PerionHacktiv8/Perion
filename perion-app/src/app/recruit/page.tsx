@@ -2,7 +2,7 @@ import { NavbarDefault } from '@/components/navbar/navbarComponent'
 import { CardUser } from '@/components/card/cardUser'
 import { HeroRecruit } from '@/components/hero/heroRecruit'
 
-export default function Home() {
+export default function Recruit() {
   return (
     <div className="flex flex-col bg-[#f5f5f5] min-h-screen">
       <NavbarDefault />
@@ -14,11 +14,11 @@ export default function Home() {
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 py-10 px-7">
               <CardUser />
+              {/* <CardUser />
               <CardUser />
               <CardUser />
               <CardUser />
-              <CardUser />
-              <CardUser />
+              <CardUser /> */}
             </div>
           </div>
         </div>

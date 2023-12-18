@@ -10,8 +10,8 @@ export function HeroRecruit() {
       <div className="hero-overlay bg-opacity-60"></div>
       <div className="text-center text-neutral-content pt-12 pb-10 px-4">
         <div className="text-white max-w-5xl mx-auto">
-          <h1 className="mb-5 text-3xl md:text-6xl lg:text-7xl font-bold">
-            Pair Your Partner & Work Together!
+          <h1 className="mb-5 text-2xl md:text-6xl lg:text-7xl font-bold">
+            Pick Your Partner & Work Together!
           </h1>
           <p className="mb-5 text-lg md:text-xl lg:text-2xl">
             Find the perfect freelancer for your next project
