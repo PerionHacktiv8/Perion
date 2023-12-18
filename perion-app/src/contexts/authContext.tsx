@@ -1,7 +1,14 @@
-// contexts/authContext.tsx
+// src/contexts/authContext.tsx
 'use client'
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from 'react'
 import { auth } from '../db/config/firebaseConfig'
+import { onAuthStateChanged } from 'firebase/auth'
 
 type AuthUser = {
   uid: string
@@ -24,12 +31,16 @@ export const useAuth = () => {
   return context
 }
 
-export const AuthProvider: React.FC = ({ children }: any) => {
+type AuthProviderProps = {
+  children: ReactNode
+}
+
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<AuthUser | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(
         user
           ? { uid: user.uid, email: user.email, photoURL: user.photoURL }
@@ -37,7 +48,7 @@ export const AuthProvider: React.FC = ({ children }: any) => {
       )
       setLoading(false)
     })
-    return unsubscribe
+    return () => unsubscribe()
   }, [])
 
   return (

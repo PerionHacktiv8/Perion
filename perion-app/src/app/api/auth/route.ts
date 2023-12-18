@@ -1,8 +1,7 @@
-// src/pages/api/auth/route.ts
+// src/app/api/auth/route.ts
+import { NextResponse, NextRequest } from 'next/server';
 import { getMongoClientInstance } from '../../../db/config/index';
 import { admin } from '../../../db/config/firebaseAdminInit';
-import { NextResponse, NextRequest } from 'next/server';
-
 
 type Request = {
     headers: {
@@ -10,16 +9,12 @@ type Request = {
     };
 };
 
-
 type MyResponse<T> = {
     status: number;
     message: string;
     data?: T;
 };
 
-
-
-// POST handler
 export async function POST(request: NextRequest) {
     const token = request.headers.get('authorization')?.split('Bearer ')[1];
     if (!token) {
@@ -47,14 +42,12 @@ export async function POST(request: NextRequest) {
         });
     } catch (error) {
         return NextResponse.json(<MyResponse<unknown>>{
-            status: 401,
-            message: error,
+            status: 500,
+            message: error as string,
         });
     }
 }
 
-// GET handler
 export async function GET(request: Request) {
-    // ...
     return NextResponse.json({ message: "Hello World" });
 }

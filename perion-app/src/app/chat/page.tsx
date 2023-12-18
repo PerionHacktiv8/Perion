@@ -1,17 +1,14 @@
+// src/app/chat/page.tsx
 import React from 'react'
-import Chat from '../../components/ChatComponent'
+import ChatComponent from '../../components/ChatComponent'
 import { AuthProvider } from '../../contexts/authContext'
 
-const Page = () => {
+const ChatPage = () => {
   return (
     <AuthProvider>
-      {' '}
-      {/* Wrap the AuthProvider around the component */}
-      <div className="flex flex-col min-h-screen">
-        <Chat />
-      </div>
+      <ChatComponent />
     </AuthProvider>
   )
 }
 
-export default Page
+export default ChatPage
