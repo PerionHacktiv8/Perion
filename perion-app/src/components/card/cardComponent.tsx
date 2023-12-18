@@ -113,8 +113,8 @@ export function CardComponent({ datum }: { datum: ProjectModel }) {
           placeholder={''}
           className="flex items-center justify-between"
         >
-          <div className="flex items-center -space-x-3">
-            <Tooltip content="Natali Craig">
+          <div className="flex -space-x-3">
+            {/* <Tooltip content="Natali Craig">
               <Avatar
                 placeholder={''}
                 size="sm"
@@ -123,19 +123,9 @@ export function CardComponent({ datum }: { datum: ProjectModel }) {
                 src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1061&q=80"
                 className="border-2 border-white hover:z-10"
               />
-            </Tooltip>
-            <Tooltip content="Tania Andrew">
-              <Avatar
-                placeholder={''}
-                size="sm"
-                variant="circular"
-                alt="tania andrew"
-                src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
-                className="border-2 border-white hover:z-10"
-              />
-            </Tooltip>
-            <Typography placeholder={''} className="font-normal pl-6">
-              Parion Team
+            </Tooltip> */}
+            <Typography placeholder={''} className="font-normal">
+              {datum.teams}
             </Typography>
           </div>
         </CardFooter>
@@ -245,6 +235,12 @@ export function CardComponent({ datum }: { datum: ProjectModel }) {
                     <p>- {el}</p>
                   ))}
                 </div>
+                <div className="flex flex-col gap-2">
+                  <p className="text-black text-lg font-bold">Skills Needed</p>
+                  {datum.skills.map((el) => (
+                    <p>- {el}</p>
+                  ))}
+                </div>
               </div>
             </section>
             <section className="w-1/3">
@@ -288,7 +284,7 @@ export function CardComponent({ datum }: { datum: ProjectModel }) {
                 color="blue-gray"
                 className="font-medium"
               >
-                Parion
+                {datum.teams}
               </Typography>
             </div>
           </div>

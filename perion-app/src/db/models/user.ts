@@ -1,6 +1,6 @@
 import { MongoServerError, ObjectId } from 'mongodb'
 import { getMongoClientInstance } from '../config'
-import { hashPass } from '../helpers/bcrypt'
+import { compHash, hashPass } from '../helpers/bcrypt'
 import { z } from 'zod'
 import { Invoice } from 'xendit-node'
 import { CreateInvoiceRequest } from 'xendit-node/invoice/models'
@@ -54,6 +54,22 @@ const userCreateSchema = z.object({
     .min(1, 'Please input your address'),
 })
 
+const loginSchema = z.object({
+  email: z
+    .string({
+      required_error: 'Please to input your email',
+      invalid_type_error: 'Please to input your email',
+    })
+    .min(1, 'Please input your email address')
+    .email('Need to be an Email Address'),
+  password: z
+    .string({
+      required_error: 'Please to input your password',
+      invalid_type_error: 'Please input your password',
+    })
+    .min(6, 'Password need to be more than 6 character long'),
+})
+
 export class Users {
   static async connection() {
     const client = await getMongoClientInstance()
@@ -79,13 +95,22 @@ export class Users {
     }
   }
 
-  static async login(email: string) {
+  static async login(email: string, password: string) {
     try {
       const collection = await this.connection()
 
-      const user = (await collection.findOne({
+      const parsedData = loginSchema.parse({
         email,
+        password,
+      })
+
+      const user = (await collection.findOne({
+        email: parsedData.email,
       })) as UserModel
+
+      if (!user || !compHash(parsedData.password, user.password)) {
+        throw new Error(`Wrong Email/Password`)
+      }
 
       return user
     } catch (err) {
@@ -149,7 +174,7 @@ export class Users {
       })
 
       const data: CreateInvoiceRequest = {
-        amount: 200,
+        amount: 310000,
         invoiceDuration: '172800',
         payerEmail: email,
         externalId: userId,

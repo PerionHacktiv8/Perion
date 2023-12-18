@@ -1,16 +1,10 @@
-import { getMongoClientInstance } from '../../../db/config/index'
-import { admin } from '../../../db/config/firebaseAdminInit'
+import { getMongoClientInstance } from '../../../../db/config/index'
+import { admin } from '../../../../db/config/firebaseAdminInit'
 import { NextResponse, NextRequest } from 'next/server'
 import { ObjectId } from 'mongodb'
 import { cookies } from 'next/headers'
 import { createToken } from '@/libs/jwt'
 import { hashPass } from '@/db/helpers/bcrypt'
-
-type Request = {
-  headers: {
-    get: (key: string) => string | null
-  }
-}
 
 type MyResponse<T> = {
   status: number
@@ -23,7 +17,6 @@ export type data = {
   email: string
 }
 
-// POST handler
 export async function POST(request: NextRequest) {
   const token = request.headers.get('authorization')?.split('Bearer ')[1]
   if (!token) {
@@ -36,25 +29,26 @@ export async function POST(request: NextRequest) {
   try {
     const decodedToken = await admin.auth().verifyIdToken(token)
 
-    const { email, picture } = decodedToken
+    const { email, picture, name } = decodedToken
     const db = await getMongoClientInstance()
 
     const username = email?.split('@')[0]
     const password = hashPass('authPass')
     const role = 'user'
     const subscription = false
-    // const firstTime = false
+    const firstTime = true
 
     const res = await db.collection('users').findOneAndUpdate(
       { email },
       {
         $set: {
+          name,
           username,
           email,
           password,
           role,
           subscription,
-          // firstTime,
+          firstTime,
           createdAt: new Date(),
           updatedAt: new Date(),
           picture,
@@ -88,10 +82,4 @@ export async function POST(request: NextRequest) {
       message: error,
     })
   }
-}
-
-// GET handler
-export async function GET(request: Request) {
-  // ...
-  return NextResponse.json({ message: 'Hello World' })
 }

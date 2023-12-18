@@ -15,8 +15,10 @@ export type ProjectModel = {
   onSiteRequired: string
   experience: string
   benefits: string
+  teams: string
   createdAt: string
   updatedAt: string
+  skills: string[]
 }
 
 type ProjectInputType = Omit<ProjectModel, '_id' | 'updatedAt' | 'createdAt'>

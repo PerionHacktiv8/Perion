@@ -23,7 +23,7 @@ export const signInWithFacebook = async () => {
 
     const token = await user.getIdToken()
 
-    const response = await fetch('http://localhost:3000/api/auth/login', {
+    const response = await fetch('http://localhost:3000/api/auth/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ export const signInWithGithub = async () => {
 
     const token = await user.getIdToken()
 
-    const response = await fetch('http://localhost:3000/api/auth/login', {
+    const response = await fetch('http://localhost:3000/api/auth/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -70,7 +70,7 @@ export const signInWithGithub = async () => {
       }),
     })
 
-    const responseJson: MyResponse<unknown> = await response.json()
+    const responseJson: MyResponse<data> = await response.json()
 
     if (!response.ok) {
       let message = responseJson.error ?? 'Something went wrong!'
@@ -93,7 +93,7 @@ export const signInWithGoogle = async () => {
 
     const token = await user.getIdToken()
 
-    const response = await fetch('http://localhost:3000/api/auth/login', {
+    const response = await fetch('http://localhost:3000/api/auth/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -107,8 +107,10 @@ export const signInWithGoogle = async () => {
 
     const responseJson: MyResponse<data> = await response.json()
 
-    if (responseJson.statusCode === 401) {
-      return responseJson
+    if (!response.ok) {
+      let message = responseJson.error ?? 'Something went wrong!'
+
+      return redirect(`/error?message=${message}`)
     }
 
     return responseJson
