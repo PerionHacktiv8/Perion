@@ -4,7 +4,7 @@ import { CreateBox } from '@/components/project/boxProject'
 import { ProfileCard } from '@/components/profile/profileCard'
 import { ProfileNav } from '@/components/profile/profileNav'
 
-export default function Profile() {
+export default function Portfolio() {
   return (
     <div className="container px-4 sm:px-8 md:px-12 py-4 md:py-8">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-24">
@@ -20,7 +20,7 @@ export default function Profile() {
           </div>
 
           <div className="px-4">
-            <CreateBox />
+            <CreateBoxPorto />
           </div>
         </div>
       </div>

@@ -1,6 +1,9 @@
-export function CreateBoxPorto() {
+export function CreateBox() {
   return (
-    <div className="w-96 flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-lg my-8" style={{ minWidth: '300px', maxWidth: '500px' }}>
+    <div
+      className="w-80 flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-lg my-8"
+      style={{ minWidth: '300px', maxWidth: '500px' }}
+    >
       <div className="flex items-center justify-center rounded-full bg-blue-100 h-16 w-16 mb-4">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -18,10 +21,10 @@ export function CreateBoxPorto() {
         </svg>
       </div>
       <button className="bg-white py-2 px-4 border border-gray-300 rounded shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-        Upload your Portfolio
+        Create Project
       </button>
       <p className="text-sm text-gray-500 mt-2">
-        Unpublished portfolio will appear here.
+        Unpublished project will appear here.
       </p>
     </div>
   )

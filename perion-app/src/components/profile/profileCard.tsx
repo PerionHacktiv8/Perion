@@ -4,10 +4,10 @@ import {
   CardBody,
   CardFooter,
   Typography,
-  Tooltip,
   Avatar,
   Button,
 } from '@material-tailwind/react'
+import Link from 'next/link'
 
 export function ProfileCard() {
   return (
@@ -62,6 +62,7 @@ export function ProfileCard() {
         </Typography>
       </CardHeader>
       <CardBody placeholder={''}>
+        <Link href="/profile/edit-profile">
         <Button
           placeholder={''}
           className="rounded-full w-full flex justify-center items-center gap-2 mx-auto mb-2"
@@ -77,6 +78,7 @@ export function ProfileCard() {
           </svg>
           Edit Your Profile
         </Button>
+        </Link>
         <Button
           placeholder={''}
           className="rounded-full w-full flex justify-center items-center gap-2 mx-auto mb-2"
@@ -95,6 +97,7 @@ export function ProfileCard() {
           </svg>
           Follow
         </Button>
+        <Link href="/chats">
         <Button
           placeholder={''}
           className="rounded-full w-full flex justify-center items-center gap-2 mx-auto mb-2"
@@ -110,6 +113,7 @@ export function ProfileCard() {
           </svg>
           Message
         </Button>
+        </Link>
       </CardBody>
       <CardFooter placeholder={''} className="flex justify-center gap-7 pt-2">
         <div className="bg-white rounded-lg p-6 shadow-md max-w-sm mx-auto w-full">
@@ -197,6 +201,65 @@ export function ProfileCard() {
                 />
               </svg>
             </span>
+          </div>
+        </div>
+      </CardFooter>
+
+      {/* Work Experience */}
+      <CardFooter placeholder={''} className="flex justify-start gap-7">
+        <div className="">
+          <Typography
+            placeholder={''}
+            variant="h5"
+            className="font-bold text-sm"
+          >
+            WORK EXPERIENCE
+          </Typography>
+          <div className="mt-4">
+            <Typography placeholder={''} className="font-bold">
+              Digital Artist & Graphic Designer
+            </Typography>
+            <Typography placeholder={''} className="text-sm text-gray-600">
+              Freelance — Dessau, Germany
+            </Typography>
+          </div>
+          <div className="mt-4">
+            <Typography placeholder={''} className="font-bold">
+              Digital Artist & Graphic Designer
+            </Typography>
+            <Typography placeholder={''} className="text-sm text-gray-600">
+              Freelance — Dessau, Germany
+            </Typography>
+          </div>
+          <div className="mt-4">
+            <Typography placeholder={''} className="font-bold">
+              Digital Artist & Graphic Designer
+            </Typography>
+            <Typography placeholder={''} className="text-sm text-gray-600">
+              Freelance — Dessau, Germany
+            </Typography>
+          </div>
+          <div className="mt-4 flex items-center">
+            <a
+              href="#"
+              className="text-gray-600 hover:underline text-sm flex items-center"
+            >
+              View Full Resume
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                className="w-4 h-4 ml-1"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                />
+              </svg>
+            </a>
           </div>
         </div>
       </CardFooter>
