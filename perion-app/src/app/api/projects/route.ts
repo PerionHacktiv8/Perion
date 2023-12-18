@@ -17,11 +17,11 @@ export const POST = async (req: NextRequest) => {
 
     return NextResponse.json<MyResponse<string>>(
       {
-        statusCode: 200,
+        statusCode: 201,
         message: "Project Has Created",
       },
       {
-        status: 200,
+        status: 201,
       }
     );
   } catch (err) {
