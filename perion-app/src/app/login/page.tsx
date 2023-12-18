@@ -1,6 +1,6 @@
 'use client'
 
-import { FunctionComponent, useState } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
 import { Card, Button, Input, IconButton } from '@material-tailwind/react'
 import Link from 'next/link'
@@ -10,46 +10,64 @@ import {
   signInWithGithub,
   signInWithGoogle,
 } from './action'
+import { ResponseAPIType } from '../api/user/route'
 
-const LoginPage: FunctionComponent = () => {
+const LoginPage = () => {
   const router = useRouter()
   const [showPass, setShowPass] = useState(false)
+  const [logData, setLogData] = useState({
+    email: '',
+    password: '',
+  })
 
   const handleSignInWithGoogle = async () => {
-    try {
-      const res = await signInWithGoogle()
+    const res = await signInWithGoogle()
 
-      if (res.message === 'success') {
-        router.push('/')
-      }
-    } catch (error) {
-      console.error('Error signing in with Google:', error)
+    if (res.message === 'success') {
+      router.push('/')
     }
+
+    if (res.message !== 'success') console.log(res)
   }
 
   const handleSignInWithGithub = async () => {
-    try {
-      const res = await signInWithGithub()
+    const res = await signInWithGithub()
 
-      if (res.message === 'success') {
-        router.push('/')
-      }
-    } catch (error) {
-      console.error('Error signing in with GitHub:', error)
+    if (res.message === 'success') {
+      router.push('/')
     }
+
+    if (res.message !== 'success') console.log(res)
   }
 
   const handleSignInWithFacebook = async () => {
-    try {
-      const res = await signInWithFacebook()
+    const res = await signInWithFacebook()
 
-      if (res.message === 'success') {
-        router.push('/')
-      }
-    } catch (error) {
-      console.error('Error signing in with Facebook:', error)
+    if (res.message === 'success') {
+      router.push('/')
     }
+
+    if (res.message !== 'success') console.log(res)
   }
+
+  const doLogin = async () => {
+    const res = await fetch('http://localhost:3000/api/login', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(logData),
+    })
+
+    const resJson = (await res.json()) as ResponseAPIType<string>
+
+    if (resJson && resJson.statusCode === 200) {
+      router.push('/')
+    }
+
+    if (resJson && resJson.statusCode === 400) console.log(resJson)
+  }
+
   return (
     <div className="flex flex-col bg-[url(https://static.vecteezy.com/system/resources/previews/032/976/063/non_2x/artificial-intelligence-tech-background-digital-technology-deep-learning-and-big-data-concept-ai-generated-free-photo.jpg)] lg:flex-row justify-around items-center bg-cover w-full min-h-screen">
       {/* Logo and Text */}
@@ -148,7 +166,7 @@ const LoginPage: FunctionComponent = () => {
               />
             </Button>
           </div>
-          <form className="mt-5 mb-2 w-full">
+          <form action={doLogin} className="mt-5 mb-2 w-full">
             <div className="mb-1 flex flex-col gap-4">
               <p className="text-black text-lg -mb-3">Your Email</p>
               <Input
@@ -157,6 +175,11 @@ const LoginPage: FunctionComponent = () => {
                 className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
                 labelProps={{
                   className: 'before:content-none after:content-none',
+                }}
+                name="email"
+                value={logData.email}
+                onChange={(e) => {
+                  setLogData({ ...logData, email: e.target.value })
                 }}
               />
               <p className="text-black text-lg -mb-3">Password</p>
@@ -202,9 +225,14 @@ const LoginPage: FunctionComponent = () => {
                 labelProps={{
                   className: 'before:content-none after:content-none',
                 }}
+                name="password"
+                value={logData.password}
+                onChange={(e) => {
+                  setLogData({ ...logData, password: e.target.value })
+                }}
               />
             </div>
-            <Button placeholder={''} className="mt-6" fullWidth>
+            <Button type="submit" placeholder={''} className="mt-6" fullWidth>
               sign in
             </Button>
           </form>

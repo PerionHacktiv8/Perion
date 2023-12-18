@@ -1,12 +1,16 @@
+'use server'
+
 import { NavbarDefault } from '@/components/navbar/navbarComponent'
 import { CardComponent } from '@/components/card/cardComponent'
 import { HeroSection } from '@/components/hero/heroHome'
 import { NavbarWithMenu } from '@/components/navbar/navMenu'
 import { DialogDefault } from '@/components/modalChoose'
+import { Project } from '@/db/models/project'
 
-const Home: React.FC = () => {
+const Home = async () => {
+  const data = await Project.readProjects()
+
   return (
-
     <div className="flex flex-col bg-[#f5f5f5] min-h-screen">
       <NavbarDefault />
       <main className="flex-grow">
@@ -19,7 +23,9 @@ const Home: React.FC = () => {
           </aside>
           <div className="flex justify-center py-10 px-4 sm:px-10">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              <CardComponent />
+              {data.map((datum, idx) => (
+                <CardComponent key={idx} datum={datum} />
+              ))}
             </div>
           </div>
         </section>

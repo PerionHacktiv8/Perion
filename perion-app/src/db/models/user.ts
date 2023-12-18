@@ -1,11 +1,13 @@
 import { MongoServerError, ObjectId } from 'mongodb'
 import { getMongoClientInstance } from '../config'
-import { hashPass } from '../helpers/bcrypt'
+import { compHash, hashPass } from '../helpers/bcrypt'
 import { z } from 'zod'
-import fireStorage from '../config/firebase'
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
-import { openai } from '../config/openai'
+import { Invoice } from 'xendit-node'
+import { CreateInvoiceRequest } from 'xendit-node/invoice/models'
 import { PdfReader } from 'pdfreader'
+import { openai } from '../config/openai'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
+import { fireStorage } from '../config/firebaseConfig'
 
 const COLLECTION_NAME = 'users'
 
@@ -15,11 +17,11 @@ export type UserModel = {
   username: string
   email: string
   password: string
-  address: string
   picture: string
+  firstTime: boolean
 }
 
-type UserInputType = Omit<UserModel, '_id' | 'picture'>
+type UserInputType = Omit<UserModel, '_id' | 'picture' | 'firstTime'>
 
 const userCreateSchema = z.object({
   name: z
@@ -46,9 +48,22 @@ const userCreateSchema = z.object({
       invalid_type_error: 'Please input your password',
     })
     .min(6, 'Password need to be more than 6 character long'),
-  address: z
-    .string({ invalid_type_error: 'Please input your address' })
-    .min(1, 'Please input your address'),
+})
+
+const loginSchema = z.object({
+  email: z
+    .string({
+      required_error: 'Please to input your email',
+      invalid_type_error: 'Please to input your email',
+    })
+    .min(1, 'Please input your email address')
+    .email('Need to be an Email Address'),
+  password: z
+    .string({
+      required_error: 'Please to input your password',
+      invalid_type_error: 'Please input your password',
+    })
+    .min(6, 'Password need to be more than 6 character long'),
 })
 
 export class Users {
@@ -67,22 +82,31 @@ export class Users {
         {
           _id: new ObjectId(val),
         },
-        { projection: { password: 0 } },
+        { projection: { picture: 1, firstTime: 1 } },
       )) as UserModel
 
-      return user.picture
+      return { picture: user.picture, firstTime: user.firstTime }
     } catch (err) {
       throw err
     }
   }
 
-  static async login(email: string) {
+  static async login(email: string, password: string) {
     try {
       const collection = await this.connection()
 
-      const user = (await collection.findOne({
+      const parsedData = loginSchema.parse({
         email,
+        password,
+      })
+
+      const user = (await collection.findOne({
+        email: parsedData.email,
       })) as UserModel
+
+      if (!user || !compHash(parsedData.password, user.password)) {
+        throw new Error(`Wrong Email/Password`)
+      }
 
       return user
     } catch (err) {
@@ -90,48 +114,90 @@ export class Users {
     }
   }
 
-  static async createUsers(input: FormData) {
+  static async createUsers(input: Object) {
     try {
       const collection = await this.connection()
 
-      await collection.createIndex({ username: 1 }, { unique: true })
-      await collection.createIndex({ email: 1 }, { unique: true })
+      const parsedData = userCreateSchema.parse(input)
 
-      const data = {
-        name: input.get('name'),
-        username: input.get('username'),
-        email: input.get('email'),
-        password: input.get('password'),
-        address: input.get('address'),
-      }
-
-      const parsedData = userCreateSchema.parse(data)
-
-      const alteredInput: UserInputType = {
+      const alteredInput = {
         ...parsedData,
         password: hashPass(parsedData.password),
+        subscription: false,
+        firstTime: true,
+        picture:
+          'https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png',
+        updatedAt: new Date(),
+        createdAt: new Date(),
       }
 
-      const created = await collection.insertOne(alteredInput)
+      const { insertedId } = await collection.insertOne(alteredInput)
 
-      return created
+      const data = await collection.findOne({ _id: insertedId })
+
+      return data
     } catch (err) {
       let error: string = 'Internal Server Error'
       let statusCode: number = 500
 
       if (err instanceof z.ZodError) {
-        statusCode = 400
         error = err.issues[0].message
       }
 
       if (err instanceof MongoServerError) {
-        if (Object.keys(err.keyPattern)[0] === 'email')
-          error = 'Email already been used'
-        if (Object.keys(err.keyPattern)[0] === 'username')
-          error = 'Username already been used'
+        error = `${Object.keys(err.keyPattern)[0]} already been use`
       }
 
+      console.log(error)
+
       throw error
+    }
+  }
+
+  static async invoiceXendit(email: string, userId: string) {
+    try {
+      const invoiceService = new Invoice({
+        secretKey: process.env.SECRET_API_XENDIT as string,
+      })
+
+      const data: CreateInvoiceRequest = {
+        amount: 310000,
+        invoiceDuration: '172800',
+        payerEmail: email,
+        externalId: userId,
+        description: 'Parion One Time Payment',
+        currency: 'IDR',
+        reminderTime: 1,
+        successRedirectUrl: 'http://localhost:3000',
+        failureRedirectUrl: 'http://localhost:3000',
+      }
+
+      const response = await invoiceService.createInvoice({
+        data,
+      })
+
+      return response.invoiceUrl
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  static async updateStatus(userId: string) {
+    try {
+      const collection = await this.connection()
+
+      await collection.findOneAndUpdate(
+        { _id: new ObjectId(userId) },
+        {
+          $set: {
+            subscription: true,
+            firstTime: false,
+            updatedAt: new Date(),
+          },
+        },
+      )
+    } catch (err) {
+      console.log(err)
     }
   }
 

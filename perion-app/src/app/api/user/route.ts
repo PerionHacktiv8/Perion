@@ -8,17 +8,22 @@ export type ResponseAPIType<T> = {
   error?: string
 }
 
+export type SetupData = {
+  picture?: string
+  firstTime: boolean
+}
+
 export const GET = async (req: NextRequest) => {
   try {
     const userId = req.headers.get('x-user-id') as string
 
-    const data = await Users.findOneUser(userId)
+    const data: SetupData = await Users.findOneUser(userId)
 
-    return NextResponse.json<ResponseAPIType<string>>(
+    return NextResponse.json<ResponseAPIType<SetupData>>(
       {
         statusCode: 200,
         message: 'Success on fetching all data',
-        data,
+        data: data,
       },
       {
         status: 200,

@@ -7,7 +7,10 @@ export const middleware = async (req: NextRequest) => {
     return new NextResponse(null, { status: 200 })
   }
 
-  if (req.url.includes('/api/user') && req.method !== 'POST') {
+  if (
+    (req.url.includes('/api/user') && req.method !== 'POST') ||
+    (req.url.includes('/api/invoiceXendit') && req.method === 'POST')
+  ) {
     const cookiesStore = cookies()
     const token = cookiesStore.get('token')
 
