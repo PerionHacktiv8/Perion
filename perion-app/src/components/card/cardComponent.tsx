@@ -50,12 +50,9 @@ export function CardComponent({ datum }: { datum: ProjectModel }) {
           className="m-0 rounded-none"
         >
           <div className="relative h-56 w-full">
-            <Image
+            <img
               src="https://images.unsplash.com/photo-1534423861386-85a16f5d13fd?q=80&w=2970&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               alt="ui/ux review check"
-              layout="fill"
-              objectFit="cover"
-              quality={100}
             />
           </div>
           <IconButton
@@ -191,13 +188,13 @@ export function CardComponent({ datum }: { datum: ProjectModel }) {
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="1.5"
+                strokeWidth="1.5"
                 stroke="currentColor"
                 className="w-6 h-6 mr-2"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
                 />
               </svg>
@@ -231,14 +228,14 @@ export function CardComponent({ datum }: { datum: ProjectModel }) {
                 </div>
                 <div className="flex flex-col gap-2">
                   <p className="text-black text-lg font-bold">Benefits</p>
-                  {datum.benefits.split(', ').map((el) => (
-                    <p>- {el}</p>
+                  {datum.benefits.split(', ').map((el, idx) => (
+                    <p key={idx}>- {el}</p>
                   ))}
                 </div>
                 <div className="flex flex-col gap-2">
                   <p className="text-black text-lg font-bold">Skills Needed</p>
-                  {datum.skills.map((el) => (
-                    <p>- {el}</p>
+                  {datum.skills.map((el, idx) => (
+                    <p key={idx}>- {el}</p>
                   ))}
                 </div>
               </div>

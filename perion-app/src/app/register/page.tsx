@@ -80,12 +80,11 @@ const RegisterPage: FunctionComponent = () => {
     <div className="flex flex-col bg-[url(https://static.vecteezy.com/system/resources/previews/032/976/063/non_2x/artificial-intelligence-tech-background-digital-technology-deep-learning-and-big-data-concept-ai-generated-free-photo.jpg)] lg:flex-row justify-around items-center bg-cover w-full min-h-screen">
       {/* Logo and Text */}
       <div className="z-10 flex w-full lg:flex-row lg:w-1/3 items-center justify-center lg:justify-center bg-opacity-60 lg:bg-transparent p-8 text-center lg:text-left">
-        <Image
+        <img
           src="https://ik.imagekit.io/naufalrafi/Parion%20Logo%20(1).png?updatedAt=1702368775661"
           alt="Company Logo"
           width={100}
           height={100}
-          objectFit="contain"
         />
         <h1 className="text-5xl text-white font-bold lg:ml-4">Parion</h1>
       </div>

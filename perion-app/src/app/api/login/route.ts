@@ -4,6 +4,7 @@ import { cookies } from 'next/headers'
 import { createToken } from '@/libs/jwt'
 import { UserModel, Users } from '@/db/models/user'
 import { z } from 'zod'
+import { ResponseAPIType, SetupData } from '../user/route'
 
 type MyResponse<T> = {
   statusCode: number
@@ -65,6 +66,35 @@ export async function POST(req: NextRequest) {
       },
       {
         status: statusCode,
+      },
+    )
+  }
+}
+
+export const GET = async (req: NextRequest) => {
+  try {
+    const userId = req.headers.get('x-user-id') as string
+
+    const data: SetupData = await Users.findOneUser(userId)
+
+    return NextResponse.json<ResponseAPIType<SetupData>>(
+      {
+        statusCode: 200,
+        message: 'Success on fetching all data',
+        data: data,
+      },
+      {
+        status: 200,
+      },
+    )
+  } catch (error) {
+    return NextResponse.json<ResponseAPIType<unknown>>(
+      {
+        statusCode: 200,
+        message: 'Error on fetching all data',
+      },
+      {
+        status: 200,
       },
     )
   }

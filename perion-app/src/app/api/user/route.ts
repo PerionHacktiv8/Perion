@@ -17,7 +17,7 @@ export const GET = async (req: NextRequest) => {
   try {
     const userId = req.headers.get('x-user-id') as string
 
-    const data: SetupData = await Users.findOneUser(userId)
+    const data: SetupData = await Users.findProfile(userId)
 
     return NextResponse.json<ResponseAPIType<SetupData>>(
       {

@@ -8,6 +8,7 @@ import { PdfReader } from 'pdfreader'
 import { openai } from '../config/openai'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { fireStorage } from '../config/firebaseConfig'
+import { ProfilesModel } from './profiles'
 
 const COLLECTION_NAME = 'users'
 
@@ -17,11 +18,16 @@ export type UserModel = {
   username: string
   email: string
   password: string
-  picture: string
+  picture: string | File
   firstTime: boolean
+  profileInfo?: ProfilesModel
+  createdAt: string
 }
 
-type UserInputType = Omit<UserModel, '_id' | 'picture' | 'firstTime'>
+type UserInputType = Omit<
+  UserModel,
+  '_id' | 'picture' | 'firstTime' | 'createdAt'
+>
 
 const userCreateSchema = z.object({
   name: z
@@ -86,6 +92,35 @@ export class Users {
       )) as UserModel
 
       return { picture: user.picture, firstTime: user.firstTime }
+    } catch (err) {
+      throw err
+    }
+  }
+
+  static async findProfile(val: string) {
+    try {
+      const collection = await this.connection()
+
+      const [user] = await collection
+        .aggregate([
+          {
+            $match: { _id: new ObjectId(val) },
+          },
+          {
+            $lookup: {
+              from: 'profiles',
+              localField: 'authorId',
+              foreignField: '_id',
+              as: 'profileInfo',
+            },
+          },
+          {
+            $unwind: { path: '$profileInfo', preserveNullAndEmptyArrays: true },
+          },
+        ])
+        .toArray()
+
+      return user as UserModel
     } catch (err) {
       throw err
     }
