@@ -8,8 +8,10 @@ const COLLECTION_NAME = "projects";
 export type ProjectModel = {
   _id: ObjectId;
   title: string;
+  teams: string;
   projectDescription: string;
   workDescription: string;
+  skills: string;
   position: string;
   onSiteRequired: string;
   jobLocation: string;
@@ -29,6 +31,12 @@ const ProjectCreateSchema = z.object({
       invalid_type_error: "You should be input the title",
     })
     .min(1, "You should be input the title"),
+  teams: z
+    .string({
+      required_error: "You should be input the Teams",
+      invalid_type_error: "You should be input the Teams",
+    })
+    .min(1, "You should be input the Teams"),
   projectDescription: z
     .string({
       required_error: "You should be input the Project Description",
@@ -41,6 +49,12 @@ const ProjectCreateSchema = z.object({
       invalid_type_error: "You should be input the Work Description",
     })
     .min(1, "You should be input the Work Description"),
+  skills: z
+    .string({
+      required_error: "You should be input the Skills",
+      invalid_type_error: "You should be input the Skills",
+    })
+    .min(1, "You should be input the Skills"),
   position: z
     .string({
       required_error: "You should be input the Position",
@@ -93,8 +107,10 @@ export class Project {
       const collection = await this.connection();
       let data = {
         title: input.get("title"),
+        teams: input.get("teams"),
         projectDescription: input.get("projectDescription"),
         workDescription: input.get("workDescription"),
+        skills: input.get("skills"),
         position: input.get("position"),
         jobLocation: input.get("jobLocation"),
         onSiteRequired: input.get("onSiteRequired"),
@@ -173,8 +189,10 @@ export class Project {
 
       let data = {
         title: input.get("title"),
+        teams: input.get("teams"),
         projectDescription: input.get("projectDescription"),
         workDescription: input.get("workDescription"),
+        skills: input.get("skills"),
         position: input.get("position"),
         jobLocation: input.get("jobLocation"),
         onSiteRequired: input.get("onSiteRequired"),
