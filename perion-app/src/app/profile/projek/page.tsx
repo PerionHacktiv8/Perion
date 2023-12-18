@@ -6,18 +6,20 @@ import { ProfileNav } from '@/components/profile/profileNav'
 
 export default function Profile() {
   return (
-    <div className="container px-12 py-8">
-      <div className="flex flex-wrap -mx-4">
-        <div className="w-full lg:w-1/4 px-4 py-7">
+    <div className="container px-4 sm:px-8 md:px-12 py-4 md:py-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-24">
+        {/* Left side */}
+        <div className="w-full lg:w-1/4 px-4">
           <ProfileCard />
         </div>
 
-        <div className="w-full lg:w-3/4 px-4 sm:py-4">
-          <div className="flex flex-col lg:flex-row justify-between items-center mb-4 lg:py-4 lg:px-32">
+        {/* Right side */}
+        <div className="w-full lg:w-3/4 px-4">
+          <div className="flex flex-col lg:flex-row justify-between items-center mb-4 px-4">
             <ProfileNav />
           </div>
 
-          <div className="space-y-4 px-4 lg:px-32">
+          <div className="px-4">
             <CreateBox />
           </div>
         </div>

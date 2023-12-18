@@ -6,6 +6,7 @@ import {
   Avatar,
   Typography,
 } from '@material-tailwind/react'
+import Link from 'next/link'
 
 export function ProfileMenu() {
   return (
@@ -20,6 +21,7 @@ export function ProfileMenu() {
         />
       </MenuHandler>
       <MenuList placeholder={''}>
+        <Link href="/profile">
         <MenuItem placeholder={''} className="flex items-center gap-2">
           <svg
             width="16"
@@ -40,6 +42,8 @@ export function ProfileMenu() {
             My Profile
           </Typography>
         </MenuItem>
+        </Link>
+        <Link href="/profile/edit-profile">
         <MenuItem placeholder={''} className="flex items-center gap-2">
           <svg
             width="16"
@@ -55,11 +59,12 @@ export function ProfileMenu() {
               fill="#90A4AE"
             />
           </svg>
-
+          
           <Typography placeholder={''} variant="small" className="font-medium">
             Edit Profile
           </Typography>
         </MenuItem>
+        </Link>
         <MenuItem placeholder={''} className="flex items-center gap-2">
           <svg
             width="14"

@@ -7,7 +7,7 @@ import {
   Avatar,
   Button,
 } from '@material-tailwind/react'
-import Image from 'next/image'
+import Link from 'next/link'
 
 export function ProfileCard() {
   return (
@@ -62,6 +62,7 @@ export function ProfileCard() {
         </Typography>
       </CardHeader>
       <CardBody placeholder={''}>
+        <Link href="/profile/edit-profile">
         <Button
           placeholder={''}
           className="rounded-full w-full flex justify-center items-center gap-2 mx-auto mb-2"
@@ -77,6 +78,7 @@ export function ProfileCard() {
           </svg>
           Edit Your Profile
         </Button>
+        </Link>
         <Button
           placeholder={''}
           className="rounded-full w-full flex justify-center items-center gap-2 mx-auto mb-2"
@@ -95,6 +97,7 @@ export function ProfileCard() {
           </svg>
           Follow
         </Button>
+        <Link href="/chats">
         <Button
           placeholder={''}
           className="rounded-full w-full flex justify-center items-center gap-2 mx-auto mb-2"
@@ -110,6 +113,7 @@ export function ProfileCard() {
           </svg>
           Message
         </Button>
+        </Link>
       </CardBody>
       <CardFooter placeholder={''} className="flex justify-center gap-7 pt-2">
         <div className="bg-white rounded-lg p-6 shadow-md max-w-sm mx-auto w-full">
@@ -241,124 +245,6 @@ export function ProfileCard() {
               className="text-gray-600 hover:underline text-sm flex items-center"
             >
               View Full Resume
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                className="w-4 h-4 ml-1"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </CardFooter>
-
-      {/* Teams */}
-      <CardFooter placeholder={''} className="flex justify-start gap-7 w-full">
-        <div className="w-full">
-          <Typography
-            placeholder={''}
-            variant="h5"
-            className="font-bold text-sm mb-3"
-          >
-            TEAMS
-          </Typography>
-          <div className="rounded-md border border-2 w-full p-2">
-            {/* Team 1 */}
-            <div className="flex items-center">
-              <div className="flex items-center">
-                <Image
-                  src="https://ik.imagekit.io/naufalrafi/Parion%20Logo%20(1).png?updatedAt=1702368775661"
-                  alt="Parion"
-                  className="w-10 h-10 rounded-full mr-2"
-                  width={50}
-                  height={50}
-                />
-                <div>
-                  <Typography placeholder={''} className="font-medium">
-                    Parion Teams
-                  </Typography>
-                  <Typography
-                    placeholder={''}
-                    className="text-sm text-gray-600"
-                  >
-                    Tangerang, Indonesia
-                  </Typography>
-                </div>
-              </div>
-            </div>
-            <div className="border-t-2 border-gray-200 my-3"></div>
-            {/* Team 2 */}
-            <div className="flex items-center">
-              <div className="flex items-center">
-                <Image
-                  src="https://ik.imagekit.io/naufalrafi/Parion%20Logo%20(1).png?updatedAt=1702368775661"
-                  alt="Parion"
-                  className="w-10 h-10 rounded-full mr-2"
-                  width={50}
-                  height={50}
-                />
-                <div>
-                  <Typography placeholder={''} className="font-medium">
-                    Parion Teams
-                  </Typography>
-                  <Typography
-                    placeholder={''}
-                    className="text-sm text-gray-600"
-                  >
-                    Tangerang, Indonesia
-                  </Typography>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </CardFooter>
-
-      <CardFooter placeholder={''} className="flex justify-start gap-7 w-full">
-        <div className="w-full">
-          <Typography
-            placeholder={''}
-            variant="h5"
-            className="font-bold text-sm mb-3"
-          >
-            Website Links
-          </Typography>
-          <div className="rounded-md border border-gray-200 w-full p-2">
-            <div className="flex flex-col">
-              <a
-                href="#link1"
-                className="text-gray-500 border-b hover:text-black hover:bg-gray-100 hover:rounded p-2 "
-              >
-                Website 1
-              </a>
-              <a
-                href="#link1"
-                className="text-gray-500 border-b hover:text-black hover:bg-gray-100 hover:rounded p-2 "
-              >
-                Website 2
-              </a>
-              <a
-                href="#link1"
-                className="text-gray-500 hover:text-black hover:bg-gray-100 hover:rounded p-2 "
-              >
-                Website 3
-              </a>
-            </div>
-          </div>
-          <div className="mt-2 flex items-center">
-            <a
-              href="#"
-              className="text-gray-600 hover:underline text-sm flex items-center"
-            >
-              View More
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

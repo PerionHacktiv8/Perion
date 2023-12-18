@@ -5,14 +5,14 @@ import { ProfileCard } from '@/components/profile/profileCard'
 
 export default function Portfolio() {
   return (
-    <div className="container px-12 py-8">
-      <div className="flex flex-wrap -mx-4">
-        <div className="w-full lg:w-1/4 px-4 py-7">
+    <div className="container px-4 sm:px-8 md:px-12 py-4 md:py-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-24">
+        <div className="md:col-span-1 px-2 md:px-4">
           <ProfileCard />
         </div>
 
-        <div className="w-full lg:w-3/4 px-4 sm:py-4 mt-3">
-          <div className="px-4 lg:px-32">
+        <div className="md:col-span-2 px-2 md:px-4 py-4 md:py-4 bg-white rounded-xl w-full">
+          <div className="px-2 sm:px-4">
             <EditForm />
           </div>
         </div>

@@ -3,12 +3,13 @@ import { CardComponent } from '@/components/card/cardComponent'
 import { HeroSection } from '@/components/hero/heroHome'
 import { NavbarWithMenu } from '@/components/navbar/navMenu'
 import { ModalPricing } from '@/components/modalPricing'
+import { NavbarUser } from '@/components/navbar/navbarUser'
 
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       <header className="bg-gray-800 text-white">
-        <NavbarDefault />
+        <NavbarUser />
       </header>
 
       <main className="flex-grow">
