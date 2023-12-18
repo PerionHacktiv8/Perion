@@ -9,8 +9,7 @@ import { openai } from '../config/openai'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { fireStorage } from '../config/firebaseConfig'
 
-const DB_NAME = process.env.MONGODB_DB_NAME
-const COLLECTION_NAME = 'Users'
+const COLLECTION_NAME = 'users'
 
 export type UserModel = {
   _id: ObjectId
@@ -143,7 +142,7 @@ export class Users {
     }
   }
 
-  static async invoiceXendit(userId: number) {
+  static async invoiceXendit(email: string, userId: string) {
     try {
       const invoiceService = new Invoice({
         secretKey: process.env.SECRET_API_XENDIT as string,
@@ -152,13 +151,11 @@ export class Users {
       const data: CreateInvoiceRequest = {
         amount: 200,
         invoiceDuration: '172800',
-        // email
-        payerEmail: 'mail@mail.com',
-        externalId: `A-${new Date().getTime()}`,
-        description: 'Bayar Penginapan',
+        payerEmail: email,
+        externalId: userId,
+        description: 'Parion One Time Payment',
         currency: 'IDR',
         reminderTime: 1,
-        // link redirect nya
         successRedirectUrl: 'http://localhost:3000',
         failureRedirectUrl: 'http://localhost:3000',
       }
@@ -167,9 +164,28 @@ export class Users {
         data,
       })
 
-      return response
+      return response.invoiceUrl
     } catch (error) {
       console.log(error)
+    }
+  }
+
+  static async updateStatus(userId: string) {
+    try {
+      const collection = await this.connection()
+
+      await collection.findOneAndUpdate(
+        { _id: new ObjectId(userId) },
+        {
+          $set: {
+            subscription: true,
+            firstTime: false,
+            updatedAt: new Date(),
+          },
+        },
+      )
+    } catch (err) {
+      console.log(err)
     }
   }
 

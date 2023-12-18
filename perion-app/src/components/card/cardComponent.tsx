@@ -19,8 +19,10 @@ import {
 import Image from 'next/image'
 import { RequirementCard } from './cardRequirement'
 import { CarouselProject } from '../carousel'
+import { ProjectModel } from '@/db/models/project'
+import dateFormat from '@/db/helpers/dateFormat'
 
-export function CardComponent() {
+export function CardComponent({ datum }: { datum: ProjectModel }) {
   const [liked, setLiked] = useState(false)
 
   const handleLikeButtonClick = () => {
@@ -80,7 +82,7 @@ export function CardComponent() {
         </CardHeader>
         <CardBody placeholder={''}>
           <Typography placeholder={''} className="font-normal mb-2">
-            Des 2023
+            {dateFormat(datum.createdAt)}
           </Typography>
           <Typography
             placeholder={''}
@@ -88,7 +90,7 @@ export function CardComponent() {
             color="blue-gray"
             className="truncate"
           >
-            Parion Game App Project
+            {datum.title}
           </Typography>
           <Typography
             placeholder={''}
@@ -96,19 +98,15 @@ export function CardComponent() {
             color="blue-gray"
             className="mt-3"
           >
-            Game Development
+            {datum.position}
           </Typography>
           <Typography
             placeholder={''}
             variant="paragraph"
             color="gray"
-            className="font-normal line-clamp-3"
+            className="font-normal h-[5rem] line-clamp-3"
           >
-            Because it&apos;s about motivating the doers. Because I&apos;m here
-            to follow my dreams and inspire others. Because it&apos;s about
-            motivating the doers. Because I&apos;m here to follow my dreams and
-            inspire others. Because it&apos;s about motivating the doers.
-            Because I&apos;m here to follow my dreams and inspire others.
+            {datum.projectDescription}
           </Typography>
         </CardBody>
         <CardFooter
@@ -155,7 +153,7 @@ export function CardComponent() {
       >
         <DialogHeader
           placeholder={''}
-          className="justify-between mt-2 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4"
+          className="justify-between border-b-2 mt-2 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4"
         >
           <div className="flex items-center gap-3">
             <Avatar
@@ -186,11 +184,9 @@ export function CardComponent() {
           </div>
           <div className="flex items-center gap-2">
             <div className="flex flex-col items-center">
-              <h5>Parion - Pair Your Passion</h5>
-              <div className="flex flex-row gap-2">
-                <p className="font-normal text-sm">Software Development</p>
-                <span className="font-normal text-sm">-</span>
-                <p className="font-normal text-sm">Web Applications</p>
+              <h5>{datum.title}</h5>
+              <div className="flex flex-row gap-2 w-full justify-center">
+                <p className="font-normal text-sm">{datum.position}</p>
               </div>
             </div>
           </div>
@@ -223,74 +219,42 @@ export function CardComponent() {
           placeholder={''}
           className="h-auto sm:h-[30rem] md:h-[35rem] lg:h-[37rem] overflow-y-auto"
         >
-          <CarouselProject />
-          <div className="px-4 py-16">
-            <h1 className="text-4xl font-bold text-black">
-              Parion - Pair Your Passion
-            </h1>
-            <hr className="border-b-2 mt-5" />
-            <div className="py-12 grid grid-cols-2 flex lg:flex-cols-1">
-              <section className="">
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
-                  dapibus, quam vel luctus mollis, mauris orci mollis tortor, in
-                  hendrerit urna dui vel neque. Aenean mi risus, aliquam nec
-                  metus quis, pharetra venenatis lorem. Aliquam eleifend
-                  facilisis est, id laoreet nibh semper nec. Aliquam varius eros
-                  ac molestie dignissim. Quisque lorem tellus, ultrices quis ex
-                  ut, consectetur laoreet dolor. Suspendisse dictum dolor sed
-                  neque iaculis, ac sagittis eros vehicula. Morbi iaculis risus
-                  ac elit ornare, a auctor libero commodo. Duis eget purus
-                  gravida, mattis nunc a, luctus ipsum. Sed facilisis at ligula
-                  sit amet pulvinar. Nulla elementum consequat posuere. Morbi
-                  lobortis nulla sed aliquam aliquam. Fusce rhoncus leo nibh,
-                  mattis fermentum nisl suscipit sit amet. Nulla tempus arcu id
-                  ornare euismod. Pellentesque magna est, semper in elementum
-                  vitae, sodales eget ex. Vestibulum ut lectus varius, tempus
-                  nisi posuere, lobortis tortor.
-                  <br />
-                  <br />
-                  Vestibulum ante ipsum primis in faucibus orci luctus et
-                  ultrices posuere cubilia curae; Nulla vel elementum diam.
-                  Nullam id dolor leo. Integer erat est, fringilla vel ligula
-                  id, dictum ornare orci. Mauris accumsan finibus enim facilisis
-                  sodales. Phasellus pharetra eget dui eget vehicula. Morbi eu
-                  vulputate purus. Praesent ultricies, libero a maximus
-                  sagittis, quam nunc venenatis dolor, ac commodo nunc arcu ut
-                  mauris. Fusce tellus leo, faucibus eu condimentum a, ornare in
-                  lectus. Ut aliquet tempor rhoncus. Donec a placerat lacus,
-                  tincidunt rhoncus velit. Sed et volutpat orci, ut luctus
-                  magna. Proin efficitur luctus ex. Aliquam erat volutpat.
-                  <br />
-                  <br />
-                  Aenean diam lorem, ultricies ac iaculis sit amet, aliquet non
-                  justo. Fusce a auctor mauris, quis cursus nisi. Integer
-                  egestas orci ut tempus molestie. Aenean consectetur
-                  scelerisque cursus. Cras vestibulum nulla in libero sagittis,
-                  at venenatis ipsum pellentesque. Aenean sem ex, tincidunt quis
-                  elit sed, molestie laoreet nisl. Nam non est efficitur,
-                  elementum justo eget, vehicula risus. Suspendisse potenti.
-                  Etiam sit amet magna rhoncus, congue risus sed, fermentum
-                  augue.
-                  <br />
-                  <br />
-                  Nullam sed aliquam enim. Duis a leo magna. Curabitur quis
-                  facilisis augue. Integer tincidunt accumsan risus, eget
-                  pretium felis efficitur eget. Duis sem quam, vestibulum ut
-                  tortor id, tincidunt posuere erat. Vivamus tempus diam a urna
-                  lobortis, id convallis nisl tempus. Vestibulum sed nulla
-                  ultricies, aliquam magna ac, convallis libero.
-                </p>
-              </section>
-              <section className="pl-36">
-                <RequirementCard />
-              </section>
-            </div>
+          {/* <CarouselProject /> */}
+          <div className="py-3 px-10 flex w-full gap-5">
+            <section className="w-2/3">
+              <div className="flex flex-col gap-5">
+                <div className="flex flex-col gap-2">
+                  <p className="text-black text-lg font-bold">About Us</p>
+                  <p>{datum.workDescription}</p>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <p className="text-black text-lg font-bold">
+                    About The Project
+                  </p>
+                  <p>{datum.projectDescription}</p>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <p className="text-black text-lg font-bold">
+                    Minimum experience
+                  </p>
+                  <p>{datum.experience}</p>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <p className="text-black text-lg font-bold">Benefits</p>
+                  {datum.benefits.split(', ').map((el) => (
+                    <p>- {el}</p>
+                  ))}
+                </div>
+              </div>
+            </section>
+            <section className="w-1/3">
+              <RequirementCard datum={datum} />
+            </section>
           </div>
         </DialogBody>
         <DialogFooter
           placeholder={''}
-          className="justify-between flex flex-col lg:flex-row lg:items-center lg:justify-between"
+          className="justify-between flex flex-col border-t-2 lg:flex-row lg:items-center lg:justify-between"
         >
           <div className="flex items-center gap-16">
             <div>
@@ -307,7 +271,7 @@ export function CardComponent() {
                 color="blue-gray"
                 className="font-medium"
               >
-                December 2023
+                {dateFormat(datum.createdAt)}
               </Typography>
             </div>
             <div>
