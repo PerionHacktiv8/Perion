@@ -1,6 +1,9 @@
 export function CreateBox() {
   return (
-    <div className="w-96 flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-lg my-8" style={{ minWidth: '300px', maxWidth: '500px' }}>
+    <div
+      className="w-80 flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-lg my-8"
+      style={{ minWidth: '300px', maxWidth: '500px' }}
+    >
       <div className="flex items-center justify-center rounded-full bg-blue-100 h-16 w-16 mb-4">
         <svg
           xmlns="http://www.w3.org/2000/svg"
