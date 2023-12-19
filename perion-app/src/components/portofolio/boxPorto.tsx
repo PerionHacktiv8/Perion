@@ -1,8 +1,8 @@
-export function CreateBoxPorto() {
+const CreateBoxPorto = ({ onOpen } : {onOpen : () => void}) => {
   return (
     <div
       className="w-80 h-52 flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-lg my-8"
-      style={{ minWidth: '300px', maxWidth: '500px' }}
+      style={{ minWidth: '300px', maxWidth: '500px' }} onClick={onOpen}
     >
       <div className="flex items-center justify-center rounded-full bg-blue-100 h-16 w-16 mb-4">
         <svg
@@ -29,3 +29,5 @@ export function CreateBoxPorto() {
     </div>
   )
 }
+
+export default CreateBoxPorto
