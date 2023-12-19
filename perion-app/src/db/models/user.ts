@@ -20,6 +20,7 @@ export type UserModel = {
   password: string
   picture: string
   firstTime: boolean
+  subscription: boolean
   bio: string
   cvLink: string
   cvData: CVData
@@ -98,10 +99,26 @@ export class Users {
         {
           _id: new ObjectId(val),
         },
-        { projection: { picture: 1, firstTime: 1 } },
+        { projection: { picture: 1, firstTime: 1, subscription: 1 } },
       )) as UserModel
 
-      return { picture: user.picture, firstTime: user.firstTime }
+      return {
+        picture: user.picture,
+        firstTime: user.firstTime,
+        subscription: user.subscription,
+      }
+    } catch (err) {
+      throw err
+    }
+  }
+
+  static async findRecruits() {
+    try {
+      const collection = await this.connection()
+
+      const users = await collection.find().toArray()
+
+      return users
     } catch (err) {
       throw err
     }
@@ -111,24 +128,7 @@ export class Users {
     try {
       const collection = await this.connection()
 
-      const [user] = await collection
-        .aggregate([
-          {
-            $match: { _id: new ObjectId(val) },
-          },
-          {
-            $lookup: {
-              from: 'profiles',
-              localField: 'authorId',
-              foreignField: '_id',
-              as: 'profileInfo',
-            },
-          },
-          {
-            $unwind: { path: '$profileInfo', preserveNullAndEmptyArrays: true },
-          },
-        ])
-        .toArray()
+      const user = await collection.findOne({ _id: new ObjectId(val) })
 
       return user as UserModel
     } catch (err) {
@@ -236,6 +236,25 @@ export class Users {
         {
           $set: {
             subscription: true,
+            firstTime: false,
+            updatedAt: new Date(),
+          },
+        },
+      )
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  static async updateFree(userId: string) {
+    try {
+      const collection = await this.connection()
+
+      await collection.findOneAndUpdate(
+        { _id: new ObjectId(userId) },
+        {
+          $set: {
+            subscription: false,
             firstTime: false,
             updatedAt: new Date(),
           },

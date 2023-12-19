@@ -48,9 +48,11 @@ export const POST = async (req: NextRequest) => {
 
     const data = (await req.formData()).get('pdf') as File
 
-    Users.upPDF(data, userId)
+    if (data) {
+      Users.upPDF(data, userId)
 
-    Users.extractPDF(data, userId)
+      Users.extractPDF(data, userId)
+    }
 
     return NextResponse.json<ResponseAPIType<unknown>>(
       {

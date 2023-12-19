@@ -28,6 +28,14 @@ export function DialogDefault() {
     router.push(data.data)
   }
 
+  const freeUser = async () => {
+    const response = await fetch('http://localhost:3000/api/user/free', {
+      method: 'POST',
+    })
+
+    firstTime()
+  }
+
   useEffect(() => {
     firstTime()
   }, [])
@@ -52,7 +60,10 @@ export function DialogDefault() {
             <div className="bg-gray-100 p-6 rounded-lg">
               <h3 className="text-lg font-semibold mb-2">Free</h3>
               <p className="text-gray-500 mb-4">USD $0</p>
-              <button className="bg-gray-200 w-full py-2 rounded text-sm mb-4">
+              <button
+                onClick={freeUser}
+                className="bg-[#3296d9] hover:bg-[#317ada] hover:shadow-md transition-transform active:scale-95 ease-in-out duration-300 w-full py-2 rounded text-white text-sm mb-4"
+              >
                 Choose Plan
               </button>
               <p className="text-gray-700 mb-4">
@@ -71,13 +82,13 @@ export function DialogDefault() {
                 Plus
               </h3>
               <p className="text-white mb-4">USD $20</p>
-                <button
-                  onClick={xendit}
-                  type="submit"
-                  className="bg-[#f5b530] hover:bg-[#f98435] hover:shadow-md transition-transform active:scale-95 ease-in-out duration-300 w-full py-2 rounded text-white text-sm mb-4"
-                >
-                  Choose Plan
-                </button>
+              <button
+                onClick={xendit}
+                type="submit"
+                className="bg-[#f5b530] hover:bg-[#f98435] hover:shadow-md transition-transform active:scale-95 ease-in-out duration-300 w-full py-2 rounded text-white text-sm mb-4"
+              >
+                Choose Plan
+              </button>
               <p className="text-white mb-4">Everything in Free, and:</p>
               <ul className="flex flex-col gap-4 text-sm text-white">
                 <li>✓ Access to Parion, our most capable model</li>

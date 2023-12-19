@@ -14,13 +14,19 @@ import Link from 'next/link'
 
 export function ProfileMenu({ textColor }: { textColor: string }) {
   const [pic, setPic] = useState<string>('')
+  const [subs, setSubs] = useState<boolean>(false)
 
   const userData = async () => {
     const res = await fetch('http://localhost:3000/api/login')
     const resJson = (await res.json()) as ResponseAPIType<SetupData>
 
-    if (resJson && resJson.data && resJson.data.picture)
+    if (resJson && resJson.data && resJson.data.picture) {
       setPic(resJson.data.picture)
+    }
+
+    if (resJson && resJson.data && resJson.data.subscription) {
+      setSubs(resJson.data.subscription)
+    }
   }
 
   useEffect(() => {
@@ -42,7 +48,7 @@ export function ProfileMenu({ textColor }: { textColor: string }) {
           <MenuList placeholder={''}>
             <MenuItem placeholder={''} className="flex items-center gap-2">
               <Link
-                href={'/profile/project'}
+                href={subs ? '/profile/project' : '/profile/portofolio'}
                 className="flex items-center gap-2"
               >
                 <svg

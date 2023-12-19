@@ -1,5 +1,6 @@
 'use client'
 
+import { UserModel } from '@/db/models/user'
 import {
   Card,
   CardHeader,
@@ -29,7 +30,7 @@ function CheckIcon() {
   )
 }
 
-export function CardUser() {
+export function CardUser({ datum }: { datum: UserModel }) {
   return (
     <Card
       placeholder={''}
@@ -52,7 +53,7 @@ export function CardUser() {
       <div className="-mt-9 flex justify-center">
         <Avatar
           placeholder={''}
-          src="https://docs.material-tailwind.com/img/face-2.jpg"
+          src={datum.picture}
           alt="avatar"
           size="xl"
           className="align-middle border-2 shadow-lg"
@@ -60,14 +61,9 @@ export function CardUser() {
       </div>
       <CardBody placeholder={''} className="flex flex-col gap-2 p-4">
         <div className="flex flex-col gap-2 justify-center items-center mb-4">
-          <Typography
-            placeholder={''}
-            variant="h5"
-            color="white"
-            className="font-bold"
-          >
-            Naufal Rafi
-          </Typography>
+          <p color="white" className="font-bold text-xl">
+            {datum.name}
+          </p>
           <Typography
             placeholder={''}
             variant="small"
@@ -86,7 +82,7 @@ export function CardUser() {
                 clipRule="evenodd"
               />
             </svg>
-            Jakarta, Indonesia
+            {datum.location}
           </Typography>
         </div>
         <ul className="flex flex-col gap-4">
@@ -94,25 +90,21 @@ export function CardUser() {
             <span className="rounded-full border border-white/20 bg-white/20 p-1">
               <CheckIcon />
             </span>
-            <Typography placeholder={''} className="font-normal">
-              Full Time Project
-            </Typography>
+            <p className="font-normal">{datum.cvData.numOfProjects}</p>
           </li>
           <li className="flex items-center gap-4">
             <span className="rounded-full border border-white/20 bg-white/20 p-1">
               <CheckIcon />
             </span>
-            <Typography placeholder={''} className="font-normal">
-              0 Projects
-            </Typography>
+            <p className="font-normal">{datum.cvData.expYear} of Experience</p>
           </li>
           <li className="flex items-center gap-4">
             <span className="rounded-full border border-white/20 bg-white/20 p-1">
               <CheckIcon />
             </span>
-            <Typography placeholder={''} className="font-normal">
-              1 Years Experients
-            </Typography>
+            <p className="font-normal">
+              {datum.cvData.skills.splice(0, 5).join(', ')}
+            </p>
           </li>
         </ul>
       </CardBody>
@@ -123,7 +115,7 @@ export function CardUser() {
           color="white"
           className="hover:bg-black hover:text-white"
         >
-          Hire Naufal Rafi
+          Hire {datum.username}
         </Button>
       </CardFooter>
     </Card>

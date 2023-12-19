@@ -4,13 +4,15 @@ import { Avatar, Button, Input, Textarea } from '@material-tailwind/react'
 import { useEffect, useState } from 'react'
 import { UserModel } from '@/db/models/user'
 import { ResponseAPIType } from '@/app/api/user/route'
-import { ProfilesModel } from '@/db/models/profiles'
+import { useRouter } from 'next/navigation'
+import { revalidatePath } from 'next/cache'
 
 export function EditForm() {
   const [profData, setProfData] = useState<UserModel>()
   const [preview, setPreview] = useState<string>()
   const [image, setImage] = useState<File>()
   const [pdf, setPdf] = useState<File>()
+  const router = useRouter()
 
   const profile = async () => {
     const res = await fetch('http://localhost:3000/api/user')
@@ -35,7 +37,7 @@ export function EditForm() {
     const body = new FormData()
     if (image) body.append('image', image)
 
-    const res = await fetch('http://localhost:3000/api/image', {
+    await fetch('http://localhost:3000/api/image', {
       method: 'POST',
       body: body,
     })
@@ -62,6 +64,7 @@ export function EditForm() {
           updateImage()
           updatePDF()
           updateProfile()
+          router.refresh()
         }}
         className="flex flex-col gap-2 mb-5"
       >
@@ -118,11 +121,21 @@ export function EditForm() {
           />
         </div>
         <div className="w-full">
-          {profData && profData.cvLink && <p>Your current CV</p>}
+          {profData && profData.cvLink && (
+            <p className="mt-3 text-gray-700">
+              Your current CV{' '}
+              <a
+                href={profData.cvLink}
+                target="_blank"
+                className="text-blue-500"
+              >
+                Click Here
+              </a>{' '}
+            </p>
+          )}
           <p className="text-gray-700 py-3 font-bold">Upload Your CV</p>
           <input
             type="file"
-            // accept="application/pdf"
             onChange={(e) => {
               e.target.files && setPdf(e.target.files[0])
             }}
