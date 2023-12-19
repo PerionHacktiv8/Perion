@@ -9,7 +9,8 @@ export const middleware = async (req: NextRequest) => {
 
   if (
     (req.url.includes('/api/user') && req.method !== 'POST') ||
-    (req.url.includes('/api/invoiceXendit') && req.method === 'POST')
+    (req.url.includes('/api/invoiceXendit') && req.method === 'POST') ||
+    (req.url.includes('/api/projects') && req.method !== 'GET')
   ) {
     const cookiesStore = cookies()
     const token = cookiesStore.get('token')

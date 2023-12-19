@@ -1,6 +1,9 @@
 import { Project, ProjectModel } from '@/db/models/project'
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
+import { ProjectInputType } from '@/db/models/project'
+import { input } from '@material-tailwind/react'
+import { ObjectId } from 'mongodb'
 
 export type MyResponse<T> = {
   statusCode: number
@@ -8,23 +11,42 @@ export type MyResponse<T> = {
   data?: T
   error?: string
 }
+export type input = {
+  title: string
+  projectDescription: string
+  workDescription: string
+  position: string
+  jobLocation: string
+  experience: string
+  benefits: string
+  teams: string
+  skills: string
+}
+export type inputSelect = { jobType: string; onSiteRequired: string }
 
 export const POST = async (req: NextRequest) => {
   try {
-    const input = await req.formData()
+    const inputForm = await req.json()
+    const userId = req.headers.get('x-user-id') as string
 
-    await Project.createProject(input)
+    // const input = (await req.formData()) as FormData
+    let input = inputForm.input as input
+    let inputSelect = inputForm.inputSelect as inputSelect
+
+    await Project.createProject(input, inputSelect, userId)
 
     return NextResponse.json<MyResponse<string>>(
       {
-        statusCode: 200,
+        statusCode: 201,
         message: 'Project Has Created',
       },
       {
-        status: 200,
+        status: 201,
       },
     )
   } catch (err) {
+    console.log(err)
+
     let errCode = 500
     let errMsg = 'Internal Server Error'
 
