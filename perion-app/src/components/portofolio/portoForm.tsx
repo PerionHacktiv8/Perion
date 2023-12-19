@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { ChangeEvent, useState, FormEvent } from 'react'
 import {
   Button,
   Dialog,
@@ -10,6 +10,13 @@ import {
   Textarea,
 } from '@material-tailwind/react'
 
+type inputPortfolio = {
+  title: string
+  thumbnail: string
+  description: string
+  link: string
+}
+
 const PortfolioForm = ({
   open,
   handleOpen,
@@ -17,6 +24,33 @@ const PortfolioForm = ({
   open: boolean
   handleOpen: () => void
 }) => {
+  const [input, setInput] = useState<inputPortfolio>({
+    title: '',
+    thumbnail: '',
+    description: '',
+    link: '',
+  })
+
+  const onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    })
+  }
+  const onSubmitInput = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    const response = await fetch(`http://localhost:3000/api/portfolios`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        input,
+      }),
+    })
+  }
+
   return (
     <>
       <Dialog
@@ -47,15 +81,24 @@ const PortfolioForm = ({
           placeholder={''}
           className="h-auto sm:h-[30rem] md:h-[35rem] lg:h-[37rem] overflow-y-auto flex flex-col gap-3"
         >
-          <form action="">
+          <form action="" onSubmit={onSubmitInput}>
             <p className="font-bold text-lg text-black">Title</p>
             <Input
               crossOrigin={''}
               label="Insert Title"
               size="lg"
               name="title"
-              // value={input.title}
-              // onChange={onChange}
+              value={input.title}
+              onChange={onChange}
+            />
+            <p className="font-bold text-lg text-black">Thumbnail</p>
+            <Input
+              crossOrigin={''}
+              label="Insert Thumbnail"
+              size="lg"
+              name="thumbnail"
+              value={input.thumbnail}
+              onChange={onChange}
             />
             <p className="mt-3 mb-2 font-bold text-lg text-black">
               Description
@@ -64,9 +107,9 @@ const PortfolioForm = ({
               placeholder={''}
               label="Insert Description"
               size="lg"
-              name="workDescription"
-              // value={input.workDescription}
-              // onChange={onChange}
+              name="description"
+              value={input.description}
+              onChange={onChange}
             />
             <p className="mt-3 mb-2 font-bold text-lg text-black">
               Website Link
@@ -75,22 +118,22 @@ const PortfolioForm = ({
               crossOrigin={''}
               label="Insert Website Link"
               size="lg"
-              name="jobLocation"
-              // value={input.jobLocation}
-              // onChange={onChange}
+              name="link"
+              value={input.link}
+              onChange={onChange}
             />
+            <DialogFooter
+              placeholder={''}
+              className="justify-between flex flex-col border-t-2 lg:flex-row lg:items-center lg:justify-between"
+            >
+              <div className="flex items center gap-3">
+                <Button type="submit" placeholder={''} color="gray" size="md">
+                  Create Portfolio
+                </Button>
+              </div>
+            </DialogFooter>
           </form>
         </DialogBody>
-        <DialogFooter
-          placeholder={''}
-          className="justify-between flex flex-col border-t-2 lg:flex-row lg:items-center lg:justify-between"
-        >
-          <div className="flex items center gap-3">
-            <Button type="submit" placeholder={''} color="gray" size="md">
-              Create Portfolio
-            </Button>
-          </div>
-        </DialogFooter>
       </Dialog>
     </>
   )
