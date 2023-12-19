@@ -60,9 +60,11 @@ const ProjectFormDialog = ({
       [e.target.name]: e.target.value,
     })
   }
+  console.log('wowoo')
 
   const onSubmitInput = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
     const response = await fetch(`http://localhost:3000/api/projects`, {
       method: 'POST',
       headers: {
@@ -73,6 +75,7 @@ const ProjectFormDialog = ({
         inputSelect,
       }),
     })
+    console.log(response)
   }
 
   return (
@@ -235,7 +238,7 @@ const ProjectFormDialog = ({
               >
                 <Option value="Web Developer">Web developer</Option>
                 <Option value="Software Developer">Software Developer</Option>
-                <Option value="Mobile App Deveveloper">
+                <Option value="Mobile App Developer">
                   Mobile App Developer
                 </Option>
                 <Option value="Game Developer">Game Developer</Option>
@@ -259,18 +262,18 @@ const ProjectFormDialog = ({
               value={input.teams}
               onChange={onChange}
             />
+            <DialogFooter
+              placeholder={''}
+              className="justify-between flex flex-col border-t-2 lg:flex-row lg:items-center lg:justify-between"
+            >
+              <div className="flex items center gap-3">
+                <Button type="submit" placeholder={''} color="gray" size="md">
+                  Create Project
+                </Button>
+              </div>
+            </DialogFooter>
           </form>
         </DialogBody>
-        <DialogFooter
-          placeholder={''}
-          className="justify-between flex flex-col border-t-2 lg:flex-row lg:items-center lg:justify-between"
-        >
-          <div className="flex items center gap-3">
-            <Button type="submit" placeholder={''} color="gray" size="md">
-              Create Project
-            </Button>
-          </div>
-        </DialogFooter>
       </Dialog>
     </>
   )
