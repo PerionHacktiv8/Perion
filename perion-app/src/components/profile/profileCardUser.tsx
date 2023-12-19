@@ -9,7 +9,7 @@ import {
 } from '@material-tailwind/react'
 import Link from 'next/link'
 
-export function ProfileCard() {
+export function ProfileCardUser() {
   return (
     <Card placeholder={''} className="w-96 mb-10">
       <CardHeader
@@ -24,19 +24,18 @@ export function ProfileCard() {
           size="xxl"
           className="mb-3 mx-auto"
         />
-        <Typography
-          placeholder={''}
-          variant="h4"
-          color="blue-gray"
-          className="mb-2"
+        <p
+          className="mb-2 text-xl font-bold text-black"
         >
           Naufal Rafi
-        </Typography>
-        <Typography
-          placeholder={''}
-          variant="small"
-          color="black"
-          className="flex justify-center items-center gap-2 mx-auto"
+        </p>
+        <p
+          className="mb-2 text-md"
+        >
+          Web Developers
+        </p>
+        <p
+          className="flex justify-center items-center gap-2 mx-auto text-sm"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -51,34 +50,14 @@ export function ProfileCard() {
             />
           </svg>
           Jakarta, Indonesia
-        </Typography>
-        <Typography
-          placeholder={''}
-          variant="small"
-          color="black"
-          className="mt-3"
+        </p>
+        <p
+          className="mt-3 text-sm text-black"
         >
           Member Since : 16 December 2023
-        </Typography>
+        </p>
       </CardHeader>
       <CardBody placeholder={''}>
-        <Link href="/profile/edit-profile">
-          <Button
-            placeholder={''}
-            className="rounded-full w-full flex justify-center items-center gap-2 mx-auto mb-2"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-6 h-6"
-            >
-              <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
-              <path d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" />
-            </svg>
-            Edit Your Profile
-          </Button>
-        </Link>
         <Button
           placeholder={''}
           className="rounded-full w-full flex justify-center items-center gap-2 mx-auto mb-2"

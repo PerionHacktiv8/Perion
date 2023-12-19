@@ -85,7 +85,28 @@ export class Users {
         { projection: { picture: 1, firstTime: 1 } },
       )) as UserModel
 
+      console.log(user)
+
       return { picture: user.picture, firstTime: user.firstTime }
+    } catch (err) {
+      throw err
+    }
+  }
+
+  static async findUser(val: string) {
+    try {
+      const collection = await this.connection()
+
+      const user = (await collection.findOne(
+        {
+          _id: new ObjectId(val),
+        },
+        { projection: { picture: 1, name: 1, email: 1 } },
+      )) as UserModel
+
+      console.log(user)
+
+      return { picture: user.picture, name: user.name, email: user.email }
     } catch (err) {
       throw err
     }

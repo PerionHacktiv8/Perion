@@ -1,7 +1,6 @@
 'use client'
-import { CreateBoxPorto } from '@/components/portofolio/boxPorto'
 import { CreateProjectCard } from '@/components/project/createProjectCard'
-import { ProfileCard } from '@/components/profile/profileCard'
+import { ProfileCardUser } from '@/components/profile/profileCardUser'
 import { ProfileNav } from '@/components/profile/profileNav'
 import ProjectCardDialog from '@/components/project/projectCardDialog'
 
@@ -13,7 +12,7 @@ export default function Profile() {
         
         {/* Profile Card - Left Side */}
         <div className="lg:col-span-1">
-          <ProfileCard />
+          <ProfileCardUser />
         </div>
 
         {/* Main Content - Right Side */}

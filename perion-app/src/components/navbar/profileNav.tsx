@@ -7,6 +7,7 @@ import {
   Avatar,
   Typography,
   Button,
+  IconButton,
 } from '@material-tailwind/react'
 import { useEffect, useState } from 'react'
 import { signOut } from './signOut'
@@ -39,7 +40,17 @@ export function ProfileMenu({ textColor }: { textColor: string }) {
               src={pic}
             />
           </MenuHandler>
-          <MenuList placeholder={''}>
+          <MenuList placeholder={''} className="w-80">
+            <div className="flex flex-col justify-center items-center mb-5">
+              <Avatar placeholder={''} src={pic} alt="avatar" size="xxl" />
+              <p className="font-semibold text-lg mt-3 text-black">
+                Naufal Rafi
+              </p>
+              <p className="text-md">naufalrafi@gmail.com</p>
+            </div>
+
+            <div className="border-t-2 border-gray-200 my-3"></div>
+
             <MenuItem placeholder={''} className="flex items-center gap-2">
               <svg
                 width="16"
@@ -59,9 +70,9 @@ export function ProfileMenu({ textColor }: { textColor: string }) {
               <Typography
                 placeholder={''}
                 variant="small"
-                className="font-medium"
+                className="font-bold"
               >
-                My Profile
+                Parion Profile
               </Typography>
             </MenuItem>
             <MenuItem placeholder={''} className="flex items-center gap-2">
@@ -83,7 +94,7 @@ export function ProfileMenu({ textColor }: { textColor: string }) {
               <Typography
                 placeholder={''}
                 variant="small"
-                className="font-medium"
+                className="font-bold"
               >
                 Edit Profile
               </Typography>
@@ -107,7 +118,7 @@ export function ProfileMenu({ textColor }: { textColor: string }) {
               <Typography
                 placeholder={''}
                 variant="small"
-                className="font-medium"
+                className="font-bold"
               >
                 Bookmark
               </Typography>

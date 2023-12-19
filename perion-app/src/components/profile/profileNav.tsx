@@ -4,7 +4,7 @@ import Link from 'next/link'
 export function ProfileNav() {
   return (
     <div className="flex items-center gap-4 mt-0">
-      <Link href={'/profile/projek'}>
+      <Link href={'/profile/project'}>
         <Button placeholder={''} variant="gradient" className="rounded-full">
           Project
         </Button>

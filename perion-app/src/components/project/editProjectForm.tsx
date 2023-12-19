@@ -12,13 +12,13 @@ import {
   Option,
 } from '@material-tailwind/react'
 
-export function ProjectForm() {
+export function EditProjectForm() {
   return (
     <>
       <Card placeholder={''} className="mx-auto w-full">
         <CardBody placeholder={''} className="flex flex-col gap-3">
           <Typography placeholder={''} variant="h4" color="blue-gray">
-            Create a Project
+            (Nama Project)
           </Typography>
           <Typography
             placeholder={''}
@@ -26,7 +26,7 @@ export function ProjectForm() {
             variant="paragraph"
             color="gray"
           >
-            Start building your project:
+            Edit your project :
           </Typography>
           <Typography placeholder={''} className="-mb-2" variant="h6">
             Title
@@ -70,7 +70,7 @@ export function ProjectForm() {
         </CardBody>
         <CardFooter placeholder={''} className="pt-0">
           <Button placeholder={''} variant="gradient">
-            Create Project
+            Save Project
           </Button>
         </CardFooter>
       </Card>
