@@ -92,6 +92,12 @@ const ProjectCreateSchema = z.object({
       invalid_type_error: 'You should be input the Teams',
     })
     .min(1, 'You should be input the Teams'),
+  jobCategory: z
+    .string({
+      required_error: 'You should be input the Job Category',
+      invalid_type_error: 'You should be input the Job Category',
+    })
+    .min(1, 'You should be input the Job Category'),
 })
 
 export class Project {
@@ -120,6 +126,7 @@ export class Project {
         experience: input.experience,
         benefits: input.benefits,
         onSiteRequired: inputSelect.onSiteRequired,
+        jobCategory: inputSelect.jobCategory,
         skills: input.skills,
         teams: input.teams,
       }

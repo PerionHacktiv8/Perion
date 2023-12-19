@@ -20,14 +20,17 @@ export type input = {
   teams: string
   skills: string
 }
-export type inputSelect = { jobType: string; onSiteRequired: string }
+export type inputSelect = {
+  jobType: string
+  onSiteRequired: string
+  jobCategory: string
+}
 
 export const POST = async (req: NextRequest) => {
   try {
     const inputForm = await req.json()
     const userId = req.headers.get('x-user-id') as string
 
-    // const input = (await req.formData()) as FormData
     let input = inputForm.input as input
     let inputSelect = inputForm.inputSelect as inputSelect
 

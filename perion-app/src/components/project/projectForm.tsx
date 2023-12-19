@@ -27,6 +27,7 @@ type inputProjectModel = {
 type inputSelect = {
   jobType: string
   onSiteRequired: string
+  jobCategory: string
 }
 
 export function ProjectForm() {
@@ -44,6 +45,7 @@ export function ProjectForm() {
   const [inputSelect, setInputSelect] = useState<inputSelect>({
     jobType: '',
     onSiteRequired: '',
+    jobCategory: '',
   })
 
   const onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -160,6 +162,31 @@ export function ProjectForm() {
               value={input.experience}
               onChange={onChange}
             />
+            <Typography placeholder={''} className="-mb-1" variant="h6">
+              Job Category
+            </Typography>
+            <div className="w-full">
+              <Select
+                placeholder={''}
+                label="Select Job Category"
+                name="jobCategory"
+                value={inputSelect.jobCategory}
+                onChange={(e) => {
+                  if (e)
+                    setInputSelect({
+                      ...inputSelect,
+                      jobCategory: e,
+                    })
+                }}
+              >
+                <Option value="Web Developer">Web developer</Option>
+                <Option value="Software Developer">Software Developer</Option>
+                <Option value="Mobile App Deveveloper">
+                  Mobile App Developer
+                </Option>
+                <Option value="Game Developer">Game Developer</Option>
+              </Select>
+            </div>
             <Typography placeholder={''} className="-mb-2" variant="h6">
               Benefits
             </Typography>
