@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   Button,
   Card,
@@ -13,6 +13,20 @@ import {
 } from '@material-tailwind/react'
 
 export function EditProjectForm() {
+  const fecthProject = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/projects`)
+      const resJson = await response.json()
+      console.log(resJson)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    fecthProject()
+  }, [])
+
   return (
     <>
       <Card placeholder={''} className="mx-auto w-full">
