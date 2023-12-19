@@ -45,7 +45,7 @@ export function NavbarDefault() {
     navbarBackground === 'transparent' ? 'text-white' : 'text-gray-800'
 
   const navList = (
-    <ul className="flex flex-col items-center gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+    <ul className="flex flex-col items-center justify-center w-full gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       <p className="flex items-center gap-x-2 p-1 font-semibold font-lg">
         <Link
           href="/"
@@ -72,11 +72,18 @@ export function NavbarDefault() {
       >
         Recruit
       </Link>
-      <p className="flex items-center gap-x-2 p-1 font-semibold font-lg">
-        <a href="#" className="flex items-center">
-          Projects
-        </a>
-      </p>
+      <Link
+        href="/project"
+        className={`flex font-bold items-center ${
+          pathName === 'project'
+            ? `scale-125 border-b-2 ${
+                navbarBackground === 'transparent' ? '' : 'border-black'
+              }`
+            : ''
+        }`}
+      >
+        Project
+      </Link>
     </ul>
   )
 
@@ -89,7 +96,7 @@ export function NavbarDefault() {
       } ${textColor}`}
     >
       <div className="container mx-auto flex items-center justify-between">
-        <Link href="/">
+        <Link className=" w-1/3" href="/">
           <Typography
             placeholder={''}
             as="p"
@@ -105,8 +112,8 @@ export function NavbarDefault() {
             Parion
           </Typography>
         </Link>
-        <div className="hidden lg:block">{navList}</div>
-        <div className="flex items-center gap-x-1">
+        <div className="w-1/3 lg:block">{navList}</div>
+        <div className="flex w-1/3 justify-end items-center gap-x-1">
           <ProfileMenu textColor={textColor} />
         </div>
         <IconButton

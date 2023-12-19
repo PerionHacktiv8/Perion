@@ -7,7 +7,8 @@ import { CreateInvoiceRequest } from 'xendit-node/invoice/models'
 import { PdfReader } from 'pdfreader'
 import { openai } from '../config/openai'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
-import { fireStorage } from '../config/firebaseConfig'
+import { ProfilesModel } from './profiles'
+import fireStorage from '../config/firebase'
 
 const COLLECTION_NAME = 'users'
 
@@ -19,9 +20,24 @@ export type UserModel = {
   password: string
   picture: string
   firstTime: boolean
+  bio: string
+  cvLink: string
+  cvData: CVData
+  location: string
+  createdAt: string
 }
 
-type UserInputType = Omit<UserModel, '_id' | 'picture' | 'firstTime'>
+export type CVData = {
+  expYear: string
+  skills: string[]
+  numOfProjects: string
+  projectsNames: string[]
+}
+
+type UserInputType = Omit<
+  UserModel,
+  '_id' | 'picture' | 'firstTime' | 'createdAt'
+>
 
 const userCreateSchema = z.object({
   name: z
@@ -93,20 +109,30 @@ export class Users {
     }
   }
 
-  static async findUser(val: string) {
+  static async findProfile(val: string) {
     try {
       const collection = await this.connection()
 
-      const user = (await collection.findOne(
-        {
-          _id: new ObjectId(val),
-        },
-        { projection: { picture: 1, name: 1, email: 1 } },
-      )) as UserModel
+      const [user] = await collection
+        .aggregate([
+          {
+            $match: { _id: new ObjectId(val) },
+          },
+          {
+            $lookup: {
+              from: 'profiles',
+              localField: 'authorId',
+              foreignField: '_id',
+              as: 'profileInfo',
+            },
+          },
+          {
+            $unwind: { path: '$profileInfo', preserveNullAndEmptyArrays: true },
+          },
+        ])
+        .toArray()
 
-      console.log(user)
-
-      return { picture: user.picture, name: user.name, email: user.email }
+      return user as UserModel
     } catch (err) {
       throw err
     }
@@ -222,7 +248,7 @@ export class Users {
     }
   }
 
-  static async extractPDF(file: File) {
+  static async extractPDF(file: File, userId: string) {
     try {
       const fileArrBuff = await file.arrayBuffer()
       const fileBuff = Buffer.from(fileArrBuff)
@@ -231,7 +257,7 @@ export class Users {
       const pdfreader = new PdfReader({})
       pdfreader.parseBuffer(fileBuff, (err, item) => {
         if (err) console.error('error:', err)
-        else if (!item) return this.sumPDF(result.join(' '))
+        else if (!item) return this.sumPDF(result.join(' '), userId)
         else if (item.text) {
           result.push(item.text)
         }
@@ -241,30 +267,51 @@ export class Users {
     }
   }
 
-  static async sumPDF(val: string) {
+  static async sumPDF(val: string, userId: string) {
     try {
+      const collection = await this.connection()
+
       const ai = await openai.chat.completions.create({
         model: 'gpt-4',
         messages: [
           {
             role: 'user',
-            content: `can you summarize this cv into four excact points divided by a dash in a line, that is his name, his total work experience in number of years, if less than a year put 1 year, and his skills strict only his skills, his number of projects, this is the cv, ${val}`,
+            content: `can you summarize this cv into four exact points divided by a dash in a line, first is only his total work experience in number of years, if less than a year put 1 year, second is his skills strict only his skills, third is his number of projects only number of projects, fourth is his projects name list divided by a coma with this format 'Names: his list of projects' , this is the cv, ${val}`,
           },
         ],
       })
 
-      console.log(ai.choices[0].message.content as string)
-
       const data = (ai.choices[0].message.content as string).split(' - ')
 
-      console.log(data)
+      const expYear = data[0]
+      const skills = data[1]?.split('Skills: ')[1]?.split(', ')
+      const numOfProjects = data[2]
+      const projectNames = data[3]?.split('Names: ')[1]?.split(', ')
+
+      await collection.findOneAndUpdate(
+        { _id: new ObjectId(userId) },
+        {
+          $set: {
+            cvData: {
+              expYear,
+              skills,
+              numOfProjects,
+              projectNames,
+            },
+          },
+        },
+      )
+
+      return data
     } catch (err) {
       console.log(err)
     }
   }
 
-  static async upPDF(file: File) {
+  static async upPDF(file: File, userId: string) {
     try {
+      const collection = await this.connection()
+
       const storageRef = ref(fireStorage, file.name)
       const upload = uploadBytes(storageRef, file)
 
@@ -274,7 +321,64 @@ export class Users {
         })
       })
 
+      await collection.findOneAndUpdate(
+        { _id: new ObjectId(userId) },
+        {
+          $set: {
+            cvLink: data,
+          },
+        },
+      )
+
       return data
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  static async upImg(file: File, userId: string) {
+    try {
+      const collection = await this.connection()
+
+      const storageRef = ref(fireStorage, userId)
+      const upload = uploadBytes(storageRef, file)
+
+      const data = await upload.then(async (snapshot) => {
+        return getDownloadURL(snapshot.ref).then((dataUrl) => {
+          return dataUrl
+        })
+      })
+
+      await collection.findOneAndUpdate(
+        { _id: new ObjectId(userId) },
+        {
+          $set: {
+            picture: data,
+          },
+        },
+      )
+
+      return data
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  static async upProfile(input: UserModel, userId: string) {
+    try {
+      const collection = await this.connection()
+
+      await collection.findOneAndUpdate(
+        { _id: new ObjectId(userId) },
+        {
+          $set: {
+            name: input.name,
+            bio: input.bio,
+            location: input.location,
+            updatedAt: new Date(),
+          },
+        },
+      )
     } catch (err) {
       console.log(err)
     }

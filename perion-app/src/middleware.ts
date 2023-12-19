@@ -8,8 +8,11 @@ export const middleware = async (req: NextRequest) => {
   }
 
   if (
-    (req.url.includes('/api/user') && req.method !== 'POST') ||
-    (req.url.includes('/api/invoiceXendit') && req.method === 'POST')
+    req.url.includes('/api/user') ||
+    (req.url.includes('/api/invoiceXendit') && req.method === 'POST') ||
+    (req.url.includes('/api/login') && req.method !== 'POST') ||
+    (req.url.includes('/api/image') && req.method === 'POST') ||
+    (req.url.includes('/api/pdf') && req.method === 'POST')
   ) {
     const cookiesStore = cookies()
     const token = cookiesStore.get('token')
