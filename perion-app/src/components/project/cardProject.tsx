@@ -2,9 +2,9 @@
 import Image from 'next/image'
 import React from 'react'
 
-export function CardProject() {
+const CardProject = ({ onOpen } : {onOpen : () => void}) => {
   return (
-    <div className="relative w-80 h-52">
+    <div onClick={onOpen} className="relative w-80 h-52">
       <Image
         src="https://static.vecteezy.com/system/resources/previews/004/965/420/non_2x/deer-in-the-forest-beautiful-sunset-scenery-illustration-free-vector.jpg"
         alt="Placeholder"
@@ -26,3 +26,5 @@ export function CardProject() {
     </div>
   )
 }
+
+export default CardProject;

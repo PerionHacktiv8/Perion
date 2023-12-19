@@ -101,8 +101,6 @@ export class Users {
         { projection: { picture: 1, firstTime: 1 } },
       )) as UserModel
 
-      console.log(user)
-
       return { picture: user.picture, firstTime: user.firstTime }
     } catch (err) {
       throw err

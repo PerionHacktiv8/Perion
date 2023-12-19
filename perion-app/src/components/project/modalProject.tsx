@@ -11,7 +11,7 @@ import {
 import Link from 'next/link'
 import React from 'react'
 
-const ProjectDialog = ({ open, handleOpen }) => {
+const ProjectDialog = ({ open , handleOpen } : {open: boolean, handleOpen : () => void} ) => {
   return (
     <>
       <Dialog
