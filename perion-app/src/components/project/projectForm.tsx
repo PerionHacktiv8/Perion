@@ -2,14 +2,14 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react'
 import {
   Button,
-  Card,
-  CardBody,
-  CardFooter,
-  Typography,
   Input,
   Textarea,
   Select,
   Option,
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
 } from '@material-tailwind/react'
 
 type inputProjectModel = {
@@ -30,7 +30,13 @@ type inputSelect = {
   jobCategory: string
 }
 
-export function ProjectForm() {
+const ProjectFormDialog = ({
+  open,
+  handleOpen,
+}: {
+  open: boolean
+  handleOpen: () => void
+}) => {
   const [input, setInput] = useState<inputProjectModel>({
     title: '',
     projectDescription: '',
@@ -71,23 +77,36 @@ export function ProjectForm() {
 
   return (
     <>
-      <Card placeholder={''} className="mx-auto w-full">
-        <form action="" onSubmit={onSubmitInput}>
-          <CardBody placeholder={''} className="flex flex-col gap-3">
-            <Typography placeholder={''} variant="h4" color="blue-gray">
-              Create a Project
-            </Typography>
-            <Typography
-              placeholder={''}
-              className="mb-1 font-normal"
-              variant="paragraph"
-              color="gray"
-            >
-              Start building your project:
-            </Typography>
-            <Typography placeholder={''} className="-mb-2" variant="h6">
-              Title
-            </Typography>
+      <Dialog
+        placeholder={''}
+        size="xl"
+        open={open}
+        handler={handleOpen}
+        className="shadow-none overflow-y-auto"
+        animate={{
+          mount: { scale: 1, y: 0 },
+          unmount: { scale: 0.9, y: -100 },
+        }}
+      >
+        <DialogHeader
+          placeholder={''}
+          className="justify-center border-b-2 mt-2 flex flex-col lg:flex-row lg:items-center lg:justify-center gap-4"
+        >
+          <div className="flex items-center gap-3">
+            <div className="mt-px flex flex-col">
+              <p className="font-bold text-lg">Create a Project</p>
+              <p className="mb-1 font-normal text-sm">
+                Start building your project:
+              </p>
+            </div>
+          </div>
+        </DialogHeader>
+        <DialogBody
+          placeholder={''}
+          className="h-auto sm:h-[30rem] md:h-[35rem] lg:h-[37rem] overflow-y-auto flex flex-col gap-3"
+        >
+          <form action="" onSubmit={onSubmitInput}>
+            <p className="font-bold text-lg text-black">Title</p>
             <Input
               crossOrigin={''}
               label="Insert Title"
@@ -96,9 +115,9 @@ export function ProjectForm() {
               value={input.title}
               onChange={onChange}
             />
-            <Typography placeholder={''} className="-mb-2" variant="h6">
+            <p className="mt-3 mb-2 font-bold text-lg text-black">
               Project Description
-            </Typography>
+            </p>
             <Textarea
               placeholder={''}
               label="Insert Description"
@@ -107,9 +126,9 @@ export function ProjectForm() {
               value={input.projectDescription}
               onChange={onChange}
             />
-            <Typography placeholder={''} className="-mb-2" variant="h6">
+            <p className="mt-3 mb-2 font-bold text-lg text-black">
               Work Description
-            </Typography>
+            </p>
             <Textarea
               placeholder={''}
               label="Insert Description"
@@ -118,9 +137,9 @@ export function ProjectForm() {
               value={input.workDescription}
               onChange={onChange}
             />
-            <Typography placeholder={''} className="-mb-2" variant="h6">
+            <p className="mt-3 mb-2 font-bold text-lg text-black">
               Project Location
-            </Typography>
+            </p>
             <Input
               crossOrigin={''}
               label="Insert Location"
@@ -129,9 +148,9 @@ export function ProjectForm() {
               value={input.jobLocation}
               onChange={onChange}
             />
-            <Typography placeholder={''} className="-mb-1" variant="h6">
+            <p className="mt-3 mb-2 font-bold text-lg text-black">
               On Site Required
-            </Typography>
+            </p>
             <div className="w-full">
               <Select
                 placeholder={''}
@@ -151,9 +170,7 @@ export function ProjectForm() {
                 <Option value="Hybrid">Hybrid</Option>
               </Select>
             </div>
-            <Typography placeholder={''} className="-mb-2" variant="h6">
-              Experience
-            </Typography>
+            <p className="mt-3 mb-2 font-bold text-lg text-black">Experience</p>
             <Input
               crossOrigin={''}
               label="Insert Experience"
@@ -162,9 +179,46 @@ export function ProjectForm() {
               value={input.experience}
               onChange={onChange}
             />
-            <Typography placeholder={''} className="-mb-1" variant="h6">
+            <p className="mt-3 mb-2 font-bold text-lg text-black">Benefits</p>
+            <Input
+              crossOrigin={''}
+              label="Insert Benefits"
+              size="lg"
+              name="benefits"
+              value={input.benefits}
+              onChange={onChange}
+            />
+            <p className="mt-3 mb-2 font-bold text-lg text-black">Position</p>
+            <Input
+              crossOrigin={''}
+              label="Insert Position"
+              size="lg"
+              name="position"
+              value={input.position}
+              onChange={onChange}
+            />
+            <p className="mt-3 mb-2 font-bold text-lg text-black">Job Type</p>
+            <div className="w-full">
+              <Select
+                placeholder={''}
+                label="Select Type"
+                name="jobType"
+                value={inputSelect.jobType}
+                onChange={(e) => {
+                  if (e)
+                    setInputSelect({
+                      ...inputSelect,
+                      jobType: e,
+                    })
+                }}
+              >
+                <Option value="Full Time">Full Time</Option>
+                <Option value="Freelance">Freelance</Option>
+              </Select>
+            </div>
+            <p className="mt-3 mb-2 font-bold text-lg text-black">
               Job Category
-            </Typography>
+            </p>
             <div className="w-full">
               <Select
                 placeholder={''}
@@ -187,52 +241,7 @@ export function ProjectForm() {
                 <Option value="Game Developer">Game Developer</Option>
               </Select>
             </div>
-            <Typography placeholder={''} className="-mb-2" variant="h6">
-              Benefits
-            </Typography>
-            <Input
-              crossOrigin={''}
-              label="Insert Benefits"
-              size="lg"
-              name="benefits"
-              value={input.benefits}
-              onChange={onChange}
-            />
-            <Typography placeholder={''} className="-mb-2" variant="h6">
-              Position
-            </Typography>
-            <Input
-              crossOrigin={''}
-              label="Insert Position"
-              size="lg"
-              name="position"
-              value={input.position}
-              onChange={onChange}
-            />
-            <Typography placeholder={''} className="-mb-2" variant="h6">
-              Job Type
-            </Typography>
-            <div className="w-full">
-              <Select
-                placeholder={''}
-                label="Select Type"
-                name="jobType"
-                value={inputSelect.jobType}
-                onChange={(e) => {
-                  if (e)
-                    setInputSelect({
-                      ...inputSelect,
-                      jobType: e,
-                    })
-                }}
-              >
-                <Option value="Full Time">Full Time</Option>
-                <Option value="Freelance">Freelance</Option>
-              </Select>
-            </div>
-            <Typography placeholder={''} className="-mb-2" variant="h6">
-              Skills
-            </Typography>
+            <p className="mt-3 mb-2 font-bold text-lg text-black">Skills</p>
             <Textarea
               placeholder={''}
               label="Insert Skills"
@@ -241,9 +250,7 @@ export function ProjectForm() {
               value={input.skills}
               onChange={onChange}
             />
-            <Typography placeholder={''} className="-mb-2" variant="h6">
-              Teams
-            </Typography>
+            <p className="mt-3 mb-2 font-bold text-lg text text-black">Teams</p>
             <Input
               crossOrigin={''}
               label="Insert Teams"
@@ -252,14 +259,21 @@ export function ProjectForm() {
               value={input.teams}
               onChange={onChange}
             />
-          </CardBody>
-          <CardFooter placeholder={''} className="pt-0">
-            <Button type="submit" placeholder={''} variant="gradient">
+          </form>
+        </DialogBody>
+        <DialogFooter
+          placeholder={''}
+          className="justify-between flex flex-col border-t-2 lg:flex-row lg:items-center lg:justify-between"
+        >
+          <div className="flex items center gap-3">
+            <Button type="submit" placeholder={''} color="gray" size="md">
               Create Project
             </Button>
-          </CardFooter>
-        </form>
-      </Card>
+          </div>
+        </DialogFooter>
+      </Dialog>
     </>
   )
 }
+
+export default ProjectFormDialog

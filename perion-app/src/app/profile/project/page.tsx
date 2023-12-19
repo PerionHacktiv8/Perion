@@ -1,31 +1,29 @@
 'use client'
-import { CreateBoxPorto } from '@/components/portofolio/boxPorto'
-import { CreateBox } from '@/components/project/boxProject'
-import { CardProject } from '@/components/project/cardProject'
-import { ProfileCard } from '@/components/profile/profileCard'
-import { ProfileNav } from '@/components/profile/profileNav'
+import ProjectFormDialog from '@/components/project/projectForm'
+import CardProject from '@/components/project/cardProject'
+import CardProjectForm from '@/components/project/createProjectCard'
+import ProjectDialog from '@/components/project/modalProject'
+import { useState } from 'react'
 
 export default function Profile() {
+  const [isFormOpen, setIsFormOpen] = useState(false)
+  const [isProjectOpen, setIsProjectOpen] = useState(false)
+
+  const toggleFormModal = () => setIsFormOpen(!isFormOpen)
+
+  const toggleProjectModal = () => setIsProjectOpen(!isProjectOpen)
+
   return (
-    <div className="container px-4 sm:px-8 md:px-12 py-4 md:py-8">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-24">
-        {/* Left side */}
-        <div className="w-full lg:w-1/4 px-4">
-          <ProfileCard />
-        </div>
+    <div className="flex items-center gap-5">
+      <CardProjectForm onOpen={toggleFormModal} />
+      {isFormOpen && (
+        <ProjectFormDialog open={isFormOpen} handleOpen={toggleFormModal} />
+      )}
 
-        {/* Right side */}
-        <div className="w-full lg:w-3/4 px-4">
-          <div className="flex flex-col lg:flex-row justify-between items-center mb-4 px-4">
-            <ProfileNav />
-          </div>
-
-          <div className="px-4">
-            <CreateBox />
-            <CardProject />
-          </div>
-        </div>
-      </div>
+      <CardProject onOpen={toggleProjectModal} />
+      {isProjectOpen && (
+        <ProjectDialog open={isProjectOpen} handleOpen={toggleProjectModal} />
+      )}
     </div>
   )
 }

@@ -71,13 +71,13 @@ export function DialogDefault() {
                 Plus
               </h3>
               <p className="text-white mb-4">USD $20</p>
-                <button
-                  onClick={xendit}
-                  type="submit"
-                  className="bg-[#f5b530] hover:bg-[#f98435] hover:shadow-md transition-transform active:scale-95 ease-in-out duration-300 w-full py-2 rounded text-white text-sm mb-4"
-                >
-                  Choose Plan
-                </button>
+              <button
+                onClick={xendit}
+                type="submit"
+                className="bg-[#f5b530] hover:bg-[#f98435] hover:shadow-md transition-transform active:scale-95 ease-in-out duration-300 w-full py-2 rounded text-white text-sm mb-4"
+              >
+                Choose Plan
+              </button>
               <p className="text-white mb-4">Everything in Free, and:</p>
               <ul className="flex flex-col gap-4 text-sm text-white">
                 <li>✓ Access to Parion, our most capable model</li>

@@ -1,13 +1,16 @@
-export function CreateBox() {
+'use client'
+import React from 'react'
+
+const CardProjectForm = ({ onOpen } : {onOpen : () => void}) => {
   return (
     <div
-      className="w-80 flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-lg my-8"
-      style={{ minWidth: '300px', maxWidth: '500px' }}
+      className="w-80 h-52 flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-lg my-8"
+      style={{ minWidth: '300px', maxWidth: '500px' }} onClick={onOpen}
     >
       <div className="flex items-center justify-center rounded-full bg-blue-100 h-16 w-16 mb-4">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-8 w-8 text-blue-600"
+          className="h-8 w-8 text-gray-600"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -21,11 +24,13 @@ export function CreateBox() {
         </svg>
       </div>
       <button className="bg-white py-2 px-4 border border-gray-300 rounded shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-        Create Project
+        Create your Project
       </button>
-      <p className="text-sm text-gray-500 mt-2">
+      <p className="text-sm bg-white p-2 rounded text-gray-700 mt-2">
         Unpublished project will appear here.
       </p>
     </div>
   )
 }
+
+export default CardProjectForm;
