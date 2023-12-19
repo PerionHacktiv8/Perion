@@ -75,7 +75,6 @@ const ProjectFormDialog = ({
         inputSelect,
       }),
     })
-    console.log(response)
   }
 
   return (
