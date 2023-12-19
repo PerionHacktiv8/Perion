@@ -24,19 +24,9 @@ export function ProfileCardUser() {
           size="xxl"
           className="mb-3 mx-auto"
         />
-        <p
-          className="mb-2 text-xl font-bold text-black"
-        >
-          Naufal Rafi
-        </p>
-        <p
-          className="mb-2 text-md"
-        >
-          Web Developers
-        </p>
-        <p
-          className="flex justify-center items-center gap-2 mx-auto text-sm"
-        >
+        <p className="mb-2 text-xl font-bold text-black">Naufal Rafi</p>
+        <p className="mb-2 text-md">Web Developers</p>
+        <p className="flex justify-center items-center gap-2 mx-auto text-sm">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -51,9 +41,7 @@ export function ProfileCardUser() {
           </svg>
           Jakarta, Indonesia
         </p>
-        <p
-          className="mt-3 text-sm text-black"
-        >
+        <p className="mt-3 text-sm text-black">
           Member Since : 16 December 2023
         </p>
       </CardHeader>
