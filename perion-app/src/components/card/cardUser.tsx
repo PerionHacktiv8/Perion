@@ -12,7 +12,7 @@ import {
   Avatar,
 } from '@material-tailwind/react'
 import { authN } from '../../db/config/firebaseConfig'
-import { createOrJoinRoom } from '../../db/config/firestoreService'
+import { sendPrivateMessage } from '../../db/config/firestoreService'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
@@ -37,26 +37,25 @@ function CheckIcon() {
 
 export function CardUser({ datum }: { datum: UserModel }) {
   const router = useRouter()
-  const user = authN.currentUser
-  const [isClient, setIsClient] = useState(false)
-
-  useEffect(() => {
-    setIsClient(true)
-  }, [])
 
   const handleChat = async () => {
-    if (!user) {
-      console.error('User is not authenticated')
+    if (!authN.currentUser?.uid || !datum._id) {
+      console.error('Invalid sender or recipient ID')
       return
     }
 
-    const roomId = await createOrJoinRoom(datum.name, user.uid)
-    localStorage.setItem('currentRoom', roomId)
-    window.location.href = '/chat'
-  }
+    const data = {
+      from: authN.currentUser.uid,
+      to: datum._id,
+      message: 'Hi, I want to hire you!',
+      createdAt: new Date().toISOString(),
+      read: false,
+    }
 
+    await sendPrivateMessage(data.to, data.from, data.message)
+    router.push('/chat')
+  }
   const skills = datum.cvData.skills.splice(0, 5).join(', ')
-  const url = datum.username
 
   return (
     <Card

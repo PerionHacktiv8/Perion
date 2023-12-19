@@ -345,7 +345,7 @@ export class Users {
     try {
       const collection = await this.connection()
 
-      const storageRef = ref(fireStorage, file.name)
+      const storageRef = ref(storage, file.name)
       const upload = uploadBytes(storageRef, file)
 
       const data = await upload.then(async (snapshot) => {
@@ -373,7 +373,7 @@ export class Users {
     try {
       const collection = await this.connection()
 
-      const storageRef = ref(fireStorage, userId)
+      const storageRef = ref(storage, userId)
       const upload = uploadBytes(storageRef, file)
 
       const data = await upload.then(async (snapshot) => {

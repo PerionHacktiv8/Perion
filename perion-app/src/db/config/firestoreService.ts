@@ -2,7 +2,6 @@ import { firestore } from '../config/firebaseConfig';
 import {
     collection, addDoc, query, orderBy, onSnapshot, where, getDocs, doc, updateDoc, arrayUnion, Timestamp
 } from 'firebase/firestore';
-import { UserModel } from '../models/user';
 
 export interface Room {
     id: string;
@@ -98,17 +97,14 @@ export const subscribeToTyping = (roomId: string, callback: (typing: Record<stri
     });
 };
 
-export const subscribeToRoomMessages = (userId: string, callback: (message: Message, roomId: string) => void) => {
-    const q = query(messagesCollection, where('userIds', 'array-contains', userId), orderBy('createdAt', 'desc'));
+export const subscribeToRoomMessages = (roomId: string, callback: (message: Message, roomId: string) => void) => {
+    const q = query(messagesCollection, where('roomId', '==', roomId), orderBy('createdAt', 'desc'));
 
-    return onSnapshot(q, snapshot => {
-        snapshot.docChanges().forEach(change => {
+    return onSnapshot(q, (snapshot) => {
+        snapshot.docChanges().forEach((change) => {
             if (change.type === 'added') {
-                const message = change.doc.data() as Message;
-                const roomId = change.doc.ref.parent.parent?.id;
-                if (roomId && message.userId !== userId) {
-                    callback(message, roomId);
-                }
+                const message = change.doc.data();
+                callback({ id: change.doc.id, ...message } as Message, roomId);
             }
         });
     });
@@ -122,3 +118,38 @@ export const subscribeToRooms = (userId: string, callback: (rooms: Room[]) => vo
     });
 };
 
+export const sendPrivateMessage = async (recipientId: string, senderId: string, initialMessage: string): Promise<string> => {
+    // Validate recipientId and senderId
+    if (!recipientId || !senderId) {
+        console.error('Invalid recipientId or senderId', { recipientId, senderId });
+        throw new Error('Invalid recipientId or senderId');
+    }
+
+    let roomId;
+
+    try {
+        const q = query(roomsCollection, where('userIds', 'array-contains', senderId));
+        const snapshot = await getDocs(q);
+
+        snapshot.forEach(doc => {
+            if (doc.data().userIds.includes(recipientId)) {
+                roomId = doc.id;
+            }
+        });
+
+        if (!roomId) {
+            const roomRef = await addDoc(roomsCollection, {
+                userIds: [senderId, recipientId],
+                private: true,
+            });
+            roomId = roomRef.id;
+        }
+
+        await postMessage(roomId, senderId, initialMessage);
+
+        return roomId;
+    } catch (error) {
+        console.error('Error in sendPrivateMessage:', error);
+        throw error;
+    }
+};
