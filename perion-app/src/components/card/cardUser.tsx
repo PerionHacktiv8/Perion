@@ -10,6 +10,8 @@ import {
   Button,
   Avatar,
 } from '@material-tailwind/react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 function CheckIcon() {
   return (
@@ -31,6 +33,11 @@ function CheckIcon() {
 }
 
 export function CardUser({ datum }: { datum: UserModel }) {
+  const router = useRouter()
+
+  const skills = datum.cvData.skills.splice(0, 5).join(', ')
+  const url = datum.username
+
   return (
     <Card
       placeholder={''}
@@ -38,7 +45,7 @@ export function CardUser({ datum }: { datum: UserModel }) {
       variant="gradient"
       className="w-full max-w-sm md:max-w-md transition duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-xl mb-5"
     >
-      <CardHeader
+      {/* <CardHeader
         placeholder={''}
         color="transparent"
         className="border-0 text-center h-44 inline-block overflow-hidden relative"
@@ -49,7 +56,7 @@ export function CardUser({ datum }: { datum: UserModel }) {
             className="relative h-[1440px] w-[900px] block"
           ></iframe>
         </div>
-      </CardHeader>
+      </CardHeader> */}
       <div className="-mt-9 flex justify-center">
         <Avatar
           placeholder={''}
@@ -102,9 +109,7 @@ export function CardUser({ datum }: { datum: UserModel }) {
             <span className="rounded-full border border-white/20 bg-white/20 p-1">
               <CheckIcon />
             </span>
-            <p className="font-normal">
-              {datum.cvData.skills.splice(0, 5).join(', ')}
-            </p>
+            <p className="font-normal">{skills}</p>
           </li>
         </ul>
       </CardBody>
@@ -113,6 +118,9 @@ export function CardUser({ datum }: { datum: UserModel }) {
           placeholder={''}
           size="lg"
           color="white"
+          onClick={() => {
+            router.push(`/${url}`)
+          }}
           className="hover:bg-black hover:text-white"
         >
           Hire {datum.username}

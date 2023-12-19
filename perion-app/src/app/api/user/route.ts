@@ -12,6 +12,8 @@ export type SetupData = {
   picture?: string
   firstTime: boolean
   subscription: boolean
+  name: string
+  email: string
 }
 
 export const GET = async (req: NextRequest) => {

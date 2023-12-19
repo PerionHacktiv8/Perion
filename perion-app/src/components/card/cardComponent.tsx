@@ -35,6 +35,8 @@ export function CardComponent({ datum }: { datum: ProjectModel }) {
   const handleOpen = () => setOpen((cur) => !cur)
   const handleIsFavorite = () => setIsFavorite((cur) => !cur)
 
+  console.log(datum.benefits)
+
   return (
     <>
       <Card
@@ -228,9 +230,7 @@ export function CardComponent({ datum }: { datum: ProjectModel }) {
                 </div>
                 <div className="flex flex-col gap-2">
                   <p className="text-black text-lg font-bold">Benefits</p>
-                  {datum.benefits.split(', ').map((el, idx) => (
-                    <p key={idx}>- {el}</p>
-                  ))}
+                  {datum.benefits}
                 </div>
                 <div className="flex flex-col gap-2">
                   <p className="text-black text-lg font-bold">Skills Needed</p>

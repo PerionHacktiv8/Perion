@@ -99,14 +99,18 @@ export class Users {
         {
           _id: new ObjectId(val),
         },
-        { projection: { picture: 1, firstTime: 1, subscription: 1 } },
+        {
+          projection: {
+            picture: 1,
+            firstTime: 1,
+            subscription: 1,
+            email: 1,
+            name: 1,
+          },
+        },
       )) as UserModel
 
-      return {
-        picture: user.picture,
-        firstTime: user.firstTime,
-        subscription: user.subscription,
-      }
+      return user
     } catch (err) {
       throw err
     }
@@ -129,6 +133,18 @@ export class Users {
       const collection = await this.connection()
 
       const user = await collection.findOne({ _id: new ObjectId(val) })
+
+      return user as UserModel
+    } catch (err) {
+      throw err
+    }
+  }
+
+  static async findDet(val: string) {
+    try {
+      const collection = await this.connection()
+
+      const user = await collection.findOne({ username: val })
 
       return user as UserModel
     } catch (err) {
