@@ -1,9 +1,7 @@
 import { Project, ProjectModel } from '@/db/models/project'
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
-import { ProjectInputType } from '@/db/models/project'
 import { input } from '@material-tailwind/react'
-import { ObjectId } from 'mongodb'
 
 export type MyResponse<T> = {
   statusCode: number
@@ -73,7 +71,6 @@ export const GET = async () => {
     if (!projects) {
       throw new Error('Cannot find data')
     }
-
     return NextResponse.json<MyResponse<ProjectModel[]>>(
       {
         statusCode: 200,

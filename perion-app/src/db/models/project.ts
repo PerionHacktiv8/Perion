@@ -1,31 +1,29 @@
 import { MongoServerError, ObjectId } from 'mongodb'
 import { getMongoClientInstance } from '../config'
 import { z } from 'zod'
-import { input, inputSelect } from '@/app/api/projects/route'
+import { inputSelect, input } from '@/app/api/projects/route'
 
+const DB_NAME = process.env.MONGODB_DB_NAME
 const COLLECTION_NAME = 'projects'
 
 export type ProjectModel = {
   _id: ObjectId
   title: string
+  teams: string
   projectDescription: string
   workDescription: string
+  skills: string
   position: string
+  onSiteRequired: string
   jobLocation: string
   jobType: string
-  onSiteRequired: string
   experience: string
   benefits: string
-  teams: string
   createdAt: string
   updatedAt: string
-  skills: string[]
 }
 
-export type ProjectInputType = Omit<
-  ProjectModel,
-  '_id' | 'updatedAt' | 'createdAt'
->
+type ProjectInputType = Omit<ProjectModel, '_id' | 'updatedAt' | 'createdAt'>
 
 const ProjectCreateSchema = z.object({
   title: z

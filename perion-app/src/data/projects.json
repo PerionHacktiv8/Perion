@@ -1,0 +1,482 @@
+[{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668b"
+  },
+  "title": "E-commerce Platform Development",
+  "projectDescription": "This project entails the creation of a robust and highly customizable e-commerce platform. The goal is to build a comprehensive system with various customizable features tailored to meet diverse business needs.",
+  "workDescription": "The Full-stack Developer will play a pivotal role in designing dynamic and user-friendly product pages, ensuring a secure payment gateway integration, and optimizing the platform's performance for mobile devices.",
+  "position": "Full-stack Developer",
+  "jobLocation": "Anywhere",
+  "onSiteRequired": "Remote",
+  "jobType": "Freelance",
+  "experience": "3+ years",
+  "benefits": "The position offers exposure to portfolio-building opportunities.",
+  "createdAt": "2023-01-05T08:00:00Z",
+  "updatedAt": "2023-01-10T15:30:00Z",
+  "skills": [
+    "React/Next",
+    "JavaScript",
+    "TypeScript",
+    "HTML",
+    "CSS"
+  ],
+  "teams": "Touke gemco pT."
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668c"
+  },
+  "title": "Blog Website Revamp",
+  "projectDescription": "The project aims to overhaul an existing blog website by incorporating a modern and user-centric design to elevate the overall user experience. The goal is to enhance content layouts, elevate SEO strategies, and seamlessly integrate social sharing features.",
+  "workDescription": "The assigned Frontend Developer will be responsible for creating visually appealing content layouts, implementing advanced SEO practices to enhance online visibility, and seamlessly integrating social sharing functionalities to facilitate wider content distribution.",
+  "position": "Frontend Developer",
+  "jobLocation": "Tangerang Selatan",
+  "onSiteRequired": "Hybrid",
+  "jobType": "Full-time",
+  "experience": "4+ years",
+  "benefits": "The position offers healthcare benefits and flexible remote work options.",
+  "createdAt": "2023-02-10T09:00:00Z",
+  "updatedAt": "2023-02-15T16:45:00Z",
+  "skills": [
+    "React Native",
+    "JavaScript",
+    "HTML5",
+    "CSS3"
+  ],
+  "teams": "Tech Shiegaru"
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668d"
+  },
+  "title": "Branded Merchandise Website",
+  "projectDescription": "This project entails the creation of a robust and highly customizable e-commerce platform. The goal is to build a comprehensive system with various customizable features tailored to meet diverse business needs.",
+  "workDescription": "The Full-stack Developer will play a pivotal role in designing dynamic and user-friendly product pages, ensuring a secure payment gateway integration, and optimizing the platform's performance for mobile devices.",
+  "position": "E-commerce Developer",
+  "jobLocation": "Surabaya",
+  "onSiteRequired": "On Site",
+  "jobType": "Contract",
+  "experience": "2+ years",
+  "benefits": "Flexible schedule",
+  "createdAt": "2023-03-20T10:30:00Z",
+  "updatedAt": "2023-03-25T18:20:00Z",
+  "skills": [
+    "Payment Gateway Integration",
+    "React Native",
+    "MongoDb",
+    "GraphQl",
+    "No Sql",
+    "React.Js/Next.Js",
+    "TypeScript",
+    "JavaScript",
+    "HTML5",
+    "CSS3"
+  ],
+  "teams": "Balorsinonuga"
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668e"
+  },
+  "title": "Movie Streaming Website Development",
+  "projectDescription": "The goal of this project is to create an innovative platform for streaming movies. The platform will feature a user-friendly interface and sophisticated recommendation systems to provide personalized content recommendations.",
+  "workDescription": "The role of the Full-stack Developer involves developing a robust and scalable video streaming infrastructure. Responsibilities include implementing user profile functionalities, optimizing video playback for smooth performance, and ensuring a high-quality viewing experience.",
+  "position": "Full-stack Developer",
+  "jobLocation": "Anywhere",
+  "onSiteRequired": "Remote",
+  "jobType": "Freelance",
+  "experience": "5+ years",
+  "benefits": "This position offers flexible working hours for better work-life balance.",
+  "createdAt": "2023-04-15T11:15:00Z",
+  "updatedAt": "2023-04-20T17:10:00Z",
+  "skills": [
+    "React/Next",
+    "JavaScript",
+    "TypeScript",
+    "HTML",
+    "CSS"
+  ],
+  "teams": "StreamifyTech"
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668f"
+  },
+  "title": "Property Rental Website",
+  "projectDescription": "This project focuses on developing an online platform dedicated to property listings and rental services. The platform aims to streamline property searches and facilitate seamless rental procedures.",
+  "workDescription": "The Backend Developer role will primarily involve implementing robust search functionalities, allowing users to upload property listings efficiently, and integrating secure and efficient booking systems.",
+  "position": "Backend Developer",
+  "jobLocation": "Bandung",
+  "onSiteRequired": "Hybrid",
+  "jobType": "Full-time",
+  "experience": "3+ years",
+  "benefits": "The position offers comprehensive healthcare benefits and a competitive salary package.",
+  "createdAt": "2023-05-10T09:45:00Z",
+  "updatedAt": "2023-05-15T16:30:00Z",
+  "skills": [
+    "Backend Development",
+    "Search Functionality Implementation",
+    "File Upload Integration",
+    "Booking System Integration",
+    "JavaScript",
+    "Express",
+    "Sequelize",
+    "Postgres",
+    "HTML5",
+    "CSS3"
+  ],
+  "teams": "Gulo Souls Yec."
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc56690"
+  },
+  "title": "Restaurant Management Mobile App",
+  "projectDescription": "The project entails the development of a sophisticated mobile application dedicated to managing restaurant operations and facilitating table reservations effectively.",
+  "workDescription": "As a Mobile App Developer, the responsibilities include designing highly intuitive user interfaces to ensure a seamless user experience. This involves integrating robust reservation systems while maintaining optimal performance standards.",
+  "position": "Mobile App Developer",
+  "jobLocation": "Jakarta",
+  "onSiteRequired": "On Site",
+  "jobType": "Contract",
+  "experience": "4+ years",
+  "benefits": "The position offers flexible work options along with exposure to mobile app development.",
+  "createdAt": "2023-06-20T10:00:00Z",
+  "updatedAt": "2023-06-25T17:45:00Z",
+  "skills": [
+    "Mobile App Development",
+    "UI/UX Design",
+    "Reservation System Integration",
+    "Performance Optimization",
+    "React Native",
+    "JavaScript",
+    "HTML5",
+    "CSS3"
+  ],
+  "teams": "Mobile App Innovations Ltd."
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc56691"
+  },
+  "title": "Online Learning Platform",
+  "projectDescription": "The goal is to develop an innovative online learning platform that focuses on providing interactive lessons and quizzes for an enhanced learning experience.",
+  "workDescription": "As a Web Developer on this project, your primary responsibilities will involve creating engaging educational content and implementing robust mechanisms for user progress tracking. Additionally, optimizing the overall user experience is essential to ensure a seamless learning journey.",
+  "position": "Web Developer",
+  "jobLocation": "Anywhere",
+  "onSiteRequired": "Remote",
+  "jobType": "Freelance",
+  "experience": "3+ years",
+  "benefits": "The position offers flexible work hours to accommodate a balanced work-life schedule.",
+  "createdAt": "2023-01-05T08:00:00Z",
+  "updatedAt": "2023-01-10T15:30:00Z",
+  "skills": [
+    "Web Development",
+    "Educational Content Creation",
+    "User Progress Tracking",
+    "User Experience Optimization",
+    "Next.js",
+    "TypeScript",
+    "MongoDb",
+    "No SQL",
+    "Node.js",
+    "HTML",
+    "CSS"
+  ],
+  "teams": "Wellness Web Works."
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc56692"
+  },
+  "title": "E-commerce Mobile App Development",
+  "projectDescription": "This project involves the creation of a sophisticated mobile application dedicated to online shopping. The main focus is on providing users with personalized recommendations to enhance their shopping experience.",
+  "workDescription": "As a Mobile App Developer, your primary tasks will revolve around designing user-friendly and intuitive interfaces that facilitate seamless navigation. You'll also be responsible for integrating secure and reliable payment gateways. Furthermore, optimizing the app's performance for mobile devices is crucial for a smooth user experience.",
+  "position": "Mobile App Developer",
+  "jobLocation": "Anywhere",
+  "onSiteRequired": "Remote",
+  "jobType": "Freelance",
+  "experience": "3+ years",
+  "benefits": "The role offers the advantage of flexible work hours, providing a balanced work-life schedule.",
+  "createdAt": "2023-08-15T09:20:00Z",
+  "updatedAt": "2023-08-20T16:10:00Z",
+  "skills": [
+    "Mobile App Development",
+    "User Interface Design",
+    "Payment Gateway Integration",
+    "Mobile Performance Optimization",
+    "React Native",
+    "JavaScript",
+    "HTML5",
+    "CSS3"
+  ],
+  "teams": "StreamifyTech."
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc56693"
+  },
+  "title": "Fitness App Development",
+  "projectDescription": "Developing a mobile app for fitness enthusiasts to track workouts and progress. The app will include features for tracking various workouts, setting fitness goals, and integrating social sharing for users to share their progress and achievements.",
+  "workDescription": "Implementing workout tracking features, integrating social sharing, ensuring user engagement.",
+  "position": "Mobile App Developer",
+  "jobLocation": "Tangerang Selatan",
+  "onSiteRequired": "Hybrid",
+  "jobType": "Full-time",
+  "experience": "4+ years",
+  "benefits": "Healthcare, career growth opportunities",
+  "createdAt": "2023-09-10T10:45:00Z",
+  "updatedAt": "2023-09-15T18:30:00Z",
+  "skills": ["Mobile App Development", "User Interface Design", "Social Media Integration", "User Engagement Strategies", "React Native", "JavaScript", "HTML5", "CSS3"],
+  "teams": "Tech Stack Inc."
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc56694"
+  },
+  "title": "Customizable Shopping App",
+  "projectDescription": "Developing an app for customizing products before purchasing. This app aims to provide users with tools to personalize and customize various products, integrating them with e-commerce systems for a seamless purchasing experience. The focus is on ensuring usability, intuitive customization tools, and a responsive interface.",
+  "workDescription": "Implementing customization tools, integrating with e-commerce systems, ensuring usability.",
+  "position": "Mobile App Developer",
+  "jobLocation": "Anywhere",
+  "onSiteRequired": "Remote",
+  "jobType": "Contract",
+  "experience": "3+ years",
+  "benefits": "Flexible work hours",
+  "createdAt": "2023-10-20T11:00:00Z",
+  "updatedAt": "2023-10-25T17:50:00Z",
+  "skills": ["Mobile App Development", "UI/UX Design", "E-commerce Integration", "User Experience Design", "React Native", "JavaScript", "HTML5", "CSS3"],
+  "teams": "Kratenfields."
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc56696"
+  },
+  "title": "Fantasy RPG Game Development",
+  "projectDescription": "Developing a fantasy RPG game with immersive storytelling and open-world exploration.",
+  "workDescription": "Creating quests, implementing character progression, designing immersive environments.",
+  "position": "Game Developer",
+  "jobLocation": "Semarang",
+  "onSiteRequired": "Hybrid",
+  "jobType": "Contract",
+  "experience": "7+ years",
+  "benefits": "Flexible schedule, creative freedom",
+  "createdAt": "2023-03-20T10:30:00Z",
+  "updatedAt": "2023-03-25T18:20:00Z",
+  "skills": ["React Native", "JavaScript", "HTML", "CSS", "GraphQl", "MongoDb"],
+    "teams": "Pg Dev slug."
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc56698"
+  },
+  "title": "Cooking Simulation Game",
+  "projectDescription": "Developing a cooking simulation game with various recipes and cooking challenges.",
+  "workDescription": "Designing cooking mechanics, creating recipe variations, implementing time-based challenges.",
+  "position": "Game Developer",
+  "jobLocation": "Anywhere",
+  "onSiteRequired": "Remote",
+  "jobType": "Freelance",
+  "experience": "4+ years",
+  "benefits": "Flexible work hours",
+  "createdAt": "2023-01-05T08:00:00Z",
+  "updatedAt": "2023-01-10T15:30:00Z",
+  "skills": ["React Native", "JavaScript", "HTML", "CSS", "GraphQl", "MongoDb"],
+    "teams": "GameCuisine Studios."
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc56699"
+  },
+  "title": "Open-world Sandbox Game",
+  "projectDescription": "The objective is to create an immersive open-world sandbox game emphasizing building and exploration mechanics.",
+  "workDescription": "As a Game Developer, your role involves designing intricate voxel-based environments, implementing versatile building systems, and ensuring a highly interactive world experience.",
+  "position": "Game Developer",
+  "jobLocation": "Surabaya",
+  "onSiteRequired": "Hybrid",
+  "jobType": "Full-time",
+  "experience": "5+ years",
+  "benefits": "The position offers healthcare benefits along with remote work options for a balanced work environment.",
+  "createdAt": "2023-02-10T09:00:00Z",
+  "updatedAt": "2023-02-15T16:45:00Z",
+  "skills": ["React Native", "JavaScript", "HTML", "CSS", "GraphQl", "MongoDb"],
+  "teams": "GameDev Creations"
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5669a"
+  },
+  "title": "Food Delivery App Development",
+  "projectDescription": "The project involves the development of a food delivery application enabling users to order food from local restaurants.",
+  "workDescription": "Your responsibilities as an App Developer include implementing restaurant listings, designing an efficient order tracking system, and optimizing delivery logistics for seamless user experience.",
+  "appType": "Food Delivery",
+  "position": "App Developer",
+  "jobLocation": "Jakarta",
+  "onSiteRequired": "Hybrid",
+  "jobType": "Contract",
+  "experience": "5+ years",
+  "benefits": "The role offers remote work options and challenging technical aspects.",
+  "createdAt": "2026-11-10T09:00:00Z",
+  "updatedAt": "2026-11-15T16:45:00Z",
+  "skills": ["React Native", "JavaScript", "HTML", "CSS", "GraphQl", "MongoDb"],
+  "teams": "DeliveryTech Solutions"
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5669b"
+  },
+  "title": "Health and Wellness Blog",
+  "projectDescription": "The aim is to create a health and wellness blog focusing on delivering engaging articles and resources.",
+  "workDescription": "As a Web Developer, your responsibilities include crafting compelling health content, designing a user-friendly interface, and optimizing the blog for SEO.",
+  "position": "Web Developer",
+  "jobLocation": "Tangerang",
+  "onSiteRequired": "On Site",
+  "jobType": "Full-time",
+  "experience": "4+ years",
+  "benefits": "The role offers healthcare benefits along with remote work options for a balanced lifestyle.",
+  "createdAt": "2023-02-10T09:00:00Z",
+  "updatedAt": "2023-02-15T16:45:00Z",
+  "skills": ["React.Js", "JavaScript", "HTML", "CSS", "Express", "No Sql"],
+  "teams": "Wellness Web Works"
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5669c"
+  },
+  "title": "E-Learning Management System",
+  "projectDescription": "The goal is to create an e-learning management system tailored for schools and educational institutions.",
+  "workDescription": "Your role as a Web Developer includes implementing comprehensive course management features, designing user-friendly dashboards for students and teachers, and incorporating analytics tools for performance evaluation.",
+  "position": "Web Developer",
+  "jobLocation": "Lampung",
+  "onSiteRequired": "Hybrid",
+  "jobType": "Contract",
+  "experience": "5+ years",
+  "benefits": "The position offers a flexible schedule and exposure to educational technology.",
+  "createdAt": "2023-03-20T10:30:00Z",
+  "updatedAt": "2023-03-25T18:20:00Z",
+  "skills": ["JavaScript", "React.js", "Node.js", "HTML", "CSS", "Express", "Sequelize", "Postgres"],
+  "teams": "Digital EduWorks"
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5669d"
+  },
+  "title": "Nutrition and Diet Planning Website",
+  "projectDescription": "The project involves creating an online platform offering personalized nutrition plans and resources for healthy eating.",
+  "workDescription": "Your responsibilities as a Web Developer include designing meal plans, implementing user health trackers, and ensuring robust user privacy measures.",
+  "position": "Web Developer",
+  "jobLocation": "Anywhere",
+  "onSiteRequired": "Remote",
+  "jobType": "Freelance",
+  "experience": "4+ years",
+  "benefits": "The position offers flexibility with remote work options.",
+  "createdAt": "2023-04-15T11:15:00Z",
+  "updatedAt": "2023-04-20T17:10:00Z",
+  "skills": ["TypeScript", "Next.js", "HTML", "CSS", "MongoDb", "JavaScript"],
+  "teams": "Tech Stack Inc."
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5669e"
+  },
+  "title": "Job Matching and Networking Platform",
+  "projectDescription": "The goal of this project is to create a comprehensive platform that effectively connects job seekers with suitable opportunities while also fostering networking among professionals.",
+  "workDescription": "As a Web Developer in this role, your responsibilities include implementing advanced job recommendation algorithms to match candidates with relevant job openings. Additionally, creating networking features to facilitate connections among users and ensuring strict measures for user privacy are crucial aspects of the role.",
+  "position": "Web Developer",
+  "jobLocation": "Jakarta",
+  "onSiteRequired": "On Site",
+  "jobType": "Full-time",
+  "experience": "4+ years",
+  "benefits": "The position offers healthcare benefits along with the flexibility of remote work options to suit a balanced work-life environment.",
+  "createdAt": "2023-02-10T09:00:00Z",
+  "updatedAt": "2023-02-15T16:45:00Z",
+  "skills": [
+    "JavaScript",
+    "React.js",
+    "Node.js",
+    "HTML5",
+    "CSS3",
+    "Express",
+    "Sequelize"
+  ],
+  "teams": "Tech Soon Inc."
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc566a0"
+  },
+  "title": "iOS Application Development with Swift",
+  "projectDescription": "This project centers on the development of an iOS mobile application utilizing the Swift programming language.",
+  "workDescription": "As an iOS Developer, you'll be responsible for the design of user interfaces and implementing various app functionalities. Ensuring seamless compatibility across multiple iOS devices will also be a key part of your role.",
+  "position": "iOS Developer",
+  "jobLocation": "Anywhere",
+  "onSiteRequired": "Remote",
+  "jobType": "Freelance",
+  "experience": "3+ years",
+  "benefits": "The role offers flexible work hours to accommodate a variety of schedules.",
+  "createdAt": "2023-08-15T09:20:00Z",
+  "updatedAt": "2023-08-20T16:10:00Z",
+  "teams": "Mobile App Innovations Ltd.",
+  "skills": [
+    "Swift",
+    "iOS Development",
+    "UI/UX Design"
+  ]
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc56692"
+  },
+  "title": "E-commerce Mobile App Development",
+  "projectDescription": "Creating a dynamic mobile application for online shopping, incorporating personalized recommendations to enhance user engagement.",
+  "workDescription": "As a Mobile App Developer, responsibilities include designing intuitive interfaces, integrating secure payment gateways, and optimizing for superior mobile performance.",
+  "position": "Mobile App Developer",
+  "jobLocation": "Anywhere",
+  "onSiteRequired": "Remote",
+  "jobType": "Freelance",
+  "experience": "3+ years",
+  "benefits": "The position offers flexible work hours for better work-life balance.",
+  "createdAt": "2023-08-15T09:20:00Z",
+  "updatedAt": "2023-08-20T16:10:00Z",
+  "skills": [
+    "Mobile App Development",
+    "User Interface Design",
+    "Payment Gateway Integration",
+    "Mobile Performance Optimization",
+    "React Native",
+    "JavaScript",
+    "HTML5",
+    "CSS3"
+  ],
+  "teams": "StreamifyTech."
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc56691"
+  },
+  "title": "Online Learning Platform",
+  "projectDescription": "Creating an online learning platform equipped with interactive lessons and quizzes for a dynamic learning experience.",
+  "workDescription": "The role as a Web Developer involves curating educational content and implementing efficient user progress tracking to enhance the overall user experience.",
+  "position": "Web Developer",
+  "jobLocation": "Anywhere",
+  "onSiteRequired": "Remote",
+  "jobType": "Freelance",
+  "experience": "3+ years",
+  "benefits": "The position offers flexible work hours to accommodate various schedules.",
+  "createdAt": "2023-01-05T08:00:00Z",
+  "updatedAt": "2023-01-10T15:30:00Z",
+  "skills": [
+    "Web Development",
+    "Educational Content Creation",
+    "User Progress Tracking",
+    "User Experience Optimization",
+    "Next.js",
+    "TypeScript",
+    "MongoDb",
+    "No Sql",
+    "Node.js",
+    "HTML",
+    "CSS"
+  ],
+  "teams": "Wellness Web Works."
+}
+]
