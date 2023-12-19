@@ -8,7 +8,7 @@ export type ProfilesModel = {
   _id: ObjectId
   bio: string
   location: string
-  birthdate: string
+  birthdate: string | Date
   createdAt: string
   updatedAt: string
 }

@@ -7,7 +7,7 @@ export function CreateBox() {
       <div className="flex items-center justify-center rounded-full bg-blue-100 h-16 w-16 mb-4">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-8 w-8 text-blue-600"
+          className="h-8 w-8 text-gray-600"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -23,7 +23,7 @@ export function CreateBox() {
       <button className="bg-white py-2 px-4 border border-gray-300 rounded shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
         Create Project
       </button>
-      <p className="text-sm text-gray-500 mt-2">
+      <p className="text-sm bg-white p-2 rounded text-gray-700 mt-2">
         Unpublished project will appear here.
       </p>
     </div>
