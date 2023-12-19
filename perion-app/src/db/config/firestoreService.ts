@@ -19,6 +19,7 @@ export interface Message {
     createdAt: Date;
 }
 
+export const usersCollection = collection(firestore, 'users');
 export const roomsCollection = collection(firestore, 'chatRooms');
 export const messagesCollection = collection(firestore, 'chatMessages');
 
@@ -120,3 +121,4 @@ export const subscribeToRooms = (userId: string, callback: (rooms: Room[]) => vo
         callback(rooms);
     });
 };
+

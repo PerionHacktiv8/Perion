@@ -10,14 +10,23 @@ import {
   setTypingStatus,
   subscribeToTyping,
   subscribeToRoomMessages,
-  subscribeToRooms,
 } from '../../db/config/firestoreService'
 import { authN } from '../../db/config/firebaseConfig'
 import Image from 'next/image'
-import { UserModel } from '@/db/models/user'
-import cookies from 'next/headers'
+import Cookies from 'js-cookie'
 
-const ChatComponent: React.FC = () => {
+export interface UserModel {
+  username: string
+  email: string
+  password: string
+  name: string
+  picture: string
+  cvData: {
+    skills: string[]
+  }
+}
+
+const ChatComponent = ({ dataUser }: { dataUser: UserModel }) => {
   const [currentRoom, setCurrentRoom] = useState<string | null>(null)
   const [rooms, setRooms] = useState<Room[]>([])
   const [messages, setMessages] = useState<Message[]>([])
@@ -25,6 +34,7 @@ const ChatComponent: React.FC = () => {
   const [roomName, setRoomName] = useState<string>('')
   const [typing, setTyping] = useState<Record<string, boolean>>({})
   const user = authN.currentUser
+  const [mongoObjectId, setMongoObjectId] = useState<string | null>(null)
 
   useEffect(() => {
     if (user?.uid) {
@@ -34,11 +44,13 @@ const ChatComponent: React.FC = () => {
   }, [user?.uid])
 
   useEffect(() => {
-    if (user?.uid) {
-      const unsubscribe = subscribeToRooms(user.uid, setRooms)
-      return () => unsubscribe()
+    // Retrieve the MongoDB ObjectId from cookies
+    const objectId = Cookies.get('token')
+    if (objectId) {
+      console.log('MongoDB ObjectId:', objectId) // Debug log
+      setMongoObjectId(objectId)
     }
-  }, [user?.uid])
+  }, [])
 
   useEffect(() => {
     const savedRoomId = localStorage.getItem('currentRoom')
@@ -69,8 +81,10 @@ const ChatComponent: React.FC = () => {
   }, [currentRoom])
 
   const handleSendMessage = useCallback(async () => {
-    if (newMessage.trim() && currentRoom && user?.uid) {
-      await postMessage(currentRoom, user.uid, newMessage)
+    if (newMessage.trim() && currentRoom) {
+      // Assuming you have a fallback user ID for unauthenticated users
+      const userId = user?.uid || 'unauthenticatedUser' // Replace with a mechanism to identify unauthenticated users
+      await postMessage(currentRoom, userId, newMessage)
       setNewMessage('')
     }
   }, [newMessage, currentRoom, user?.uid])
@@ -181,9 +195,7 @@ const ChatComponent: React.FC = () => {
                     } my-2`}
                   >
                     <span className="text-xs text-gray-500">
-                      {message.userId === user?.uid
-                        ? 'You'
-                        : user?.displayName || user?.displayName}
+                      {message.userId === user?.uid ? 'You' : 'Other'}
                     </span>
                     <div
                       className={`rounded-lg p-2 mt-1 ${

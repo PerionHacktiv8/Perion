@@ -54,6 +54,8 @@ export function CardComponent({ datum }: { datum: ProjectModel }) {
           <div className="relative h-56 w-full">
             <Image
               src="https://images.unsplash.com/photo-1534423861386-85a16f5d13fd?q=80&w=2970&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              width={1184}
+              height={500}
               alt="ui/ux review check"
             />
           </div>

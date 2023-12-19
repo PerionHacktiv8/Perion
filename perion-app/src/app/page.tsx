@@ -1,5 +1,3 @@
-'use server'
-
 import { DialogDefault } from '@/components/modalChoose'
 import { Portfolio } from '@/db/models/portofolios'
 import { CardPortoPage } from '@/components/card/cardPorto'
