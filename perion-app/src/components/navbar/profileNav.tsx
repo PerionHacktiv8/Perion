@@ -14,14 +14,15 @@ import { signOut } from './signOut'
 import Link from 'next/link'
 
 export function ProfileMenu({ textColor }: { textColor: string }) {
-  const [pic, setPic] = useState<string>('')
+  const [data, setData] = useState<SetupData>()
 
   const userData = async () => {
     const res = await fetch('http://localhost:3000/api/login')
     const resJson = (await res.json()) as ResponseAPIType<SetupData>
 
-    if (resJson && resJson.data && resJson.data.picture)
-      setPic(resJson.data.picture)
+    if (resJson && resJson.data && resJson.data) {
+      setData(resJson.data)
+    }
   }
 
   useEffect(() => {
@@ -30,30 +31,35 @@ export function ProfileMenu({ textColor }: { textColor: string }) {
 
   return (
     <>
-      {pic ? (
+      {data ? (
         <Menu>
           <MenuHandler>
             <Avatar
               placeholder={''}
               variant="circular"
               className="cursor-pointer w-10 h-10"
-              src={pic}
+              src={data.picture}
             />
           </MenuHandler>
-          <MenuList placeholder={''} className="w-80">
+          <MenuList placeholder={''} className="w-60">
             <div className="flex flex-col justify-center items-center mb-5">
-              <Avatar placeholder={''} src={pic} alt="avatar" size="xxl" />
-              <p className="font-semibold text-lg mt-3 text-black">
-                Naufal Rafi
+              <Avatar
+                placeholder={''}
+                src={data.picture}
+                alt="avatar"
+                size="xl"
+              />
+              <p className="font-semibold text-md mt-3 text-black">
+                {data.name}
               </p>
-              <p className="text-md">naufalrafi@gmail.com</p>
+              <p className="text-md">{data.email}</p>
             </div>
-
-            <div className="border-t-2 border-gray-200 my-3"></div>
-
+            <div className="border-t-2 border-gray-200 mb-3"></div>
             <MenuItem placeholder={''} className="flex items-center gap-2">
               <Link
-                href={'/profile/project'}
+                href={
+                  data.subscription ? '/profile/project' : '/profile/portofolio'
+                }
                 className="flex items-center gap-2"
               >
                 <svg
@@ -81,24 +87,26 @@ export function ProfileMenu({ textColor }: { textColor: string }) {
               </Link>
             </MenuItem>
             <MenuItem placeholder={''} className="flex items-center gap-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="#90A4AE"
-                width="16"
-                height="16"
-              >
-                <path d="M3.505 2.365A41.369 41.369 0 019 2c1.863 0 3.697.124 5.495.365 1.247.167 2.18 1.108 2.435 2.268a4.45 4.45 0 00-.577-.069 43.141 43.141 0 00-4.706 0C9.229 4.696 7.5 6.727 7.5 8.998v2.24c0 1.413.67 2.735 1.76 3.562l-2.98 2.98A.75.75 0 015 17.25v-3.443c-.501-.048-1-.106-1.495-.172C2.033 13.438 1 12.162 1 10.72V5.28c0-1.441 1.033-2.717 2.505-2.914z" />
-                <path d="M14 6c-.762 0-1.52.02-2.271.062C10.157 6.148 9 7.472 9 8.998v2.24c0 1.519 1.147 2.839 2.71 2.935.214.013.428.024.642.034.2.009.385.09.518.224l2.35 2.35a.75.75 0 001.28-.531v-2.07c1.453-.195 2.5-1.463 2.5-2.915V8.998c0-1.526-1.157-2.85-2.729-2.936A41.645 41.645 0 0014 6z" />
-              </svg>
+              <Link href={'chats'} className="flex items-center w-full gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="#90A4AE"
+                  width="16"
+                  height="16"
+                >
+                  <path d="M3.505 2.365A41.369 41.369 0 019 2c1.863 0 3.697.124 5.495.365 1.247.167 2.18 1.108 2.435 2.268a4.45 4.45 0 00-.577-.069 43.141 43.141 0 00-4.706 0C9.229 4.696 7.5 6.727 7.5 8.998v2.24c0 1.413.67 2.735 1.76 3.562l-2.98 2.98A.75.75 0 015 17.25v-3.443c-.501-.048-1-.106-1.495-.172C2.033 13.438 1 12.162 1 10.72V5.28c0-1.441 1.033-2.717 2.505-2.914z" />
+                  <path d="M14 6c-.762 0-1.52.02-2.271.062C10.157 6.148 9 7.472 9 8.998v2.24c0 1.519 1.147 2.839 2.71 2.935.214.013.428.024.642.034.2.009.385.09.518.224l2.35 2.35a.75.75 0 001.28-.531v-2.07c1.453-.195 2.5-1.463 2.5-2.915V8.998c0-1.526-1.157-2.85-2.729-2.936A41.645 41.645 0 0014 6z" />
+                </svg>
 
-              <Typography
-                placeholder={''}
-                variant="small"
-                className="font-bold"
-              >
-                Chat
-              </Typography>
+                <Typography
+                  placeholder={''}
+                  variant="small"
+                  className="font-medium"
+                >
+                  Chat
+                </Typography>
+              </Link>
             </MenuItem>
             <MenuItem placeholder={''} className="flex items-center gap-2">
               <svg
@@ -119,7 +127,7 @@ export function ProfileMenu({ textColor }: { textColor: string }) {
               <Typography
                 placeholder={''}
                 variant="small"
-                className="font-bold"
+                className="font-medium"
               >
                 Bookmark
               </Typography>
@@ -128,7 +136,7 @@ export function ProfileMenu({ textColor }: { textColor: string }) {
             <MenuItem
               onClick={() => {
                 signOut()
-                setPic('')
+                setData(undefined)
               }}
               placeholder={''}
               className="flex items-center gap-2 "

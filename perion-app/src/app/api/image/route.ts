@@ -48,7 +48,9 @@ export const POST = async (req: NextRequest) => {
 
     const data = (await req.formData()).get('image') as File
 
-    Users.upImg(data, userId)
+    if (data) {
+      Users.upImg(data, userId)
+    }
 
     return NextResponse.json<ResponseAPIType<unknown>>(
       {

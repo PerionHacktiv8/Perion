@@ -1,5 +1,6 @@
 'use client'
 
+import { UserModel } from '@/db/models/user'
 import {
   Card,
   CardHeader,
@@ -9,6 +10,8 @@ import {
   Button,
   Avatar,
 } from '@material-tailwind/react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 function CheckIcon() {
   return (
@@ -29,7 +32,12 @@ function CheckIcon() {
   )
 }
 
-export function CardUser() {
+export function CardUser({ datum }: { datum: UserModel }) {
+  const router = useRouter()
+
+  const skills = datum.cvData.skills.splice(0, 5).join(', ')
+  const url = datum.username
+
   return (
     <Card
       placeholder={''}
@@ -37,7 +45,7 @@ export function CardUser() {
       variant="gradient"
       className="w-full max-w-sm md:max-w-md transition duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-xl mb-5"
     >
-      <CardHeader
+      {/* <CardHeader
         placeholder={''}
         color="transparent"
         className="border-0 text-center h-44 inline-block overflow-hidden relative"
@@ -48,11 +56,11 @@ export function CardUser() {
             className="relative h-[1440px] w-[900px] block"
           ></iframe>
         </div>
-      </CardHeader>
+      </CardHeader> */}
       <div className="-mt-9 flex justify-center">
         <Avatar
           placeholder={''}
-          src="https://docs.material-tailwind.com/img/face-2.jpg"
+          src={datum.picture}
           alt="avatar"
           size="xl"
           className="align-middle border-2 shadow-lg"
@@ -60,14 +68,9 @@ export function CardUser() {
       </div>
       <CardBody placeholder={''} className="flex flex-col gap-2 p-4">
         <div className="flex flex-col gap-2 justify-center items-center mb-4">
-          <Typography
-            placeholder={''}
-            variant="h5"
-            color="white"
-            className="font-bold"
-          >
-            Naufal Rafi
-          </Typography>
+          <p color="white" className="font-bold text-xl">
+            {datum.name}
+          </p>
           <Typography
             placeholder={''}
             variant="small"
@@ -86,7 +89,7 @@ export function CardUser() {
                 clipRule="evenodd"
               />
             </svg>
-            Jakarta, Indonesia
+            {datum.location}
           </Typography>
         </div>
         <ul className="flex flex-col gap-4">
@@ -94,25 +97,19 @@ export function CardUser() {
             <span className="rounded-full border border-white/20 bg-white/20 p-1">
               <CheckIcon />
             </span>
-            <Typography placeholder={''} className="font-normal">
-              Full Time Project
-            </Typography>
+            <p className="font-normal">{datum.cvData.numOfProjects}</p>
           </li>
           <li className="flex items-center gap-4">
             <span className="rounded-full border border-white/20 bg-white/20 p-1">
               <CheckIcon />
             </span>
-            <Typography placeholder={''} className="font-normal">
-              0 Projects
-            </Typography>
+            <p className="font-normal">{datum.cvData.expYear} of Experience</p>
           </li>
           <li className="flex items-center gap-4">
             <span className="rounded-full border border-white/20 bg-white/20 p-1">
               <CheckIcon />
             </span>
-            <Typography placeholder={''} className="font-normal">
-              1 Years Experients
-            </Typography>
+            <p className="font-normal">{skills}</p>
           </li>
         </ul>
       </CardBody>
@@ -121,9 +118,12 @@ export function CardUser() {
           placeholder={''}
           size="lg"
           color="white"
+          onClick={() => {
+            router.push(`/${url}`)
+          }}
           className="hover:bg-black hover:text-white"
         >
-          Hire Naufal Rafi
+          Hire {datum.username}
         </Button>
       </CardFooter>
     </Card>

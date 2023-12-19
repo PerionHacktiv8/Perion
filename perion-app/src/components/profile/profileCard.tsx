@@ -1,37 +1,19 @@
 'use client'
 
-import { ResponseAPIType } from '@/app/api/user/route'
 import { UserModel } from '@/db/models/user'
 import {
   Card,
   CardHeader,
   CardBody,
-  Typography,
   Avatar,
   Button,
 } from '@material-tailwind/react'
 import { format } from 'date-fns'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
 
-export function ProfileCard() {
+export function ProfileCard({ profData }: { profData: UserModel }) {
   const path = usePathname().split('profile/')[1]
-
-  const [profData, setProfData] = useState<UserModel>()
-
-  const profile = async () => {
-    const res = await fetch('http://localhost:3000/api/user')
-    const resJson = (await res.json()) as ResponseAPIType<UserModel>
-
-    if (resJson && resJson.data) {
-      setProfData(resJson.data)
-    }
-  }
-
-  useEffect(() => {
-    profile()
-  }, [])
 
   return (
     <Card placeholder={''} className="w-96 mb-10">
@@ -42,13 +24,13 @@ export function ProfileCard() {
       >
         <Avatar
           placeholder={''}
-          src={profData?.picture as string}
+          src={profData.picture as string}
           alt="avatar"
           size="xxl"
           className="mb-3 mx-auto"
         />
         <p color="blue-gray" className="mb-2 text-2xl font-bold">
-          {profData?.name}
+          {profData.name}
         </p>
         <p
           color="black"
@@ -66,11 +48,10 @@ export function ProfileCard() {
               clipRule="evenodd"
             />
           </svg>
-          Jakarta, Indonesia
+          {profData.location}
         </p>
         <p className="mt-3">
-          Member Since :{' '}
-          {profData && format(new Date(profData.createdAt), 'MMMM do, yyyy')}
+          Member Since : {format(new Date(profData.createdAt), 'MMMM do, yyyy')}
         </p>
       </CardHeader>
       <CardBody placeholder={''}>
