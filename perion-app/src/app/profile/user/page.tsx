@@ -9,7 +9,6 @@ export default function Profile() {
     <div className="container px-4 sm:px-8 md:px-12 py-4 md:py-8">
       {/* Navigation and Content */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        
         {/* Profile Card - Left Side */}
         <div className="lg:col-span-1">
           <ProfileCardUser />
@@ -35,7 +34,6 @@ export default function Profile() {
             </div>
           </div>
         </div>
-
       </div>
     </div>
   )
