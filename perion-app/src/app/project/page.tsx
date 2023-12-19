@@ -1,6 +1,5 @@
 'use server'
 
-import { NavbarDefault } from '@/components/navbar/navbarComponent'
 import { CardComponent } from '@/components/card/cardComponent'
 import { HeroSection } from '@/components/hero/heroHome'
 import { NavbarWithMenu } from '@/components/navbar/navMenu'

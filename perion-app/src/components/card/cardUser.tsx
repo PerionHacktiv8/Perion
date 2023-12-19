@@ -32,10 +32,15 @@ function CheckIcon() {
   )
 }
 
-export function CardUser({ datum }: { datum: UserModel }) {
+export function CardUser({
+  datum,
+  skills,
+}: {
+  datum: UserModel
+  skills: string
+}) {
   const router = useRouter()
 
-  const skills = datum.cvData.skills.splice(0, 5).join(', ')
   const url = datum.username
 
   return (
@@ -45,18 +50,6 @@ export function CardUser({ datum }: { datum: UserModel }) {
       variant="gradient"
       className="w-full max-w-sm md:max-w-md transition duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-xl mb-5"
     >
-      {/* <CardHeader
-        placeholder={''}
-        color="transparent"
-        className="border-0 text-center h-44 inline-block overflow-hidden relative"
-      >
-        <div className="relative origin-[0_0] scale-[0.39] zoom: 0.39 -o-transform: scale(0.39) -o-transform-origin: 0 0 -webkit-transform: scale(0.39) -webkit-transform-origin: 0 0 after:content-[''] after:block after:absolute after:inset-0">
-          <iframe
-            src="https://seek-app-three.vercel.app"
-            className="relative h-[1440px] w-[900px] block"
-          ></iframe>
-        </div>
-      </CardHeader> */}
       <div className="-mt-9 flex justify-center">
         <Avatar
           placeholder={''}

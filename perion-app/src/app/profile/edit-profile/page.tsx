@@ -1,12 +1,13 @@
 'use client'
-import { CreateBoxPorto } from '@/components/portofolio/boxPorto'
 import { EditForm } from '@/components/profile/editForm'
-import { ProfileCard } from '@/components/profile/profileCard'
+import { useRouter } from 'next/navigation'
 
 export default function Portfolio() {
+  const router = useRouter()
+
   return (
     <div className="bg-white rounded-lg">
-      <EditForm />
+      <EditForm router={router} />
     </div>
   )
 }

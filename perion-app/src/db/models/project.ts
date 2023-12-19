@@ -1,6 +1,7 @@
 import { MongoServerError, ObjectId } from 'mongodb'
 import { getMongoClientInstance } from '../config'
 import { z } from 'zod'
+import { UserModel, Users } from './user'
 
 const COLLECTION_NAME = 'projects'
 
@@ -19,6 +20,7 @@ export type ProjectModel = {
   createdAt: string
   updatedAt: string
   skills: string[]
+  userId: ObjectId
 }
 
 type ProjectInputType = Omit<ProjectModel, '_id' | 'updatedAt' | 'createdAt'>
@@ -108,19 +110,41 @@ export class Project {
       throw error
     }
   }
+
   static async readProjects() {
     try {
       const collection = await this.connection()
+
       const projects = (await collection
         .find({})
         .sort({ createdAt: 1 })
         .toArray()) as ProjectModel[]
+
       return projects
     } catch (error) {
       console.log(error)
       throw error
     }
   }
+
+  static async readUserProject(userId: string) {
+    try {
+      const collection = await this.connection()
+
+      const projects = (await collection
+        .find({ userId: new ObjectId(userId) })
+        .sort({ createdAt: 1 })
+        .toArray()) as ProjectModel[]
+
+      return projects
+
+      return projects
+    } catch (error) {
+      console.log(error)
+      throw error
+    }
+  }
+
   static async readDetailProject(id: ObjectId) {
     try {
       const collection = await this.connection()
@@ -142,6 +166,7 @@ export class Project {
       throw error
     }
   }
+
   static async deleteProject(id: ObjectId) {
     try {
       const collection = await this.connection()
@@ -163,6 +188,7 @@ export class Project {
       throw error
     }
   }
+
   static async editProject(id: ObjectId, input: FormData) {
     try {
       const collection = await this.connection()
@@ -201,6 +227,32 @@ export class Project {
         },
       )
       return project
+    } catch (error) {
+      console.log(error)
+      throw error
+    }
+  }
+
+  static async recommendation(userId: string) {
+    try {
+      const collection = await this.connection()
+
+      const userData = (await Users.findProfile(userId)) as UserModel
+
+      const exp = +userData?.cvData?.expYear[0]
+      const skills = userData.cvData.skills
+
+      const projects = (await collection
+        .find({})
+        .sort({ createdAt: 1 })
+        .toArray()) as ProjectModel[]
+
+      const filterData = projects
+        .filter((el) => el.userId?.toString() !== userId)
+        .filter((el) => +el.experience.replace(/[^0-9]/g, '') <= exp)
+        .filter((el) => el.skills.filter((el) => skills.includes(el)))
+
+      return filterData
     } catch (error) {
       console.log(error)
       throw error

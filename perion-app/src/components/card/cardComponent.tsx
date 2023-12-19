@@ -16,11 +16,10 @@ import {
   DialogFooter,
   Button,
 } from '@material-tailwind/react'
-import Image from 'next/image'
 import { RequirementCard } from './cardRequirement'
-import { CarouselProject } from '../carousel'
 import { ProjectModel } from '@/db/models/project'
 import dateFormat from '@/db/helpers/dateFormat'
+import { format } from 'date-fns'
 
 export function CardComponent({ datum }: { datum: ProjectModel }) {
   const [liked, setLiked] = useState(false)
@@ -35,62 +34,18 @@ export function CardComponent({ datum }: { datum: ProjectModel }) {
   const handleOpen = () => setOpen((cur) => !cur)
   const handleIsFavorite = () => setIsFavorite((cur) => !cur)
 
-  console.log(datum.benefits)
-
   return (
     <>
       <Card
         placeholder={''}
-        className="max-w-[24rem] overflow-hidden transition duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-xl"
+        className="max-w-[24rem] h-[20rem] overflow-hidden transition duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-xl"
         onClick={handleOpen}
       >
-        <CardHeader
-          placeholder={''}
-          floated={false}
-          shadow={false}
-          color="transparent"
-          className="m-0 rounded-none"
-        >
-          <div className="relative h-56 w-full">
-            <img
-              src="https://images.unsplash.com/photo-1534423861386-85a16f5d13fd?q=80&w=2970&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              alt="ui/ux review check"
-            />
-          </div>
-          <IconButton
-            placeholder={''}
-            color={liked ? 'orange' : 'white'}
-            size="lg"
-            variant="text"
-            className="!absolute top-4 right-4 rounded-full"
-            onClick={handleLikeButtonClick}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                fillRule="evenodd"
-                d="M6.32 2.577a49.255 49.255 0 0111.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 01-1.085.67L12 18.089l-7.165 3.583A.75.75 0 013.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </IconButton>
-        </CardHeader>
-        <CardBody placeholder={''}>
+        <CardBody placeholder={''} className="flex flex-col justify-between">
           <Typography placeholder={''} className="font-normal mb-2">
-            {dateFormat(datum.createdAt)}
+            {format(new Date(datum.createdAt), 'MMMM do, yyyy')}
           </Typography>
-          <Typography
-            placeholder={''}
-            variant="h4"
-            color="blue-gray"
-            className="truncate"
-          >
-            {datum.title}
-          </Typography>
+          <p className="text-lg text-black h-14 font-semibold">{datum.title}</p>
           <Typography
             placeholder={''}
             variant="h6"
@@ -113,16 +68,6 @@ export function CardComponent({ datum }: { datum: ProjectModel }) {
           className="flex items-center justify-between"
         >
           <div className="flex -space-x-3">
-            {/* <Tooltip content="Natali Craig">
-              <Avatar
-                placeholder={''}
-                size="sm"
-                variant="circular"
-                alt="natali craig"
-                src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1061&q=80"
-                className="border-2 border-white hover:z-10"
-              />
-            </Tooltip> */}
             <Typography placeholder={''} className="font-normal">
               {datum.teams}
             </Typography>
