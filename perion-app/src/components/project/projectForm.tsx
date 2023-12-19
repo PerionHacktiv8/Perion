@@ -46,17 +46,12 @@ export function ProjectForm() {
     onSiteRequired: '',
   })
 
-  const onChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
-  ) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     })
   }
-
-  console.log(input)
-  console.log(inputSelect)
 
   const onSubmitInput = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -70,7 +65,6 @@ export function ProjectForm() {
         inputSelect,
       }),
     })
-    console.log(response)
   }
 
   return (
@@ -139,7 +133,7 @@ export function ProjectForm() {
             <div className="w-full">
               <Select
                 placeholder={''}
-                label="Select Requird"
+                label="Select On Site Required"
                 name="onSiteRequired"
                 value={inputSelect.onSiteRequired}
                 onChange={(e) => {
@@ -150,9 +144,9 @@ export function ProjectForm() {
                     })
                 }}
               >
-                <Option value="onSite">On Site</Option>
-                <Option value="remote">Remote</Option>
-                <Option value="hybrid">Hybrid</Option>
+                <Option value="On Site">On Site</Option>
+                <Option value="Remote">Remote</Option>
+                <Option value="Hybrid">Hybrid</Option>
               </Select>
             </div>
             <Typography placeholder={''} className="-mb-2" variant="h6">
@@ -205,8 +199,8 @@ export function ProjectForm() {
                     })
                 }}
               >
-                <Option value="fullTime">Full Time</Option>
-                <Option value="freeLance">Freelance</Option>
+                <Option value="Full Time">Full Time</Option>
+                <Option value="Freelance">Freelance</Option>
               </Select>
             </div>
             <Typography placeholder={''} className="-mb-2" variant="h6">

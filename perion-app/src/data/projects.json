@@ -20,7 +20,10 @@
     "HTML",
     "CSS"
   ],
-  "teams": "Touke gemco pT."
+  "teams": "Touke gemco pT.",
+  "userId": {
+    "$oid": "657fed670e0abe3b97d16b83"
+  }
 },
 {
   "_id": {
@@ -43,7 +46,10 @@
     "HTML5",
     "CSS3"
   ],
-  "teams": "Tech Shiegaru"
+  "teams": "Tech Shiegaru",
+  "userId": {
+    "$oid": "657fed670e0abe3b97d16b83"
+  }
 },
 {
   "_id": {
@@ -72,7 +78,10 @@
     "HTML5",
     "CSS3"
   ],
-  "teams": "Balorsinonuga"
+  "teams": "Balorsinonuga",
+  "userId": {
+    "$oid": "657fed670e0abe3b97d16b83"
+  }
 },
 {
   "_id": {
@@ -96,7 +105,10 @@
     "HTML",
     "CSS"
   ],
-  "teams": "StreamifyTech"
+  "teams": "StreamifyTech",
+  "userId": {
+    "$oid": "658023cc0e0abe3b97eea8cc"
+  }
 },
 {
   "_id": {
@@ -125,7 +137,10 @@
     "HTML5",
     "CSS3"
   ],
-  "teams": "Gulo Souls Yec."
+  "teams": "Gulo Souls Yec.",
+  "userId": {
+    "$oid": "658023cc0e0abe3b97eea8cc"
+  }
 },
 {
   "_id": {
@@ -152,7 +167,10 @@
     "HTML5",
     "CSS3"
   ],
-  "teams": "Mobile App Innovations Ltd."
+  "teams": "Mobile App Innovations Ltd.",
+  "userId": {
+    "$oid": "658023cc0e0abe3b97eea8cc"
+  }
 },
 {
   "_id": {
@@ -182,7 +200,10 @@
     "HTML",
     "CSS"
   ],
-  "teams": "Wellness Web Works."
+  "teams": "Wellness Web Works.",
+  "userId": {
+    "$oid": "658023cc0e0abe3b97eea8cc"
+  }
 },
 {
   "_id": {
@@ -209,7 +230,10 @@
     "HTML5",
     "CSS3"
   ],
-  "teams": "StreamifyTech."
+  "teams": "StreamifyTech.",
+  "userId": {
+    "$oid": "658001cd0e0abe3b97dc7bec"
+  }
 },
 {
   "_id": {
@@ -227,7 +251,10 @@
   "createdAt": "2023-09-10T10:45:00Z",
   "updatedAt": "2023-09-15T18:30:00Z",
   "skills": ["Mobile App Development", "User Interface Design", "Social Media Integration", "User Engagement Strategies", "React Native", "JavaScript", "HTML5", "CSS3"],
-  "teams": "Tech Stack Inc."
+  "teams": "Tech Stack Inc.",
+  "userId": {
+    "$oid": "65810ef60e0abe3b9764e5b3"
+  }
 },
 {
   "_id": {
@@ -245,7 +272,10 @@
   "createdAt": "2023-10-20T11:00:00Z",
   "updatedAt": "2023-10-25T17:50:00Z",
   "skills": ["Mobile App Development", "UI/UX Design", "E-commerce Integration", "User Experience Design", "React Native", "JavaScript", "HTML5", "CSS3"],
-  "teams": "Kratenfields."
+  "teams": "Kratenfields.",
+  "userId": {
+    "$oid": "65810ef60e0abe3b9764e5b3"
+  }
 },
 {
   "_id": {
@@ -263,7 +293,10 @@
   "createdAt": "2023-03-20T10:30:00Z",
   "updatedAt": "2023-03-25T18:20:00Z",
   "skills": ["React Native", "JavaScript", "HTML", "CSS", "GraphQl", "MongoDb"],
-    "teams": "Pg Dev slug."
+    "teams": "Pg Dev slug.",
+    "userId": {
+      "$oid": "65810ef60e0abe3b9764e5b3"
+    }
 },
 {
   "_id": {
@@ -281,7 +314,10 @@
   "createdAt": "2023-01-05T08:00:00Z",
   "updatedAt": "2023-01-10T15:30:00Z",
   "skills": ["React Native", "JavaScript", "HTML", "CSS", "GraphQl", "MongoDb"],
-    "teams": "GameCuisine Studios."
+    "teams": "GameCuisine Studios.",
+    "userId": {
+      "$oid": "65810ef60e0abe3b9764e5b3"
+    }
 },
 {
   "_id": {
@@ -299,7 +335,10 @@
   "createdAt": "2023-02-10T09:00:00Z",
   "updatedAt": "2023-02-15T16:45:00Z",
   "skills": ["React Native", "JavaScript", "HTML", "CSS", "GraphQl", "MongoDb"],
-  "teams": "GameDev Creations"
+  "teams": "GameDev Creations",
+  "userId": {
+    "$oid": "65810ef60e0abe3b9764e5b3"
+  }
 },
 {
   "_id": {
@@ -318,7 +357,10 @@
   "createdAt": "2026-11-10T09:00:00Z",
   "updatedAt": "2026-11-15T16:45:00Z",
   "skills": ["React Native", "JavaScript", "HTML", "CSS", "GraphQl", "MongoDb"],
-  "teams": "DeliveryTech Solutions"
+  "teams": "DeliveryTech Solutions",
+  "userId": {
+    "$oid": "65801b060e0abe3b97ea0fbd"
+  }
 },
 {
   "_id": {
@@ -336,7 +378,10 @@
   "createdAt": "2023-02-10T09:00:00Z",
   "updatedAt": "2023-02-15T16:45:00Z",
   "skills": ["React.Js", "JavaScript", "HTML", "CSS", "Express", "No Sql"],
-  "teams": "Wellness Web Works"
+  "teams": "Wellness Web Works",
+  "userId": {
+    "$oid": "65801b060e0abe3b97ea0fbd"
+  }
 },
 {
   "_id": {
@@ -354,7 +399,10 @@
   "createdAt": "2023-03-20T10:30:00Z",
   "updatedAt": "2023-03-25T18:20:00Z",
   "skills": ["JavaScript", "React.js", "Node.js", "HTML", "CSS", "Express", "Sequelize", "Postgres"],
-  "teams": "Digital EduWorks"
+  "teams": "Digital EduWorks",
+  "userId": {
+    "$oid": "65801b060e0abe3b97ea0fbd"
+  }
 },
 {
   "_id": {
@@ -372,7 +420,10 @@
   "createdAt": "2023-04-15T11:15:00Z",
   "updatedAt": "2023-04-20T17:10:00Z",
   "skills": ["TypeScript", "Next.js", "HTML", "CSS", "MongoDb", "JavaScript"],
-  "teams": "Tech Stack Inc."
+  "teams": "Tech Stack Inc.",
+  "userId": {
+    "$oid": "658001cd0e0abe3b97dc7bec"
+  }
 },
 {
   "_id": {
@@ -398,7 +449,10 @@
     "Express",
     "Sequelize"
   ],
-  "teams": "Tech Soon Inc."
+  "teams": "Tech Soon Inc.",
+  "userId": {
+    "$oid": "657fed670e0abe3b97d16b83"
+  }
 },
 {
   "_id": {
@@ -447,7 +501,10 @@
     "HTML5",
     "CSS3"
   ],
-  "teams": "StreamifyTech."
+  "teams": "StreamifyTech.",
+  "userId": {
+    "$oid": "657fed670e0abe3b97d16b83"
+  }
 },
 {
   "_id": {
@@ -477,6 +534,840 @@
     "HTML",
     "CSS"
   ],
-  "teams": "Wellness Web Works."
+  "teams": "Wellness Web Works.",
+  "userId": {
+    "$oid": "657fed670e0abe3b97d16b83"
+  }
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668b"
+  },
+  "title": "Online Learning Platform Development",
+  "projectDescription": "Proyek ini bertujuan untuk membangun platform pembelajaran online yang inovatif dan terjangkau. Kami ingin menyediakan beragam kursus dari berbagai bidang, menyediakan interaksi langsung antara guru dan siswa, serta memastikan pengalaman belajar yang menyenangkan.",
+  "workDescription": "Peran Pengembang Front-end akan fokus pada pembuatan antarmuka pengguna yang intuitif, menyediakan fitur-fitur kolaboratif, dan memastikan responsivitas platform di berbagai perangkat.",
+  "position": "Pengembang Front-end",
+  "jobLocation": "Dapat Dilakukan dari Mana Saja",
+  "onSiteRequired": "Remote",
+  "jobType": "Kontrak",
+  "experience": "Minimal 2 tahun di pengembangan web",
+  "benefits": "Kesempatan untuk terlibat dalam revolusi pendidikan online, pengembangan keterampilan, dan pertumbuhan karir yang cepat.",
+  "createdAt": "2023-03-15T09:00:00Z",
+  "updatedAt": "2023-03-20T16:45:00Z",
+  "skills": [
+    "React",
+    "Vue.js",
+    "HTML5",
+    "CSS3",
+    "RESTful API"
+  ],
+  "teams": "EduTech Solutions",
+  "userId": {
+    "$oid": "657fed670e0abe3b97d16b83"
+  }
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668b"
+  },
+  "title": "Health and Wellness Mobile App Development",
+  "projectDescription": "Dalam upaya meningkatkan kesehatan masyarakat, kami berencana untuk mengembangkan aplikasi mobile yang menyediakan panduan kesehatan personal, saran nutrisi, dan pelacak aktivitas fisik untuk membantu pengguna mencapai gaya hidup sehat.",
+  "workDescription": "Pengembang Mobile akan bertanggung jawab dalam merancang antarmuka yang ramah pengguna, mengintegrasikan fitur-fitur pelacak kesehatan, dan memastikan keamanan data pengguna.",
+  "position": "Pengembang Mobile",
+  "jobLocation": "Bebas Lokasi",
+  "onSiteRequired": "Remote",
+  "jobType": "Proyek",
+  "experience": "Minimal 3 tahun pengembangan aplikasi mobile",
+  "benefits": "Keterlibatan dalam proyek yang berdampak pada kesehatan, ruang untuk inovasi, dan peluang pertumbuhan profesional.",
+  "createdAt": "2023-05-10T10:30:00Z",
+  "updatedAt": "2023-05-15T14:20:00Z",
+  "skills": [
+    "Flutter",
+    "Dart",
+    "Firebase",
+    "UI/UX Design",
+    "Pengembangan Responsif"
+  ],
+  "teams": "HealthTech Innovations",
+  "userId": {
+    "$oid": "657fed670e0abe3b97d16b83"
+  }
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668b"
+  },
+  "title": "Platform Pencarian Kerja Terintegrasi",
+  "projectDescription": "Kami memiliki visi untuk membuat platform pencarian kerja yang menghubungkan pencari kerja dengan perusahaan, menyediakan beragam informasi tentang pasar tenaga kerja, dan membantu mempermudah proses perekrutan.",
+  "workDescription": "Pengembang Back-end akan fokus pada pengembangan sistem backend yang tangguh, integrasi API pihak ketiga, dan memastikan keamanan data pengguna.",
+  "position": "Pengembang Back-end",
+  "jobLocation": "Bebas Lokasi",
+  "onSiteRequired": "Remote",
+  "jobType": "Kontrak",
+  "experience": "Minimal 4 tahun pengembangan sistem backend",
+  "benefits": "Kesempatan untuk merintis inovasi di industri pencarian kerja, fleksibilitas dalam pekerjaan, dan pertumbuhan profesional yang berkelanjutan.",
+  "createdAt": "2023-07-20T11:15:00Z",
+  "updatedAt": "2023-07-25T13:40:00Z",
+  "skills": [
+    "Node.js",
+    "Express",
+    "MongoDB",
+    "RESTful API",
+    "Keamanan Data"
+  ],
+  "teams": "CareerConnect Solutions",
+  "userId": {
+    "$oid": "657fed670e0abe3b97d16b83"
+  }
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668b"
+  },
+  "title": "Pengembangan Platform E-commerce Multifungsi",
+  "projectDescription": "Proyek ini bertujuan untuk menciptakan platform e-commerce yang dapat diandalkan, dengan beragam fitur yang dapat disesuaikan sesuai kebutuhan bisnis yang beragam.",
+  "workDescription": "Pengembang Full-stack akan berperan dalam merancang halaman produk yang dinamis dan ramah pengguna, memastikan integrasi gateway pembayaran yang aman, dan mengoptimalkan kinerja platform untuk perangkat mobile.",
+  "position": "Pengembang Full-stack",
+  "jobLocation": "Bebas Lokasi",
+  "onSiteRequired": "Remote",
+  "jobType": "Freelance",
+  "experience": "Minimal 3 tahun",
+  "benefits": "Kesempatan untuk membangun portofolio yang kuat dan pengalaman dalam mengembangkan platform e-commerce yang canggih.",
+  "createdAt": "2023-01-05T08:00:00Z",
+  "updatedAt": "2023-01-10T15:30:00Z",
+  "skills": [
+    "React/Next",
+    "JavaScript",
+    "TypeScript",
+    "HTML",
+    "CSS"
+  ],
+  "teams": "Touke gemco pT.",
+  "userId": {
+    "$oid": "657fed670e0abe3b97d16b83"
+  }
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668b"
+  },
+  "title": "Aplikasi Pemesanan Makanan Online",
+  "projectDescription": "Kami berencana untuk mengembangkan aplikasi pemesanan makanan yang intuitif, menyediakan beragam restoran dan menu, serta menawarkan pengalaman pengguna yang lancar dan nyaman.",
+  "workDescription": "Pengembang Front-end akan bertanggung jawab dalam merancang antarmuka pengguna yang menarik, mempercepat proses pemesanan, dan memastikan kompatibilitas aplikasi dengan berbagai perangkat.",
+  "position": "Pengembang Front-end",
+  "jobLocation": "Fleksibel",
+  "onSiteRequired": "Remote",
+  "jobType": "Proyek",
+  "experience": "Minimal 2 tahun pengembangan aplikasi web",
+  "benefits": "Keterlibatan dalam proyek yang berhubungan dengan industri makanan, ruang untuk kreativitas, dan peluang pengembangan karir.",
+  "createdAt": "2023-09-12T09:30:00Z",
+  "updatedAt": "2023-09-17T12:20:00Z",
+  "skills": [
+    "React",
+    "Angular",
+    "HTML5",
+    "CSS3",
+    "Pengalaman Pengguna (UX)"
+  ],
+  "teams": "Foodie Tech Solutions",
+  "userId": {
+    "$oid": "657fed670e0abe3b97d16b83"
+  }
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668b"
+  },
+  "title": "Pengembangan Aplikasi Mobile Interaktif",
+  "projectDescription": "Tujuan dari proyek ini adalah menciptakan aplikasi mobile yang menyajikan konten multimedia interaktif untuk meningkatkan pengalaman pengguna dan interaksi sosial.",
+  "workDescription": "Pengembang Mobile akan fokus pada pengembangan fitur-fitur multimedia, integrasi API media sosial, dan memastikan kinerja optimal pada berbagai perangkat.",
+  "position": "Pengembang Mobile",
+  "jobLocation": "Dapat Dilakukan dari Mana Saja",
+  "onSiteRequired": "Remote",
+  "jobType": "Freelance",
+  "experience": "Minimal 3 tahun pengembangan aplikasi mobile",
+  "benefits": "Kesempatan untuk terlibat dalam pengembangan aplikasi inovatif, ruang untuk eksperimen, dan pengembangan profesional yang berkelanjutan.",
+  "createdAt": "2023-11-25T10:00:00Z",
+  "updatedAt": "2023-11-30T14:45:00Z",
+  "skills": [
+    "React Native",
+    "Swift",
+    "Android Studio",
+    "API Integration",
+    "UI/UX Design"
+  ],
+  "teams": "MobileTech Innovations",
+  "userId": {
+    "$oid": "657fed670e0abe3b97d16b83"
+  }
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668b"
+  },
+  "title": "Pengembangan Aplikasi IoT",
+  "projectDescription": "Kami berfokus pada pengembangan aplikasi Internet of Things (IoT) yang dapat mengintegrasikan perangkat cerdas untuk meningkatkan efisiensi dan kemudahan pengguna.",
+  "workDescription": "Pengembang Embedded Systems akan bertanggung jawab atas pengembangan perangkat lunak yang dapat berinteraksi dengan perangkat keras, mengimplementasikan protokol komunikasi, dan memastikan keamanan sistem.",
+  "position": "Pengembang Embedded Systems",
+  "jobLocation": "Fleksibel",
+  "onSiteRequired": "Remote",
+  "jobType": "Kontrak",
+  "experience": "Minimal 4 tahun pengembangan sistem terbenam",
+  "benefits": "Keterlibatan dalam teknologi masa depan, kesempatan eksplorasi inovasi, dan pertumbuhan karir di ranah IoT.",
+  "createdAt": "2023-10-18T08:45:00Z",
+  "updatedAt": "2023-10-23T13:15:00Z",
+  "skills": [
+    "C/C++",
+    "Python",
+    "Protokol IoT",
+    "Keamanan Sistem",
+    "Pengembangan Perangkat Terbenam"
+  ],
+  "teams": "TechConnect Solutions",
+  "userId": {
+    "$oid": "65801b060e0abe3b97ea0fbd"
+  }
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668b"
+  },
+  "title": "Platform Reservasi Wisata Online",
+  "projectDescription": "Tujuan kami adalah membangun platform reservasi yang memungkinkan pengguna untuk menjelajahi dan merencanakan perjalanan mereka dengan mudah, serta menemukan pengalaman wisata yang unik.",
+  "workDescription": "Pengembang Back-end akan fokus pada pengembangan database dinamis, integrasi sistem pembayaran, dan memastikan kecepatan dan keandalan platform.",
+  "position": "Pengembang Back-end",
+  "jobLocation": "Bebas Lokasi",
+  "onSiteRequired": "Remote",
+  "jobType": "Freelance",
+  "experience": "Minimal 3 tahun pengembangan web",
+  "benefits": "Keterlibatan dalam industri pariwisata, kesempatan untuk membangun platform inovatif, dan peluang eksplorasi destinasi wisata.",
+  "createdAt": "2023-12-05T09:20:00Z",
+  "updatedAt": "2023-12-10T12:30:00Z",
+  "skills": [
+    "Node.js",
+    "MongoDB",
+    "RESTful API",
+    "Sistem Pembayaran",
+    "Pengembangan Database"
+  ],
+  "teams": "TravelTech Innovations",
+  "userId": {
+    "$oid": "658023cc0e0abe3b97eea8cc"
+  }
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668b"
+  },
+  "title": "Aplikasi Streaming Musik Interaktif",
+  "projectDescription": "Kami bermaksud mengembangkan aplikasi streaming musik yang memberikan pengalaman mendengarkan yang personal dan fitur interaktif untuk penggemar musik.",
+  "workDescription": "Pengembang Front-end akan fokus pada pengembangan antarmuka pengguna yang menarik, fitur-fitur personalisasi, dan interaksi real-time.",
+  "position": "Pengembang Front-end",
+  "jobLocation": "Dapat Dilakukan dari Mana Saja",
+  "onSiteRequired": "Remote",
+  "jobType": "Proyek",
+  "experience": "Minimal 2 tahun pengembangan aplikasi web",
+  "benefits": "Terlibat dalam industri musik, ruang untuk kreativitas, dan kesempatan berkolaborasi dalam menciptakan aplikasi musik yang inovatif.",
+  "createdAt": "2023-09-28T11:10:00Z",
+  "updatedAt": "2023-10-03T14:50:00Z",
+  "skills": [
+    "React",
+    "JavaScript",
+    "HTML5",
+    "CSS3",
+    "Real-time Interaction"
+  ],
+  "teams": "MusicTech Solutions",
+  "userId": {
+    "$oid": "658023cc0e0abe3b97eea8cc"
+  }
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668b"
+  },
+  "title": "Pengembangan Platform E-commerce Fashion",
+  "projectDescription": "Proyek ini bertujuan untuk menciptakan platform e-commerce yang menghadirkan pengalaman belanja mode yang terpersonalisasi dan menyediakan beragam merek fashion terkemuka.",
+  "workDescription": "Pengembang Full-stack akan bertanggung jawab dalam merancang tampilan produk yang estetis, mempercepat proses checkout, dan mengoptimalkan responsivitas platform.",
+  "position": "Pengembang Full-stack",
+  "jobLocation": "Bebas Lokasi",
+  "onSiteRequired": "Remote",
+  "jobType": "Freelance",
+  "experience": "Minimal 3 tahun",
+  "benefits": "Kesempatan untuk membangun portofolio dalam industri fashion, kreativitas dalam pengembangan tampilan, dan pengalaman dalam platform e-commerce yang dinamis.",
+  "createdAt": "2023-02-15T08:30:00Z",
+  "updatedAt": "2023-02-20T15:00:00Z",
+  "skills": [
+    "React/Next",
+    "JavaScript",
+    "TypeScript",
+    "HTML",
+    "CSS"
+  ],
+  "teams": "FashionForward Tech Co.",
+  "userId": {
+    "$oid": "658023cc0e0abe3b97eea8cc"
+  }
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668b"
+  },
+  "title": "Platform Pencarian Properti Online",
+  "projectDescription": "Kami ingin membuat platform yang memudahkan pencarian dan penjualan properti dengan menyediakan informasi lengkap, tampilan visual yang menarik, dan proses transaksi yang mudah.",
+  "workDescription": "Pengembang Back-end akan bertanggung jawab dalam mengelola basis data properti, memastikan keamanan transaksi, dan memperbarui fitur pencarian.",
+  "position": "Pengembang Back-end",
+  "jobLocation": "Dapat Dilakukan dari Mana Saja",
+  "onSiteRequired": "Remote",
+  "jobType": "Kontrak",
+  "experience": "Minimal 4 tahun pengembangan web",
+  "benefits": "Kesempatan berkontribusi dalam industri properti, pengalaman dalam teknologi transaksi online, dan pertumbuhan karir di sektor ini.",
+  "createdAt": "2023-04-20T10:00:00Z",
+  "updatedAt": "2023-04-25T12:45:00Z",
+  "skills": [
+    "Node.js",
+    "MongoDB",
+    "RESTful API",
+    "Keamanan Transaksi",
+    "Manajemen Database"
+  ],
+  "teams": "RealEstateTech Innovations",
+  "userId": {
+    "$oid": "658001cd0e0abe3b97dc7bec"
+  }  
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668b"
+  },
+  "title": "Pengembangan Aplikasi Otomotif",
+  "projectDescription": "Kami bertujuan untuk membuat aplikasi yang memberikan informasi lengkap tentang kendaraan, memfasilitasi layanan perbaikan, dan memungkinkan transaksi jual-beli mobil secara online.",
+  "workDescription": "Pengembang Front-end akan fokus pada antarmuka pengguna yang responsif, fitur-fitur pencarian yang canggih, dan integrasi layanan perbaikan otomotif.",
+  "position": "Pengembang Front-end",
+  "jobLocation": "Fleksibel",
+  "onSiteRequired": "Remote",
+  "jobType": "Proyek",
+  "experience": "Minimal 3 tahun pengembangan aplikasi web",
+  "benefits": "Terlibat dalam industri otomotif, eksplorasi teknologi terkini, dan peluang untuk berinovasi dalam pengembangan aplikasi otomotif.",
+  "createdAt": "2023-08-08T09:30:00Z",
+  "updatedAt": "2023-08-13T11:20:00Z",
+  "skills": [
+    "React",
+    "Vue.js",
+    "HTML5",
+    "CSS3",
+    "Pengalaman Pengguna (UX)"
+  ],
+  "teams": "AutoTech Solutions",
+  "userId": {
+    "$oid": "asadassadds"
+  }
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668b"
+  },
+  "title": "Pengembangan Game Mobile RPG",
+  "projectDescription": "Kami ingin mengembangkan game mobile role-playing yang menarik dengan fitur-fitur inovatif, dunia yang terbuka, dan gameplay yang seru.",
+  "workDescription": "Pengembang Game akan fokus pada pengembangan mekanika gameplay, integrasi fitur sosial, dan optimalisasi kinerja game.",
+  "position": "Pengembang Game",
+  "jobLocation": "Dapat Dilakukan dari Mana Saja",
+  "onSiteRequired": "Remote",
+  "jobType": "Freelance",
+  "experience": "Minimal 4 tahun pengembangan game",
+  "benefits": "Terlibat dalam industri game, ruang untuk kreasi, dan peluang dalam pengembangan game mobile yang menarik.",
+  "createdAt": "2023-11-10T08:45:00Z",
+  "updatedAt": "2023-11-15T10:30:00Z",
+  "skills": [
+    "Unity",
+    "C#",
+    "Game Design",
+    "Keterampilan Kreatif",
+    "Optimalisasi Kinerja Game"
+  ],
+  "teams": "GameDev Innovations",
+  "userId": {
+    "$oid": "657fed670e0abe3b97d16b83"
+  }
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668b"
+  },
+  "title": "Pengembangan Aplikasi Otomotif",
+  "projectDescription": "Kami bertujuan untuk membuat aplikasi yang memberikan informasi lengkap tentang kendaraan, memfasilitasi layanan perbaikan, dan memungkinkan transaksi jual-beli mobil secara online.",
+  "workDescription": "Pengembang Front-end akan fokus pada antarmuka pengguna yang responsif, fitur-fitur pencarian yang canggih, dan integrasi layanan perbaikan otomotif.",
+  "position": "Pengembang Front-end",
+  "jobLocation": "Fleksibel",
+  "onSiteRequired": "Remote",
+  "jobType": "Proyek",
+  "experience": "Minimal 3 tahun pengembangan aplikasi web",
+  "benefits": "Terlibat dalam industri otomotif, eksplorasi teknologi terkini, dan peluang untuk berinovasi dalam pengembangan aplikasi otomotif.",
+  "createdAt": "2023-08-08T09:30:00Z",
+  "updatedAt": "2023-08-13T11:20:00Z",
+  "skills": [
+    "React",
+    "Vue.js",
+    "HTML5",
+    "CSS3",
+    "Pengalaman Pengguna (UX)"
+  ],
+  "teams": "AutoTech Solutions",
+  "userId": {
+    "$oid": "658023cc0e0abe3b97eea8cc"
+  }
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668b"
+  },
+  "title": "Platform Konservasi Lingkungan",
+  "projectDescription": "Kami bertujuan untuk membuat platform yang memungkinkan pengguna untuk berkontribusi pada konservasi lingkungan dengan menyediakan informasi, kampanye, dan cara-cara untuk beraksi.",
+  "workDescription": "Pengembang Full-stack akan bertanggung jawab dalam membangun platform interaktif, mengelola database kampanye, dan memastikan keamanan data pengguna.",
+  "position": "Pengembang Full-stack",
+  "jobLocation": "Bebas Lokasi",
+  "onSiteRequired": "Remote",
+  "jobType": "Kontrak",
+  "experience": "Minimal 3 tahun",
+  "benefits": "Kesempatan untuk berkontribusi pada isu lingkungan, ruang untuk inovasi, dan pengalaman dalam pengembangan platform konservasi.",
+  "createdAt": "2023-05-25T09:20:00Z",
+  "updatedAt": "2023-05-30T12:15:00Z",
+  "skills": [
+    "React/Next",
+    "JavaScript",
+    "Node.js",
+    "MongoDB",
+    "Keamanan Data"
+  ],
+  "teams": "EnviroTech Solutions",
+  "userId": {
+    "$oid": "658023cc0e0abe3b97eea8cc"
+  }
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668b"
+  },
+  "projectDescription": "Kami berencana untuk mengembangkan aplikasi yang memungkinkan kolaborasi seni online, memfasilitasi pertukaran ide dan penciptaan bersama di antara para seniman.",
+  "workDescription": "Pengembang Front-end akan fokus pada pengembangan antarmuka pengguna yang menarik, fitur-fitur kolaborasi real-time, dan penyajian karya seni dengan baik.",
+  "position": "Pengembang Front-end",
+  "jobLocation": "Dapat Dilakukan dari Mana Saja",
+  "onSiteRequired": "Remote",
+  "jobType": "Proyek",
+  "experience": "Minimal 3 tahun pengembangan aplikasi web",
+  "benefits": "Keterlibatan dalam komunitas seni, kesempatan untuk mendorong kreativitas, dan pengalaman dalam mengembangkan platform seni online.",
+  "createdAt": "2023-10-05T09:45:00Z",
+  "updatedAt": "2023-10-10T11:30:00Z",
+  "skills": [
+    "React",
+    "Vue.js",
+    "HTML5",
+    "CSS3",
+    "Real-time Collaboration"
+  ],
+  "teams": "ArtTech Innovations",
+  "userId": {
+    "$oid": "658006bd0e0abe3b97df2ac4"
+  }
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668b"
+  },
+  "projectDescription": "Kami ingin mengembangkan platform yang memungkinkan layanan sosial dan kesehatan mental secara online, menyediakan dukungan dan sumber daya bagi mereka yang membutuhkan.",
+  "workDescription": "Pengembang Full-stack akan bertanggung jawab dalam mengembangkan fitur-fitur interaktif, integrasi keamanan data, dan memastikan ketersediaan sumber daya.",
+  "position": "Pengembang Full-stack",
+  "jobLocation": "Bebas Lokasi",
+  "onSiteRequired": "Remote",
+  "jobType": "Kontrak",
+  "experience": "Minimal 4 tahun",
+  "benefits": "Keterlibatan dalam layanan sosial, ruang untuk inovasi, dan pengalaman dalam pengembangan platform layanan kesehatan mental online.",
+  "createdAt": "2023-07-12T10:15:00Z",
+  "updatedAt": "2023-07-17T12:00:00Z",
+  "skills": [
+    "React/Next",
+    "Node.js",
+    "MongoDB",
+    "Keamanan Data",
+    "Pengalaman Pengguna (UX)"
+  ],
+  "teams": "SocialCare Innovations",
+  "userId": {
+    "$oid": "658006bd0e0abe3b97df2ac4"
+  }
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668b"
+  },
+  "projectDescription": "Kami memiliki proyek penelitian dan pengembangan untuk menghasilkan inovasi baru dalam teknologi energi terbarukan, dengan fokus pada solusi ramah lingkungan.",
+  "workDescription": "Pengembang Back-end akan fokus pada pengembangan sistem terbaru, integrasi prototipe, dan pengujian produk untuk meningkatkan efisiensi.",
+  "position": "Pengembang Back-end",
+  "jobLocation": "Dapat Dilakukan dari Mana Saja",
+  "onSiteRequired": "Remote",
+  "jobType": "Freelance",
+  "experience": "Minimal 5 tahun",
+  "benefits": "Terlibat dalam penelitian dan pengembangan, kesempatan eksplorasi teknologi baru, dan pengalaman dalam menciptakan solusi energi terbarukan.",
+  "createdAt": "2023-12-01T08:00:00Z",
+  "updatedAt": "2023-12-06T11:30:00Z",
+  "skills": [
+    "Node.js",
+    "Python",
+    "Machine Learning",
+    "Prototyping",
+    "Pengembangan Produk"
+  ],
+  "teams": "GreenTech Innovations",
+  "userId": {
+    "$oid": "658001cd0e0abe3b97dc7bec"
+  }
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668b"
+  },
+  "projectDescription": "Kami ingin mengembangkan aplikasi fintech yang memungkinkan akses ke layanan perbankan digital, pembayaran, dan investasi secara mudah dan aman.",
+  "workDescription": "Pengembang Front-end akan bertanggung jawab dalam merancang antarmuka pengguna yang intuitif, integrasi layanan keuangan, dan pemeliharaan aplikasi.",
+  "position": "Pengembang Front-end",
+  "jobLocation": "Fleksibel",
+  "onSiteRequired": "Remote",
+  "jobType": "Proyek",
+  "experience": "Minimal 3 tahun",
+  "benefits": "Terlibat dalam industri finansial digital, ruang untuk inovasi, dan pengalaman dalam pengembangan aplikasi fintech.",
+  "createdAt": "2023-02-28T09:45:00Z",
+  "updatedAt": "2023-03-05T12:20:00Z",
+  "skills": [
+    "React",
+    "JavaScript",
+    "RESTful API",
+    "Keamanan Keuangan",
+    "Pengalaman Pengguna (UX)"
+  ],
+  "teams": "FinanceTech Solutions",
+  "userId": {
+    "$oid": "658001cd0e0abe3b97dc7bec"
+  }
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668b"
+  },
+  "projectDescription": "Kami berencana mengembangkan aplikasi untuk penggemar olahraga yang menyediakan informasi terkini, jadwal, dan interaksi komunitas.",
+  "workDescription": "Pengembang Mobile akan fokus pada pengembangan fitur push notifikasi, integrasi API data olahraga, dan peningkatan kinerja aplikasi.",
+  "position": "Pengembang Mobile",
+  "jobLocation": "Dapat Dilakukan dari Mana Saja",
+  "onSiteRequired": "Remote",
+  "jobType": "Freelance",
+  "experience": "Minimal 3 tahun pengembangan aplikasi mobile",
+  "benefits": "Terlibat dalam industri olahraga, ruang untuk inovasi, dan pengalaman dalam pengembangan aplikasi olahraga.",
+  "createdAt": "2023-06-20T08:30:00Z",
+  "updatedAt": "2023-06-25T10:15:00Z",
+  "skills": [
+    "React Native",
+    "Swift",
+    "Android Studio",
+    "Integrasi API",
+    "Pengalaman Pengguna (UX)"
+  ],
+  "teams": "SportsTech Innovations",
+  "userId": {
+    "$oid": "657fed670e0abe3b97d16b83"
+  }
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668b"
+  },
+  "projectDescription": "Kami memiliki proyek pengembangan sistem manufaktur pintar yang mengintegrasikan teknologi terbaru untuk meningkatkan efisiensi dan keandalan produksi.",
+  "workDescription": "Pengembang Embedded Systems akan fokus pada pengembangan sistem kontrol otomatis, integrasi sensor, dan pengujian keandalan sistem.",
+  "position": "Pengembang Embedded Systems",
+  "jobLocation": "Fleksibel",
+  "onSiteRequired": "Remote",
+  "jobType": "Kontrak",
+  "experience": "Minimal 4 tahun pengembangan sistem terbenam",
+  "benefits": "Keterlibatan dalam industri manufaktur, ruang untuk eksperimen, dan pengalaman dalam pengembangan sistem manufaktur pintar.",
+  "createdAt": "2023-09-05T09:00:00Z",
+  "updatedAt": "2023-09-10T11:45:00Z",
+  "skills": [
+    "C/C++",
+    "Python",
+    "Sistem Kontrol Otomatis",
+    "Sensor Integrasi",
+    "Pengujian Sistem"
+  ],
+  "teams": "ManufactureTech Solutions",
+  "userId": {
+    "$oid": "657fed670e0abe3b97d16b83"
+  }
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668b"
+  },
+  "title": "Telemedicine Platform Development",
+  "projectDescription": "We aim to develop a telemedicine platform to offer remote healthcare services, enabling virtual consultations, medical records management, and easy access to healthcare professionals.",
+  "workDescription": "The Full-stack Developer will focus on developing a user-friendly interface, integrating secure communication protocols, and ensuring compliance with healthcare data regulations.",
+  "position": "Full-stack Developer",
+  "jobLocation": "Remote",
+  "onSiteRequired": "Not Required",
+  "jobType": "Contract",
+  "experience": "Minimum 4 years in web development",
+  "benefits": "Engagement in the healthcare sector, exploration of telehealth innovations, and contributing to remote patient care.",
+  "createdAt": "2023-09-15T08:00:00Z",
+  "updatedAt": "2023-09-20T11:30:00Z",
+  "skills": [
+    "React",
+    "Node.js",
+    "HIPAA Compliance",
+    "Telemedicine Solutions",
+    "Healthcare Data Security"
+  ],
+  "teams": "HealthTech Innovations",
+  "userId": {
+    "$oid": "658006bd0e0abe3b97df2ac4"
+  }
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668b"
+  },
+  "title": "Smart Renewable Energy System Development",
+  "projectDescription": "Our project focuses on developing smart manufacturing solutions integrating the latest technology to enhance renewable energy production efficiency and reliability.",
+  "workDescription": "The Embedded Systems Developer will concentrate on developing automated control systems, sensor integration, and testing system reliability.",
+  "position": "Embedded Systems Developer",
+  "jobLocation": "Flexible",
+  "onSiteRequired": "Remote",
+  "jobType": "Contract",
+  "experience": "Minimum 4 years in embedded systems development",
+  "benefits": "Involvement in the renewable energy sector, room for experimentation, and experience in developing smart renewable energy systems.",
+  "createdAt": "2023-11-25T09:00:00Z",
+  "updatedAt": "2023-11-30T12:45:00Z",
+  "skills": [
+    "C/C++",
+    "Python",
+    "Automated Control Systems",
+    "Sensor Integration",
+    "System Reliability Testing"
+  ],
+  "teams": "GreenTech Solutions",
+  "userId": {
+    "$oid": "658006bd0e0abe3b97df2ac4"
+  }
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668b"
+  },
+  "title": "LegalTech Platform Development",
+  "projectDescription": "We are developing a LegalTech platform to provide easy access to legal services, consultations, and documentation online.",
+  "workDescription": "The Back-end Developer will focus on data security, payment system integration, and user information management.",
+  "position": "Back-end Developer",
+  "jobLocation": "Anywhere",
+  "onSiteRequired": "Remote",
+  "jobType": "Project-based",
+  "experience": "Minimum 3 years in web development",
+  "benefits": "Engagement in legal services, space for innovation, and experience in LegalTech platform development.",
+  "createdAt": "2023-10-10T08:30:00Z",
+  "updatedAt": "2023-10-15T10:20:00Z",
+  "skills": [
+    "Node.js",
+    "MongoDB",
+    "Data Security",
+    "Payment System Integration",
+    "User Information Management"
+  ],
+  "teams": "LegalTech Innovations",
+  "userId": {
+    "$oid": "65810ef60e0abe3b9764e5b3"
+  }
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668b"
+  },
+  "title": "AI-driven Robotics Development",
+  "projectDescription": "We're working on an AI-driven robotics project to create intelligent robots capable of advanced functions and adaptability in various environments.",
+  "workDescription": "The Robotics Engineer will focus on programming AI algorithms, sensor integration, and testing robot functionality.",
+  "position": "Robotics Engineer",
+  "jobLocation": "Remote",
+  "onSiteRequired": "Not Required",
+  "jobType": "Contract",
+  "experience": "Minimum 5 years in robotics engineering",
+  "benefits": "Involvement in cutting-edge AI robotics, space for innovation, and experience in developing AI-driven robotics.",
+  "createdAt": "2023-12-05T09:45:00Z",
+  "updatedAt": "2023-12-10T11:30:00Z",
+  "skills": [
+    "Python",
+    "Machine Learning",
+    "Sensor Integration",
+    "Robotics Programming",
+    "Adaptive Systems"
+  ],
+  "teams": "AI Robotics Solutions",
+  "userId": {
+    "$oid": "65810ef60e0abe3b9764e5b3"
+  }
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668b"
+  },
+  "title": "Online Travel Booking Platform",
+  "projectDescription": "Our project aims to build a user-friendly travel booking platform, facilitating travel planning, and discovery of unique travel experiences.",
+  "workDescription": "The Front-end Developer will focus on creating an engaging user interface, advanced search features, and seamless integration of travel services.",
+  "position": "Front-end Developer",
+  "jobLocation": "Remote",
+  "onSiteRequired": "Not Required",
+  "jobType": "Freelance",
+  "experience": "Minimum 3 years in web development",
+  "benefits": "Engagement in the travel industry, opportunity to build innovative platforms, and exploration of travel destinations.",
+  "createdAt": "2023-09-20T09:30:00Z",
+  "updatedAt": "2023-09-25T12:15:00Z",
+  "skills": [
+    "React",
+    "Vue.js",
+    "HTML5",
+    "CSS3",
+    "User Experience (UX)"
+  ],
+  "teams": "TravelTech Innovations",
+  "userId": {
+    "$oid": "658023cc0e0abe3b97eea8cc"
+  }
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668b"
+  },
+  "title": "Interactive Media Streaming Platform",
+  "projectDescription": "We're developing a media streaming app focused on interactive content, enabling users to engage and participate actively with various forms of media.",
+  "workDescription": "The Full-stack Developer will concentrate on building an immersive user interface, integrating real-time features, and ensuring seamless media streaming.",
+  "position": "Full-stack Developer",
+  "jobLocation": "Remote",
+  "onSiteRequired": "Not Required",
+  "jobType": "Contract",
+  "experience": "Minimum 4 years in web development",
+  "benefits": "Involvement in media innovation, space for creativity, and experience in developing interactive streaming platforms.",
+  "createdAt": "2023-08-15T08:00:00Z",
+  "updatedAt": "2023-08-20T10:30:00Z",
+  "skills": [
+    "React",
+    "Node.js",
+    "Real-time Integration",
+    "Media Streaming",
+    "User Interface Design"
+  ],
+  "teams": "MediaTech Innovations",
+  "userId": {
+    "$oid": "658023cc0e0abe3b97eea8cc"
+  }
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668b"
+  },
+  "title": "Smart Agriculture Solutions Development",
+  "projectDescription": "Our project focuses on developing smart technology solutions to enhance agricultural practices, improve yields, and optimize farming processes.",
+  "workDescription": "The IoT Developer will focus on developing IoT-based farming solutions, data analytics, and remote monitoring systems.",
+  "position": "IoT Developer",
+  "jobLocation": "Flexible",
+  "onSiteRequired": "Remote",
+  "jobType": "Contract",
+  "experience": "Minimum 4 years in IoT development",
+  "benefits": "Involvement in agricultural innovation, opportunity for technology-driven farming, and experience in developing smart agriculture solutions.",
+  "createdAt": "2023-11-05T09:45:00Z",
+  "updatedAt": "2023-11-10T11:20:00Z",
+  "skills": [
+    "IoT Development",
+    "Data Analytics",
+    "Remote Monitoring",
+    "Agricultural Technology",
+    "Sensors Integration"
+  ],
+  "teams": "AgriTech Innovations",
+  "userId": {
+    "$oid": "65801b060e0abe3b97ea0fbd"
+  }
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668b"
+  },
+  "title": "Network Security Enhancement Project",
+  "projectDescription": "We're initiating a project to enhance network security, detect vulnerabilities, and fortify cyber defenses against evolving threats.",
+  "workDescription": "The Cybersecurity Analyst will focus on analyzing system vulnerabilities, implementing security protocols, and developing incident response strategies.",
+  "position": "Cybersecurity Analyst",
+  "jobLocation": "Remote",
+  "onSiteRequired": "Not Required",
+  "jobType": "Contract",
+  "experience": "Minimum 5 years in cybersecurity",
+  "benefits": "Engagement in cybersecurity fortification, exploring evolving threats, and experience in enhancing network defenses.",
+  "createdAt": "2023-10-28T08:30:00Z",
+  "updatedAt": "2023-11-02T10:15:00Z",
+  "skills": [
+    "Cybersecurity Analysis",
+    "Incident Response",
+    "Security Protocols",
+    "Vulnerability Assessment",
+    "Network Defense"
+  ],
+  "teams": "CyberTech Solutions",
+  "userId": {
+    "$oid": "65801b060e0abe3b97ea0fbd"
+  }
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668b"
+  },
+  "title": "Online Fashion Marketplace Development",
+  "projectDescription": "We're developing an online fashion marketplace to connect fashion enthusiasts with unique brands and facilitate seamless shopping experiences.",
+  "workDescription": "The UI/UX Designer will focus on creating visually appealing interfaces, optimizing user experience, and ensuring smooth navigation.",
+  "position": "UI/UX Designer",
+  "jobLocation": "Remote",
+  "onSiteRequired": "Not Required",
+  "jobType": "Freelance",
+  "experience": "Minimum 3 years in UI/UX design",
+  "benefits": "Engagement in the fashion industry, opportunity to design innovative platforms, and experience in e-commerce fashion markets.",
+  "createdAt": "2023-09-15T09:00:00Z",
+  "updatedAt": "2023-09-20T11:45:00Z",
+  "skills": [
+    "UI Design",
+    "UX Optimization",
+    "E-commerce Platforms",
+    "Visual Design",
+    "User-Centric Navigation"
+  ],
+  "teams": "FashionTech Innovations",
+  "userId": {
+    "$oid": "65801b060e0abe3b97ea0fbd"
+  }
+},
+{
+  "_id": {
+    "$oid": "657ec03343b6e4ae5bc5668b"
+  },
+  "title": "Online Fundraising Platform Development",
+  "projectDescription": "Our project aims to develop an online platform for fundraising and charity, enabling easy donation processes and connecting donors with causes.",
+  "workDescription": "The Full-stack Developer will focus on building a secure donation system, integrating payment gateways, and ensuring platform scalability.",
+  "position": "Full-stack Developer",
+  "jobLocation": "Remote",
+  "onSiteRequired": "Not Required",
+  "jobType": "Contract",
+  "experience": "Minimum 4 years in web development",
+  "benefits": "Involvement in charity initiatives, contribution to fundraising technology, and experience in developing online charity platforms.",
+  "createdAt": "2023-12-10T09:30:00Z",
+  "updatedAt": "2023-12-15T12:20:00Z",
+  "skills": [
+    "Node.js",
+    "Payment Gateway Integration",
+    "Security Systems",
+    "Scalable Platforms",
+    "Fundraising Technology"
+  ],
+  "teams": "CharityTech Solutions",
+  "userId": {
+    "$oid": "65801b060e0abe3b97ea0fbd"
+  }
 }
 ]
