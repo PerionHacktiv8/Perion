@@ -13,7 +13,7 @@ export function ProfileNav({ subs }: { subs: boolean }) {
         <Link href={'/profile/project'}>
           <Button
             placeholder={''}
-            variant={path === 'project' ? 'gradient' : 'outlined'}
+            variant={path.includes('project') ? 'gradient' : 'outlined'}
             className="rounded-full"
           >
             Project
@@ -23,7 +23,7 @@ export function ProfileNav({ subs }: { subs: boolean }) {
       <Link href={'/profile/portofolio'}>
         <Button
           placeholder={''}
-          variant={path !== 'project' ? 'gradient' : 'outlined'}
+          variant={path.includes('portofolio') ? 'gradient' : 'outlined'}
           className="rounded-full"
         >
           Portfolio

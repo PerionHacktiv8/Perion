@@ -136,6 +136,7 @@ export function ProfileMenu({ textColor }: { textColor: string }) {
             <MenuItem
               onClick={() => {
                 signOut()
+                setData(undefined)
               }}
               placeholder={''}
               className="flex items-center gap-2 "
