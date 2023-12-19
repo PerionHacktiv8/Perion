@@ -2,6 +2,7 @@ import { firestore } from '../config/firebaseConfig';
 import {
     collection, addDoc, query, orderBy, onSnapshot, where, getDocs, doc, updateDoc, arrayUnion, Timestamp
 } from 'firebase/firestore';
+import { UserModel } from '../models/user';
 
 export interface Room {
     id: string;
@@ -28,12 +29,16 @@ export const getChatRooms = async (userId: string): Promise<Room[]> => {
 };
 
 export const postMessage = async (roomId: string, userId: string, text: string): Promise<void> => {
-    await addDoc(messagesCollection, {
-        roomId,
-        userId,
-        text,
-        createdAt: Timestamp.now()
-    });
+    try {
+        await addDoc(messagesCollection, {
+            roomId,
+            userId,
+            text,
+            createdAt: Timestamp.now()
+        });
+    } catch (error) {
+        console.error("Error posting message:", error);
+    }
 };
 
 export const subscribeToChat = (roomId: string, callback: (messages: Message[]) => void) => {
@@ -100,10 +105,18 @@ export const subscribeToRoomMessages = (userId: string, callback: (message: Mess
             if (change.type === 'added') {
                 const message = change.doc.data() as Message;
                 const roomId = change.doc.ref.parent.parent?.id;
-                if (roomId && message.userId !== userId) { // Don't notify for own messages
+                if (roomId && message.userId !== userId) {
                     callback(message, roomId);
                 }
             }
         });
+    });
+};
+
+export const subscribeToRooms = (userId: string, callback: (rooms: Room[]) => void) => {
+    const q = query(roomsCollection, where('userIds', 'array-contains', userId));
+    return onSnapshot(q, snapshot => {
+        const rooms = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Room));
+        callback(rooms);
     });
 };

@@ -1,7 +1,7 @@
 export function HeroSection() {
   return (
     <div
-      className="relative h-fit bg-[bottom] md:h-50vh pt-16"
+      className="relative bg-[bottom] md:h-50vh pt-10"
       style={{
         backgroundImage:
           'url(https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?q=80&w=2047&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)',

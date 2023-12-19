@@ -1,4 +1,4 @@
-import { Users } from '@/db/models/user'
+import { UserModel, Users } from '@/db/models/user'
 import { NextRequest, NextResponse } from 'next/server'
 
 export type ResponseAPIType<T> = {
@@ -11,13 +11,16 @@ export type ResponseAPIType<T> = {
 export type SetupData = {
   picture?: string
   firstTime: boolean
+  subscription: boolean
+  name: string
+  email: string
 }
 
 export const GET = async (req: NextRequest) => {
   try {
     const userId = req.headers.get('x-user-id') as string
 
-    const data: SetupData = await Users.findOneUser(userId)
+    const data: SetupData = await Users.findProfile(userId)
 
     return NextResponse.json<ResponseAPIType<SetupData>>(
       {
@@ -44,15 +47,19 @@ export const GET = async (req: NextRequest) => {
 
 export const POST = async (req: NextRequest) => {
   try {
-    const data = await req.formData()
+    const userId = req.headers.get('x-user-id') as string
+
+    const data = (await req.json()) as UserModel
+
+    await Users.upProfile(data, userId)
 
     return NextResponse.json<ResponseAPIType<unknown>>(
       {
-        statusCode: 201,
-        message: 'Successfully created a users',
+        statusCode: 200,
+        message: 'Successfully updating a users',
       },
       {
-        status: 201,
+        status: 200,
       },
     )
   } catch (err) {

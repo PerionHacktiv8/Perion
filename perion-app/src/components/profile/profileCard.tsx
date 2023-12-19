@@ -1,15 +1,20 @@
+'use client'
+
+import { UserModel } from '@/db/models/user'
 import {
   Card,
   CardHeader,
   CardBody,
-  CardFooter,
-  Typography,
   Avatar,
   Button,
 } from '@material-tailwind/react'
-import Image from 'next/image'
+import { format } from 'date-fns'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
-export function ProfileCard() {
+export function ProfileCard({ profData }: { profData: UserModel }) {
+  const path = usePathname().split('profile/')[1]
+
   return (
     <Card placeholder={''} className="w-96 mb-10">
       <CardHeader
@@ -19,22 +24,15 @@ export function ProfileCard() {
       >
         <Avatar
           placeholder={''}
-          src="https://docs.material-tailwind.com/img/face-3.jpg"
+          src={profData.picture as string}
           alt="avatar"
           size="xxl"
           className="mb-3 mx-auto"
         />
-        <Typography
-          placeholder={''}
-          variant="h4"
-          color="blue-gray"
-          className="mb-2"
-        >
-          Natalie Paisley
-        </Typography>
-        <Typography
-          placeholder={''}
-          variant="small"
+        <p color="blue-gray" className="mb-2 text-2xl font-bold">
+          {profData.name}
+        </p>
+        <p
           color="black"
           className="flex justify-center items-center gap-2 mx-auto"
         >
@@ -50,34 +48,37 @@ export function ProfileCard() {
               clipRule="evenodd"
             />
           </svg>
-          Jakarta, Indonesia
-        </Typography>
-        <Typography
-          placeholder={''}
-          variant="small"
-          color="black"
-          className="mt-3"
-        >
-          Member Since : 16 December 2023
-        </Typography>
+          {profData.location}
+        </p>
+        <p className="mt-3">
+          Member Since : {format(new Date(profData.createdAt), 'MMMM do, yyyy')}
+        </p>
       </CardHeader>
       <CardBody placeholder={''}>
-        <Button
-          placeholder={''}
-          className="rounded-full w-full flex justify-center items-center gap-2 mx-auto mb-2"
+        <Link
+          href={
+            path === 'edit-profile'
+              ? '/profile/project'
+              : '/profile/edit-profile'
+          }
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            className="w-6 h-6"
+          <Button
+            placeholder={''}
+            className="rounded-full w-full flex justify-center items-center gap-2 mx-auto mb-2"
           >
-            <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
-            <path d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" />
-          </svg>
-          Edit Your Profile
-        </Button>
-        <Button
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="w-6 h-6"
+            >
+              <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
+              <path d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" />
+            </svg>
+            {path !== 'edit-profile' ? 'Edit Your Profile' : 'Back To Profile'}
+          </Button>
+        </Link>
+        {/* <Button
           placeholder={''}
           className="rounded-full w-full flex justify-center items-center gap-2 mx-auto mb-2"
         >
@@ -93,25 +94,27 @@ export function ProfileCard() {
               clipRule="evenodd"
             />
           </svg>
-          Follow
+          Hire Naufal Rafi
         </Button>
-        <Button
-          placeholder={''}
-          className="rounded-full w-full flex justify-center items-center gap-2 mx-auto mb-2"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            className="w-6 h-6"
+        <Link href="/chats">
+          <Button
+            placeholder={''}
+            className="rounded-full w-full flex justify-center items-center gap-2 mx-auto mb-2"
           >
-            <path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z" />
-            <path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z" />
-          </svg>
-          Message
-        </Button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="w-6 h-6"
+            >
+              <path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z" />
+              <path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z" />
+            </svg>
+            Message
+          </Button>
+        </Link> */}
       </CardBody>
-      <CardFooter placeholder={''} className="flex justify-center gap-7 pt-2">
+      {/* <CardFooter placeholder={''} className="flex justify-center gap-7 pt-2">
         <div className="bg-white rounded-lg p-6 shadow-md max-w-sm mx-auto w-full">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">
             Hire Naufal
@@ -119,7 +122,6 @@ export function ProfileCard() {
 
           <div className="border-t-2 border-gray-200 my-3"></div>
 
-          {/* Full Time Job Option */}
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center">
               <span className="inline-block p-2 text-blue-500 rounded mr-2">
@@ -145,13 +147,13 @@ export function ProfileCard() {
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="1.5"
+                strokeWidth="1.5"
                 stroke="currentColor"
                 className="w-6 h-6"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
@@ -160,7 +162,6 @@ export function ProfileCard() {
 
           <div className="border-t-2 border-gray-200 my-3"></div>
 
-          {/* Freelance / Project Option */}
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center">
               <span className="inline-block p-2 text-gray-500 rounded mr-2">
@@ -168,13 +169,13 @@ export function ProfileCard() {
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  stroke-width="1.5"
+                  strokeWidth="1.5"
                   stroke="currentColor"
                   className="w-6 h-6"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
@@ -186,23 +187,23 @@ export function ProfileCard() {
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="1.5"
+                strokeWidth="1.5"
                 stroke="currentColor"
                 className="w-6 h-6"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
             </span>
           </div>
         </div>
-      </CardFooter>
+      </CardFooter> */}
 
       {/* Work Experience */}
-      <CardFooter placeholder={''} className="flex justify-start gap-7">
+      {/* <CardFooter placeholder={''} className="flex justify-start gap-7">
         <div className="">
           <Typography
             placeholder={''}
@@ -245,138 +246,20 @@ export function ProfileCard() {
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="1.5"
+                strokeWidth="1.5"
                 stroke="currentColor"
                 className="w-4 h-4 ml-1"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M8.25 4.5l7.5 7.5-7.5 7.5"
                 />
               </svg>
             </a>
           </div>
         </div>
-      </CardFooter>
-
-      {/* Teams */}
-      <CardFooter placeholder={''} className="flex justify-start gap-7 w-full">
-        <div className="w-full">
-          <Typography
-            placeholder={''}
-            variant="h5"
-            className="font-bold text-sm mb-3"
-          >
-            TEAMS
-          </Typography>
-          <div className="rounded-md border border-2 w-full p-2">
-            {/* Team 1 */}
-            <div className="flex items-center">
-              <div className="flex items-center">
-                <Image
-                  src="https://ik.imagekit.io/naufalrafi/Parion%20Logo%20(1).png?updatedAt=1702368775661"
-                  alt="Parion"
-                  className="w-10 h-10 rounded-full mr-2"
-                  width={50}
-                  height={50}
-                />
-                <div>
-                  <Typography placeholder={''} className="font-medium">
-                    Parion Teams
-                  </Typography>
-                  <Typography
-                    placeholder={''}
-                    className="text-sm text-gray-600"
-                  >
-                    Tangerang, Indonesia
-                  </Typography>
-                </div>
-              </div>
-            </div>
-            <div className="border-t-2 border-gray-200 my-3"></div>
-            {/* Team 2 */}
-            <div className="flex items-center">
-              <div className="flex items-center">
-                <Image
-                  src="https://ik.imagekit.io/naufalrafi/Parion%20Logo%20(1).png?updatedAt=1702368775661"
-                  alt="Parion"
-                  className="w-10 h-10 rounded-full mr-2"
-                  width={50}
-                  height={50}
-                />
-                <div>
-                  <Typography placeholder={''} className="font-medium">
-                    Parion Teams
-                  </Typography>
-                  <Typography
-                    placeholder={''}
-                    className="text-sm text-gray-600"
-                  >
-                    Tangerang, Indonesia
-                  </Typography>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </CardFooter>
-
-      <CardFooter placeholder={''} className="flex justify-start gap-7 w-full">
-        <div className="w-full">
-          <Typography
-            placeholder={''}
-            variant="h5"
-            className="font-bold text-sm mb-3"
-          >
-            Website Links
-          </Typography>
-          <div className="rounded-md border border-gray-200 w-full p-2">
-            <div className="flex flex-col">
-              <a
-                href="#link1"
-                className="text-gray-500 border-b hover:text-black hover:bg-gray-100 hover:rounded p-2 "
-              >
-                Website 1
-              </a>
-              <a
-                href="#link1"
-                className="text-gray-500 border-b hover:text-black hover:bg-gray-100 hover:rounded p-2 "
-              >
-                Website 2
-              </a>
-              <a
-                href="#link1"
-                className="text-gray-500 hover:text-black hover:bg-gray-100 hover:rounded p-2 "
-              >
-                Website 3
-              </a>
-            </div>
-          </div>
-          <div className="mt-2 flex items-center">
-            <a
-              href="#"
-              className="text-gray-600 hover:underline text-sm flex items-center"
-            >
-              View More
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                className="w-4 h-4 ml-1"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </CardFooter>
+      </CardFooter> */}
     </Card>
   )
 }

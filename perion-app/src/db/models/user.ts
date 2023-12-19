@@ -7,7 +7,8 @@ import { CreateInvoiceRequest } from 'xendit-node/invoice/models'
 import { PdfReader } from 'pdfreader'
 import { openai } from '../config/openai'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
-import { storage } from '../config/firebaseConfig'
+import { ProfilesModel } from './profiles'
+import storage from '../config/firebase'
 
 const COLLECTION_NAME = 'users'
 
@@ -17,12 +18,27 @@ export type UserModel = {
   username: string
   email: string
   password: string
-  address: string
   picture: string
   firstTime: boolean
+  subscription: boolean
+  bio: string
+  cvLink: string
+  cvData: CVData
+  location: string
+  createdAt: string
 }
 
-type UserInputType = Omit<UserModel, '_id' | 'picture' | 'firstTime'>
+export type CVData = {
+  expYear: string
+  skills: string[]
+  numOfProjects: string
+  projectsNames: string[]
+}
+
+type UserInputType = Omit<
+  UserModel,
+  '_id' | 'picture' | 'firstTime' | 'createdAt'
+>
 
 const userCreateSchema = z.object({
   name: z
@@ -49,9 +65,6 @@ const userCreateSchema = z.object({
       invalid_type_error: 'Please input your password',
     })
     .min(6, 'Password need to be more than 6 character long'),
-  address: z
-    .string({ invalid_type_error: 'Please input your address' })
-    .min(1, 'Please input your address'),
 })
 
 const loginSchema = z.object({
@@ -86,10 +99,54 @@ export class Users {
         {
           _id: new ObjectId(val),
         },
-        { projection: { picture: 1, firstTime: 1 } },
+        {
+          projection: {
+            picture: 1,
+            firstTime: 1,
+            subscription: 1,
+            email: 1,
+            name: 1,
+          },
+        },
       )) as UserModel
 
-      return { picture: user.picture, firstTime: user.firstTime }
+      return user
+    } catch (err) {
+      throw err
+    }
+  }
+
+  static async findRecruits() {
+    try {
+      const collection = await this.connection()
+
+      const users = await collection.find().toArray()
+
+      return users
+    } catch (err) {
+      throw err
+    }
+  }
+
+  static async findProfile(val: string) {
+    try {
+      const collection = await this.connection()
+
+      const user = await collection.findOne({ _id: new ObjectId(val) })
+
+      return user as UserModel
+    } catch (err) {
+      throw err
+    }
+  }
+
+  static async findDet(val: string) {
+    try {
+      const collection = await this.connection()
+
+      const user = await collection.findOne({ username: val })
+
+      return user as UserModel
     } catch (err) {
       throw err
     }
@@ -118,50 +175,41 @@ export class Users {
     }
   }
 
-  static async createUsers(input: FormData) {
+  static async createUsers(input: Object) {
     try {
       const collection = await this.connection()
 
-      await collection.createIndex({ username: 1 }, { unique: true })
-      await collection.createIndex({ email: 1 }, { unique: true })
+      const parsedData = userCreateSchema.parse(input)
 
-      const data = {
-        name: input.get('name'),
-        username: input.get('username'),
-        email: input.get('email'),
-        password: input.get('password'),
-        address: input.get('address'),
-      }
-
-      const parsedData = userCreateSchema.parse(data)
-
-      const alteredInput: UserInputType = {
+      const alteredInput = {
         ...parsedData,
         password: hashPass(parsedData.password),
+        subscription: false,
+        firstTime: true,
+        picture:
+          'https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png',
+        updatedAt: new Date(),
+        createdAt: new Date(),
       }
 
-      const created = await collection.insertOne(alteredInput)
+      const { insertedId } = await collection.insertOne(alteredInput)
 
-      return created
+      const data = await collection.findOne({ _id: insertedId })
+
+      return data
     } catch (err) {
       let error: string = 'Internal Server Error'
       let statusCode: number = 500
 
       if (err instanceof z.ZodError) {
-        statusCode = 400
         error = err.issues[0].message
       }
 
       if (err instanceof MongoServerError) {
-        if (Object.keys(err.keyPattern)[0] === 'email')
-          error = 'Email already been used'
-        if (Object.keys(err.keyPattern)[0] === 'username')
-          error = 'Username already been used'
-        if (Object.keys(err.keyPattern)[0] === 'email')
-          error = 'Email already been used'
-        if (Object.keys(err.keyPattern)[0] === 'username')
-          error = 'Username already been used'
+        error = `${Object.keys(err.keyPattern)[0]} already been use`
       }
+
+      console.log(error)
 
       throw error
     }
@@ -214,7 +262,26 @@ export class Users {
     }
   }
 
-  static async extractPDF(file: File) {
+  static async updateFree(userId: string) {
+    try {
+      const collection = await this.connection()
+
+      await collection.findOneAndUpdate(
+        { _id: new ObjectId(userId) },
+        {
+          $set: {
+            subscription: false,
+            firstTime: false,
+            updatedAt: new Date(),
+          },
+        },
+      )
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  static async extractPDF(file: File, userId: string) {
     try {
       const fileArrBuff = await file.arrayBuffer()
       const fileBuff = Buffer.from(fileArrBuff)
@@ -223,7 +290,7 @@ export class Users {
       const pdfreader = new PdfReader({})
       pdfreader.parseBuffer(fileBuff, (err, item) => {
         if (err) console.error('error:', err)
-        else if (!item) return this.sumPDF(result.join(' '))
+        else if (!item) return this.sumPDF(result.join(' '), userId)
         else if (item.text) {
           result.push(item.text)
         }
@@ -233,31 +300,52 @@ export class Users {
     }
   }
 
-  static async sumPDF(val: string) {
+  static async sumPDF(val: string, userId: string) {
     try {
+      const collection = await this.connection()
+
       const ai = await openai.chat.completions.create({
         model: 'gpt-4',
         messages: [
           {
             role: 'user',
-            content: `can you summarize this cv into four excact points divided by a dash in a line, that is his name, his total work experience in number of years, if less than a year put 1 year, and his skills strict only his skills, his number of projects, this is the cv, ${val}`,
+            content: `can you summarize this cv into four exact points divided by a dash in a line, first is only his total work experience in number of years, if less than a year put 1 year, second is his skills strict only his skills, third is his number of projects only number of projects, fourth is his projects name list divided by a coma with this format 'Names: his list of projects' , this is the cv, ${val}`,
           },
         ],
       })
 
-      console.log(ai.choices[0].message.content as string)
-
       const data = (ai.choices[0].message.content as string).split(' - ')
 
-      console.log(data)
+      const expYear = data[0]
+      const skills = data[1]?.split('Skills: ')[1]?.split(', ')
+      const numOfProjects = data[2]
+      const projectNames = data[3]?.split('Names: ')[1]?.split(', ')
+
+      await collection.findOneAndUpdate(
+        { _id: new ObjectId(userId) },
+        {
+          $set: {
+            cvData: {
+              expYear,
+              skills,
+              numOfProjects,
+              projectNames,
+            },
+          },
+        },
+      )
+
+      return data
     } catch (err) {
       console.log(err)
     }
   }
 
-  static async upPDF(file: File) {
+  static async upPDF(file: File, userId: string) {
     try {
-      const storageRef = ref(storage, file.name)
+      const collection = await this.connection()
+
+      const storageRef = ref(fireStorage, file.name)
       const upload = uploadBytes(storageRef, file)
 
       const data = await upload.then(async (snapshot) => {
@@ -266,7 +354,64 @@ export class Users {
         })
       })
 
+      await collection.findOneAndUpdate(
+        { _id: new ObjectId(userId) },
+        {
+          $set: {
+            cvLink: data,
+          },
+        },
+      )
+
       return data
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  static async upImg(file: File, userId: string) {
+    try {
+      const collection = await this.connection()
+
+      const storageRef = ref(fireStorage, userId)
+      const upload = uploadBytes(storageRef, file)
+
+      const data = await upload.then(async (snapshot) => {
+        return getDownloadURL(snapshot.ref).then((dataUrl) => {
+          return dataUrl
+        })
+      })
+
+      await collection.findOneAndUpdate(
+        { _id: new ObjectId(userId) },
+        {
+          $set: {
+            picture: data,
+          },
+        },
+      )
+
+      return data
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  static async upProfile(input: UserModel, userId: string) {
+    try {
+      const collection = await this.connection()
+
+      await collection.findOneAndUpdate(
+        { _id: new ObjectId(userId) },
+        {
+          $set: {
+            name: input.name,
+            bio: input.bio,
+            location: input.location,
+            updatedAt: new Date(),
+          },
+        },
+      )
     } catch (err) {
       console.log(err)
     }

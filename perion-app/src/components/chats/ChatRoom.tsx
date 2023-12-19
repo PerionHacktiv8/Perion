@@ -10,9 +10,12 @@ import {
   setTypingStatus,
   subscribeToTyping,
   subscribeToRoomMessages,
+  subscribeToRooms,
 } from '../../db/config/firestoreService'
 import { authN } from '../../db/config/firebaseConfig'
 import Image from 'next/image'
+import { UserModel } from '@/db/models/user'
+import cookies from 'next/headers'
 
 const ChatComponent: React.FC = () => {
   const [currentRoom, setCurrentRoom] = useState<string | null>(null)
@@ -26,6 +29,13 @@ const ChatComponent: React.FC = () => {
   useEffect(() => {
     if (user?.uid) {
       const unsubscribe = subscribeToRoomMessages(user.uid, handleNewMessage)
+      return () => unsubscribe()
+    }
+  }, [user?.uid])
+
+  useEffect(() => {
+    if (user?.uid) {
+      const unsubscribe = subscribeToRooms(user.uid, setRooms)
       return () => unsubscribe()
     }
   }, [user?.uid])
@@ -91,6 +101,7 @@ const ChatComponent: React.FC = () => {
   return (
     <div className="flex h-screen">
       <div className="flex flex-col w-full max-w-4xl mx-auto shadow-lg">
+        {/* Header */}
         <header className="bg-gray-800 p-4 flex justify-between items-center text-white">
           <div className="flex items-center">
             <Image
@@ -110,7 +121,9 @@ const ChatComponent: React.FC = () => {
           </button>
         </header>
 
+        {/* Main Content */}
         <div className="flex-grow flex">
+          {/* Room List Sidebar */}
           <aside className="w-1/4 bg-gray-900 p-4 border-r">
             <h2 className="text-lg font-semibold mb-4 text-white">Rooms</h2>
             <ul className="overflow-auto">
@@ -134,11 +147,12 @@ const ChatComponent: React.FC = () => {
             </ul>
           </aside>
 
+          {/* Chat Area */}
           <main className="flex-grow p-4 bg-gray-200">
             <div className="h-full flex flex-col">
+              {/* Room Creation Input */}
               {!currentRoom && (
                 <div className="p-4">
-                  {/* Room creation input and button */}
                   <input
                     type="text"
                     placeholder="Room name"
@@ -155,6 +169,7 @@ const ChatComponent: React.FC = () => {
                 </div>
               )}
 
+              {/* Messages Display */}
               <div className="flex-grow overflow-auto">
                 {messages.map((message) => (
                   <div
@@ -163,10 +178,12 @@ const ChatComponent: React.FC = () => {
                       message.userId === user?.uid
                         ? 'items-end text-right'
                         : 'items-start text-left'
-                    }`}
+                    } my-2`}
                   >
                     <span className="text-xs text-gray-500">
-                      {message.userId === user?.displayName}
+                      {message.userId === user?.uid
+                        ? 'You'
+                        : user?.displayName || user?.displayName}
                     </span>
                     <div
                       className={`rounded-lg p-2 mt-1 ${
@@ -180,8 +197,10 @@ const ChatComponent: React.FC = () => {
                   </div>
                 ))}
               </div>
+
+              {/* Message Input */}
               {currentRoom && (
-                <div className="mt-4 border-t pt-4">
+                <div className="border-t border-gray-300 p-4">
                   <input
                     type="text"
                     placeholder="Type a message"

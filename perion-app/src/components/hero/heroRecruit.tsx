@@ -1,14 +1,13 @@
 export function HeroRecruit() {
   return (
     <div
-      className="relative h-auto md:h-50vh pt-16"
+      className="relative bg-[center] flex justify-center items-center h-80"
       style={{
         backgroundImage:
-          'url(https://images.unsplash.com/photo-1512514076443-1eef59c260b0?q=80&w=2448&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)',
+          'url(https://images.unsplash.com/photo-1541746972996-4e0b0f43e02a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)',
       }}
     >
-      <div className="hero-overlay bg-opacity-60"></div>
-      <div className="text-center text-neutral-content pt-12 pb-10 px-4">
+      <div className="text-center text-neutral-content pt-10">
         <div className="text-white max-w-5xl mx-auto">
           <h1 className="mb-5 text-2xl md:text-6xl lg:text-7xl font-bold">
             Pick Your Partner & Work Together!

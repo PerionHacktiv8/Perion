@@ -1,6 +1,6 @@
 // src/app/chat/page.tsx
 import React from 'react'
-import ChatComponent from '@/components/chat/ChatRoom'
+import ChatComponent from '@/components/chats/ChatRoom'
 import { AuthProvider } from '@/contexts/authContext'
 
 const ChatPage = () => {

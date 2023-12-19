@@ -1,38 +1,37 @@
 // src/app/components/signInWithAuth.tsx
-"use client";
-import React from "react";
-import { signInWithGoogle } from "../db/config/Sign-InFunction";
-import { signInWithGithub } from "../db/config/Sign-InFunction";
-import { signInWithFacebook } from "../db/config/Sign-InFunction";
-
+'use client'
+import React from 'react'
+import { signInWithGoogle } from '../db/config/Sign-InFunction'
+import { signInWithGithub } from '../db/config/Sign-InFunction'
+import { signInWithFacebook } from '../db/config/Sign-InFunction'
 
 const SignInButton: React.FC = () => {
   const handleSignInWithGoogle = async () => {
     try {
-      const user = await signInWithGoogle();
-      console.log("Signed in user:", user);
+      const user = await signInWithGoogle()
+      console.log('Signed in user:', user)
     } catch (error) {
-      console.error("Error signing in:", error);
+      console.error('Error signing in:', error)
     }
-  };
+  }
 
   const handleSignInWithGithub = async () => {
     try {
-      const user = await signInWithGithub();
-      console.log("Signed in user:", user);
+      const user = await signInWithGithub()
+      console.log('Signed in user:', user)
     } catch (error) {
-      console.error("Error signing in with GitHub:", error);
+      console.error('Error signing in with GitHub:', error)
     }
-  };
+  }
 
   const handleSignInWithFacebook = async () => {
     try {
-      const user = await signInWithFacebook();
-      console.log("Signed in user:", user);
+      const user = await signInWithFacebook()
+      console.log('Signed in user:', user)
     } catch (error) {
-      console.error("Error signing in with Facebook:", error);
+      console.error('Error signing in with Facebook:', error)
     }
-  };
+  }
 
   return (
     <div>
@@ -57,7 +56,7 @@ const SignInButton: React.FC = () => {
         Sign in with Facebook
       </button>
     </div>
-  );
-};
+  )
+}
 
-export default SignInButton;
+export default SignInButton
