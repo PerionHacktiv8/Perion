@@ -17,8 +17,6 @@
     "@types/bcryptjs": "^2.4.6",
     "@types/jsonwebtoken": "^9.0.5",
     "bcryptjs": "^2.4.3",
-    "date-fns": "^3.0.0",
-    "dayjs": "^1.11.10",
     "firebase": "^10.7.1",
     "firebase-admin": "^12.0.0",
     "jose": "^5.1.3",

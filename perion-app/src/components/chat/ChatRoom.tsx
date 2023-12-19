@@ -9,6 +9,7 @@ import {
   Message,
   setTypingStatus,
   subscribeToTyping,
+  subscribeToRoomMessages,
 } from '../../db/config/firestoreService'
 import { authN } from '../../db/config/firebaseConfig'
 import Image from 'next/image'
@@ -24,9 +25,26 @@ const ChatComponent: React.FC = () => {
 
   useEffect(() => {
     if (user?.uid) {
-      getChatRooms(user.uid).then(setRooms)
+      const unsubscribe = subscribeToRoomMessages(user.uid, handleNewMessage)
+      return () => unsubscribe()
     }
   }, [user?.uid])
+
+  useEffect(() => {
+    const savedRoomId = localStorage.getItem('currentRoom')
+    if (savedRoomId) {
+      setCurrentRoom(savedRoomId)
+    }
+  }, [])
+
+  const handleNewMessage = useCallback(
+    (message: Message, roomId: string) => {
+      if (roomId === currentRoom) {
+        setMessages((prevMessages) => [...prevMessages, message])
+      }
+    },
+    [currentRoom],
+  )
 
   useEffect(() => {
     if (currentRoom) {
@@ -41,15 +59,11 @@ const ChatComponent: React.FC = () => {
   }, [currentRoom])
 
   const handleSendMessage = useCallback(async () => {
-    if (newMessage.trim() && currentRoom && user?.displayName) {
-      try {
-        await postMessage(currentRoom, user.uid, user.displayName)
-        setNewMessage('')
-      } catch (error) {
-        console.error('Error sending message:', error)
-      }
+    if (newMessage.trim() && currentRoom && user?.uid) {
+      await postMessage(currentRoom, user.uid, newMessage)
+      setNewMessage('')
     }
-  }, [newMessage, currentRoom, user?.uid, user?.displayName])
+  }, [newMessage, currentRoom, user?.uid])
 
   const handleKeyDown = async (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && currentRoom) {
@@ -145,36 +159,27 @@ const ChatComponent: React.FC = () => {
                 {messages.map((message) => (
                   <div
                     key={message.id}
-                    className={`mb-4 p-3 rounded-lg shadow ${
+                    className={`flex flex-col ${
                       message.userId === user?.uid
-                        ? `ml-auto bg-gray-900 text-black`
-                        : `mr-auto bg-gray-100 text-white`
+                        ? 'items-end text-right'
+                        : 'items-start text-left'
                     }`}
                   >
-                    <p className="text-sm text-indigo-500 font-semibold">
-                      {message.userId === user?.uid ? 'You' : user?.displayName}
-                      : {''}
+                    <span className="text-xs text-gray-500">
+                      {message.userId === user?.displayName}
+                    </span>
+                    <div
+                      className={`rounded-lg p-2 mt-1 ${
+                        message.userId === user?.uid
+                          ? 'bg-blue-500 text-white'
+                          : 'bg-gray-300'
+                      }`}
+                    >
                       {message.text}
-                    </p>
-                    <p className="text-xs text-gray-500">
-                      {message.createdAt.toDate().toLocaleString()}
-                    </p>
+                    </div>
                   </div>
                 ))}
               </div>
-
-              <div className="mt-4">
-                {Object.entries(typing)
-                  .filter(
-                    ([userId, isTyping]) => isTyping && userId !== user?.uid,
-                  )
-                  .map(([userId]) => (
-                    <div key={userId} className="text-sm text-gray-500">
-                      {user?.displayName} is typing...
-                    </div>
-                  ))}
-              </div>
-
               {currentRoom && (
                 <div className="mt-4 border-t pt-4">
                   <input

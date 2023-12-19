@@ -9,6 +9,8 @@ import {
   Button,
   Avatar,
 } from '@material-tailwind/react'
+import { authN } from '../../db/config/firebaseConfig'
+import { createOrJoinRoom } from '../../db/config/firestoreService'
 
 function CheckIcon() {
   return (
@@ -30,6 +32,19 @@ function CheckIcon() {
 }
 
 export function CardUser() {
+  const user = authN.currentUser
+
+  const handleChat = async () => {
+    if (!user) {
+      console.error('User is not authenticated')
+      return
+    }
+
+    const roomId = await createOrJoinRoom('Naufal Rafi', user.uid)
+    localStorage.setItem('currentRoom', roomId)
+    window.location.href = '/chat'
+  }
+
   return (
     <Card
       placeholder={''}
@@ -122,6 +137,7 @@ export function CardUser() {
           size="lg"
           color="white"
           className="hover:bg-black hover:text-white"
+          onClick={() => handleChat()}
         >
           Hire Naufal Rafi
         </Button>

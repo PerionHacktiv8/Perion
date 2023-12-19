@@ -231,15 +231,9 @@ export function CardComponent({ datum }: { datum: ProjectModel }) {
                 </div>
                 <div className="flex flex-col gap-2">
                   <p className="text-black text-lg font-bold">Benefits</p>
-                  {datum.benefits.split(', ').map((el) => (
-                    <p>- {el}</p>
-                  ))}
                 </div>
                 <div className="flex flex-col gap-2">
                   <p className="text-black text-lg font-bold">Skills Needed</p>
-                  {datum.skills.map((el) => (
-                    <p>- {el}</p>
-                  ))}
                 </div>
               </div>
             </section>

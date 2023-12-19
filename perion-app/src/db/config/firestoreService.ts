@@ -22,27 +22,18 @@ export const roomsCollection = collection(firestore, 'chatRooms');
 export const messagesCollection = collection(firestore, 'chatMessages');
 
 export const getChatRooms = async (userId: string): Promise<Room[]> => {
-    try {
-        const q = query(roomsCollection, where('userIds', 'array-contains', userId));
-        const snapshot = await getDocs(q);
-        return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Room));
-    } catch (error) {
-        console.error("Error fetching chat rooms:", error);
-        return [];
-    }
+    const q = query(roomsCollection, where('userIds', 'array-contains', userId));
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Room));
 };
 
 export const postMessage = async (roomId: string, userId: string, text: string): Promise<void> => {
-    try {
-        await addDoc(messagesCollection, {
-            roomId,
-            userId,
-            text,
-            createdAt: Timestamp.now()
-        });
-    } catch (error) {
-        console.error("Error posting message:", error);
-    }
+    await addDoc(messagesCollection, {
+        roomId,
+        userId,
+        text,
+        createdAt: Timestamp.now()
+    });
 };
 
 export const subscribeToChat = (roomId: string, callback: (messages: Message[]) => void) => {
@@ -98,5 +89,21 @@ export const subscribeToTyping = (roomId: string, callback: (typing: Record<stri
             const data = snapshot.data();
             callback(data.typing as Record<string, boolean>);
         }
+    });
+};
+
+export const subscribeToRoomMessages = (userId: string, callback: (message: Message, roomId: string) => void) => {
+    const q = query(messagesCollection, where('userIds', 'array-contains', userId), orderBy('createdAt', 'desc'));
+
+    return onSnapshot(q, snapshot => {
+        snapshot.docChanges().forEach(change => {
+            if (change.type === 'added') {
+                const message = change.doc.data() as Message;
+                const roomId = change.doc.ref.parent.parent?.id;
+                if (roomId && message.userId !== userId) { // Don't notify for own messages
+                    callback(message, roomId);
+                }
+            }
+        });
     });
 };
