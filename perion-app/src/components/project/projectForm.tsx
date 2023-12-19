@@ -1,79 +1,293 @@
 'use client'
-import React from 'react'
+import React, { useState, ChangeEvent, FormEvent } from 'react'
 import {
   Button,
-  Card,
-  CardBody,
-  CardFooter,
-  Typography,
   Input,
   Textarea,
   Select,
   Option,
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
 } from '@material-tailwind/react'
 
-export function ProjectForm() {
+type inputProjectModel = {
+  title: string
+  projectDescription: string
+  workDescription: string
+  position: string
+  jobLocation: string
+  experience: string
+  benefits: string
+  teams: string
+  skills: string[]
+}
+
+type inputSelect = {
+  jobType: string
+  onSiteRequired: string
+  jobCategory: string
+}
+
+const ProjectFormDialog = ({ open , handleOpen } : {open: boolean, handleOpen : () => void} ) => {
+
+  const [input, setInput] = useState<inputProjectModel>({
+    title: '',
+    projectDescription: '',
+    workDescription: '',
+    position: '',
+    jobLocation: '',
+    experience: '',
+    benefits: '',
+    teams: '',
+    skills: [],
+  })
+  const [inputSelect, setInputSelect] = useState<inputSelect>({
+    jobType: '',
+    onSiteRequired: '',
+    jobCategory: '',
+  })
+
+  const onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    })
+  }
+
+  const onSubmitInput = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const response = await fetch(`http://localhost:3000/api/projects`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        input,
+        inputSelect,
+      }),
+    })
+  }
+  
+
   return (
     <>
-      <Card placeholder={''} className="mx-auto w-full">
-        <CardBody placeholder={''} className="flex flex-col gap-3">
-          <Typography placeholder={''} variant="h4" color="blue-gray">
-            Create a Project
-          </Typography>
-          <Typography
-            placeholder={''}
-            className="mb-1 font-normal"
-            variant="paragraph"
-            color="gray"
-          >
-            Start building your project:
-          </Typography>
-          <Typography placeholder={''} className="-mb-2" variant="h6">
-            Title
-          </Typography>
-          <Input crossOrigin={''} label="Insert Title" size="lg" />
-          <Typography placeholder={''} className="-mb-2" variant="h6">
-            Description
-          </Typography>
-          <Textarea placeholder={''} label="Insert Description" size="lg" />
-          <Typography placeholder={''} className="-mb-2" variant="h6">
-            Project Location
-          </Typography>
-          <Input crossOrigin={''} label="Insert Location" size="lg" />
-          <Typography placeholder={''} className="-mb-1" variant="h6">
-            Onsite Requird
-          </Typography>
-          <div className="w-full">
-            <Select placeholder={''} label="Select Requird">
-              <Option>On Site</Option>
-              <Option>Remote</Option>
-              <Option>Hybrid</Option>
-            </Select>
+    <Dialog
+        placeholder={''}
+        size="xl"
+        open={open}
+        handler={handleOpen}
+        className="shadow-none overflow-y-auto"
+        animate={{
+          mount: { scale: 1, y: 0 },
+          unmount: { scale: 0.9, y: -100 },
+        }}
+      >
+      <DialogHeader
+        placeholder={''}
+        className="justify-center border-b-2 mt-2 flex flex-col lg:flex-row lg:items-center lg:justify-center gap-4"
+      >
+        <div className="flex items-center gap-3">
+          <div className="mt-px flex flex-col">
+            <p className='font-bold text-lg'>
+              Create a Project
+            </p>
+            <p
+              className="mb-1 font-normal text-sm"
+            >
+              Start building your project:
+            </p>
           </div>
-          <Typography placeholder={''} className="-mb-2" variant="h6">
-            Experience
-          </Typography>
-          <Input crossOrigin={''} label="Insert Experience" size="lg" />
-          <Typography placeholder={''} className="-mb-2" variant="h6">
-            Benefits
-          </Typography>
-          <Input crossOrigin={''} label="Insert Benefits" size="lg" />
-          <Typography placeholder={''} className="-mb-2" variant="h6">
-            Job Type
-          </Typography>
-          <div className="w-full">
-            <Select placeholder={''} label="Select Type">
-              <Option>Full Time</Option>
-              <Option>Freelance</Option>
-            </Select>
+        </div>
+      </DialogHeader>
+      <DialogBody
+          placeholder={''}
+          className="h-auto sm:h-[30rem] md:h-[35rem] lg:h-[37rem] overflow-y-auto flex flex-col gap-3"
+        >
+        <form action="" onSubmit={onSubmitInput}>
+            <p className='font-bold text-lg text-black'>
+              Title
+            </p>
+            <Input
+              crossOrigin={''}
+              label="Insert Title"
+              size="lg"
+              name="title"
+              value={input.title}
+              onChange={onChange}
+            />
+            <p className='mt-3 mb-2 font-bold text-lg text-black'>
+              Project Description
+            </p>
+            <Textarea
+              placeholder={''}
+              label="Insert Description"
+              size="lg"
+              name="projectDescription"
+              value={input.projectDescription}
+              onChange={onChange}
+            />
+            <p className='mt-3 mb-2 font-bold text-lg text-black'>
+              Work Description
+            </p>
+            <Textarea
+              placeholder={''}
+              label="Insert Description"
+              size="lg"
+              name="workDescription"
+              value={input.workDescription}
+              onChange={onChange}
+            />
+            <p className='mt-3 mb-2 font-bold text-lg text-black'>
+              Project Location
+            </p>
+            <Input
+              crossOrigin={''}
+              label="Insert Location"
+              size="lg"
+              name="jobLocation"
+              value={input.jobLocation}
+              onChange={onChange}
+            />
+            <p className='mt-3 mb-2 font-bold text-lg text-black'>
+              On Site Required
+            </p>
+            <div className="w-full">
+              <Select
+                placeholder={''}
+                label="Select On Site Required"
+                name="onSiteRequired"
+                value={inputSelect.onSiteRequired}
+                onChange={(e) => {
+                  if (e)
+                    setInputSelect({
+                      ...inputSelect,
+                      onSiteRequired: e,
+                    })
+                }}
+              >
+                <Option value="On Site">On Site</Option>
+                <Option value="Remote">Remote</Option>
+                <Option value="Hybrid">Hybrid</Option>
+              </Select>
+            </div>
+            <p className='mt-3 mb-2 font-bold text-lg text-black'>
+              Experience
+            </p>
+            <Input
+              crossOrigin={''}
+              label="Insert Experience"
+              size="lg"
+              name="experience"
+              value={input.experience}
+              onChange={onChange}
+            />
+            <p className='mt-3 mb-2 font-bold text-lg text-black'>
+              Benefits
+            </p>
+            <Input
+              crossOrigin={''}
+              label="Insert Benefits"
+              size="lg"
+              name="benefits"
+              value={input.benefits}
+              onChange={onChange}
+            />
+            <p className='mt-3 mb-2 font-bold text-lg text-black'>
+              Position
+            </p>
+            <Input
+              crossOrigin={''}
+              label="Insert Position"
+              size="lg"
+              name="position"
+              value={input.position}
+              onChange={onChange}
+            />
+            <p className='mt-3 mb-2 font-bold text-lg text-black'>
+              Job Type
+            </p>
+            <div className="w-full">
+              <Select
+                placeholder={''}
+                label="Select Type"
+                name="jobType"
+                value={inputSelect.jobType}
+                onChange={(e) => {
+                  if (e)
+                    setInputSelect({
+                      ...inputSelect,
+                      jobType: e,
+                    })
+                }}
+              >
+                <Option value="Full Time">Full Time</Option>
+                <Option value="Freelance">Freelance</Option>
+              </Select>
+            </div>
+            <p className='mt-3 mb-2 font-bold text-lg text-black'>
+              Job Category
+            </p>
+            <div className="w-full">
+              <Select
+                placeholder={''}
+                label="Select Job Category"
+                name="jobCategory"
+                value={inputSelect.jobCategory}
+                onChange={(e) => {
+                  if (e)
+                    setInputSelect({
+                      ...inputSelect,
+                      jobCategory: e,
+                    })
+                }}
+              >
+                <Option value="Web Developer">Web developer</Option>
+                <Option value="Software Developer">Software Developer</Option>
+                <Option value="Mobile App Deveveloper">
+                  Mobile App Developer
+                </Option>
+                <Option value="Game Developer">Game Developer</Option>
+              </Select>
+            </div>
+            <p className='mt-3 mb-2 font-bold text-lg text-black'>
+              Skills
+            </p>
+            <Textarea
+              placeholder={''}
+              label="Insert Skills"
+              size="lg"
+              name="skills"
+              value={input.skills}
+              onChange={onChange}
+            />
+            <p className='mt-3 mb-2 font-bold text-lg text text-black'>
+              Teams
+            </p>
+            <Input
+              crossOrigin={''}
+              label="Insert Teams"
+              size="lg"
+              name="teams"
+              value={input.teams}
+              onChange={onChange}
+            />
+        </form>
+      </DialogBody>  
+      <DialogFooter
+          placeholder={''}
+          className="justify-between flex flex-col border-t-2 lg:flex-row lg:items-center lg:justify-between"
+        >
+          <div className="flex items center gap-3">
+            <Button type="submit" placeholder={''} color="gray" size="md">
+              Create Project
+            </Button>
           </div>
-        </CardBody>
-        <CardFooter placeholder={''} className="pt-0">
-          <Button placeholder={''} variant="gradient">
-            Create Project
-          </Button>
-        </CardFooter>
-      </Card>
+      </DialogFooter>
+      </Dialog>
     </>
   )
 }
+
+export default ProjectFormDialog

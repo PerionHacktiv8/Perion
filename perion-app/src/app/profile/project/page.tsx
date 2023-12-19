@@ -1,19 +1,25 @@
-'use client'
-import { CreateBoxPorto } from '@/components/portofolio/boxPorto'
-import CardProject  from '@/components/project/cardProject'
+'use client';
+import ProjectFormDialog from '@/components/project/projectForm';
+import CardProject from '@/components/project/cardProject';
+import CardProjectForm from '@/components/project/createProjectCard';
 import ProjectDialog from '@/components/project/modalProject'
-import { useState } from 'react'
+import { useState } from 'react';
 
 export default function Profile() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [isProjectOpen, setIsProjectOpen] = useState(false);
 
-  const toggleModal = () => setIsOpen(!isOpen);
+  const toggleFormModal = () => setIsFormOpen(!isFormOpen);
+
+  const toggleProjectModal = () => setIsProjectOpen(!isProjectOpen);
 
   return (
-    <div className="flex items-center gap-5">
-      <CreateBoxPorto />
-      <CardProject onOpen={toggleModal} />
-      {isOpen && <ProjectDialog open={isOpen} handleOpen={toggleModal} />}
+    <div className="flex items-center gap-5"> 
+      <CardProjectForm onOpen={toggleFormModal} />
+      {isFormOpen && <ProjectFormDialog open={isFormOpen} handleOpen={toggleFormModal} />}
+
+      <CardProject onOpen={toggleProjectModal} />
+      {isProjectOpen && <ProjectDialog open={isProjectOpen} handleOpen={toggleProjectModal} />}
     </div>
-  )
+  );
 }
