@@ -28,7 +28,9 @@ export default function RecomPage() {
   return (
     <div className="h-full w-full grid grid-cols-3 mt-5 gap-5">
       {data && data?.length > 0 ? (
-        data.map((datum) => <CardComponent datum={datum} />)
+        data.map((datum) => (
+          <CardComponent datum={datum} fetchData={fetchData} />
+        ))
       ) : (
         <h2 className="font-bold text-white text-md">
           You Haven't Applied On Any Project Yet
