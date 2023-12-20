@@ -1,5 +1,11 @@
 'use client'
-import React, { useState, useEffect, useCallback, useRef } from 'react'
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+  MutableRefObject,
+} from 'react'
 import {
   getChatRooms,
   postMessage,
@@ -13,8 +19,6 @@ import {
   getUserDetails,
 } from '../../db/config/firestoreService'
 import { authN } from '../../db/config/firebaseConfig'
-import Cookies from 'js-cookie'
-import swall from 'sweetalert2'
 
 interface UserDetails {
   [key: string]: {
@@ -58,13 +62,6 @@ const ChatComponent: React.FC = () => {
   }, [user?.uid])
 
   useEffect(() => {
-    const objectId = Cookies.get('token')
-    if (objectId) {
-      setMongoObjectId(objectId)
-    }
-  }, [])
-
-  useEffect(() => {
     if (user?.uid) {
       getChatRooms(user.uid).then(setRooms)
     }
@@ -76,22 +73,6 @@ const ChatComponent: React.FC = () => {
 
   const handleNewMessage = (message: Message, roomId: string) => {
     setMessages((prevMessages) => [...prevMessages, message])
-    if (roomId !== currentRoom) {
-      swall
-        .fire({
-          title: 'New Message',
-          text: `You have a new message in ${message.roomId}: "${message.text}"`,
-          icon: 'info',
-          confirmButtonText: 'View',
-          showCancelButton: true,
-          cancelButtonText: 'Close',
-        })
-        .then((result) => {
-          if (result.isConfirmed) {
-            setCurrentRoom(roomId)
-          }
-        })
-    }
   }
 
   useEffect(() => {
@@ -154,7 +135,7 @@ const ChatComponent: React.FC = () => {
   return (
     <div className="flex flex-col h-screen">
       {/* Header */}
-      <header className="bg-gray-800 p-4 flex justify-between items-center text-white">
+      <header className="bg-gray-800 p-4 flex justify-between items-center mt-16 text-white">
         <div className="flex items-center">
           <span className="ml-2">{user?.displayName}</span>
         </div>

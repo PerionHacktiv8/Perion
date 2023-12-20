@@ -21,7 +21,7 @@ export default function Profile() {
   }, [])
 
   return (
-    <div className="grid grid-cols-3 overflow-auto gap-3 py-10 items-center">
+    <div className="grid grid-cols-3 overflow-auto gap-3 py-5 items-center">
       <CardProjectForm />
 
       {data &&
