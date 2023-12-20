@@ -43,7 +43,7 @@ export function ProfileMenu({ textColor }: { textColor: string }) {
             />
           </MenuHandler>
           <MenuList placeholder={''} className="w-60">
-            <div className="flex flex-col justify-center items-center mb-5">
+            <div className="flex flex-col justify-center items-center mb-3">
               <Avatar
                 placeholder={''}
                 src={data.picture}
@@ -55,7 +55,7 @@ export function ProfileMenu({ textColor }: { textColor: string }) {
               </p>
               <p className="text-md">{data.email}</p>
             </div>
-            <div className="border-t-2 border-gray-200 mb-3"></div>
+            <div className="border-t-2 border-gray-200 mb-2"></div>
             <MenuItem placeholder={''} className="flex items-center gap-2">
               <Link
                 href={
@@ -108,30 +108,6 @@ export function ProfileMenu({ textColor }: { textColor: string }) {
                   Chat
                 </Typography>
               </Link>
-            </MenuItem>
-            <MenuItem placeholder={''} className="flex items-center gap-2">
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 14 14"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M2 0C1.46957 0 0.960859 0.210714 0.585786 0.585786C0.210714 0.960859 0 1.46957 0 2V12C0 12.5304 0.210714 13.0391 0.585786 13.4142C0.960859 13.7893 1.46957 14 2 14H12C12.5304 14 13.0391 13.7893 13.4142 13.4142C13.7893 13.0391 14 12.5304 14 12V2C14 1.46957 13.7893 0.960859 13.4142 0.585786C13.0391 0.210714 12.5304 0 12 0H2ZM2 2H12V9H10L9 11H5L4 9H2V2Z"
-                  fill="#90A4AE"
-                />
-              </svg>
-
-              <Typography
-                placeholder={''}
-                variant="small"
-                className="font-medium"
-              >
-                Bookmark
-              </Typography>
             </MenuItem>
             <hr className="my-2 border-blue-gray-50" />
             <MenuItem

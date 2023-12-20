@@ -11,14 +11,22 @@ import {
   DialogBody,
   DialogFooter,
   Button,
+  Avatar,
 } from '@material-tailwind/react'
 import { RequirementCard } from './cardRequirement'
 import { ProjectModel } from '@/db/models/project'
 import dateFormat from '@/db/helpers/dateFormat'
 import { format } from 'date-fns'
 import { usePathname } from 'next/navigation'
+import { UserModel } from '@/db/models/user'
 
-export function CardComponent({ datum }: { datum: ProjectModel }) {
+export function CardComponent({
+  datum,
+  rec,
+}: {
+  datum: ProjectModel
+  rec?: UserModel[]
+}) {
   const path = usePathname()
   const [open, setOpen] = React.useState(false)
   const [applied, setApplied] = useState<boolean>(false)
@@ -38,6 +46,10 @@ export function CardComponent({ datum }: { datum: ProjectModel }) {
       setApplied(true)
     }
   }
+
+  const recommendation = rec?.filter((el) =>
+    el.cvData.skills.filter((el) => datum.skills.includes(el)),
+  )
 
   return (
     <>
@@ -137,6 +149,31 @@ export function CardComponent({ datum }: { datum: ProjectModel }) {
                     <p key={idx}>- {el}</p>
                   ))}
                 </div>
+                {path.includes('/profile/project') && (
+                  <div>
+                    <h2 className="text-black text-lg font-bold">
+                      Our Recommendation For You Based On This Project
+                    </h2>
+                    <div className="grid grid-cols-2 gap-3 w-[50rem]">
+                      {recommendation &&
+                        recommendation.map((datum) => (
+                          <div className="flex justify-center gap-4 items-center border h-24 rounded-md shadow-md hover:-translate-y-1 p-4 transition-all duration-200">
+                            <Avatar placeholder={''} src={datum.picture} />
+                            <div className="w-full">
+                              <p className="font-semibold">{datum.name}</p>
+                              <a
+                                href={datum.cvLink}
+                                target="_blank"
+                                className="text-blue-400"
+                              >
+                                Click Here to Open His/Her CV
+                              </a>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </section>
             <section className="w-1/3">
