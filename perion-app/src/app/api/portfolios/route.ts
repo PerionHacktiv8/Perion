@@ -16,6 +16,8 @@ export type MyResponse<T> = {
 export const POST = async (req: NextRequest) => {
   try {
     const userId = req.headers.get('x-user-id') as string
+    console.log(userId)
+
     let inputs = await req.json()
     let input = inputs.input as inputPortfolio
 

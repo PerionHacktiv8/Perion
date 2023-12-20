@@ -7,45 +7,78 @@ import {
   Input,
   Textarea,
 } from '@material-tailwind/react'
-import React, { useState } from 'react'
+import React, { useState, ChangeEvent, FormEvent } from 'react'
 
-export function CreateBoxPorto(){
+type inputPortfolio = {
+  title: string
+  thumbnail: string
+  description: string
+  link: string
+}
+
+export function CreateBoxPorto() {
   const [open, setOpen] = useState(false)
-
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
-  return (
-  <>
-    <div
-      className="w-80 h-52 flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-lg my-8"
-      style={{ minWidth: '300px', maxWidth: '500px' }}
-      onClick={handleOpen}
-    >
-      <div className="flex items-center justify-center rounded-full bg-blue-100 h-16 w-16 mb-4">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-8 w-8 text-gray-600"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth="2"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M12 4v16m8-8H4"
-          />
-        </svg>
-      </div>
-      <button className="bg-white py-2 px-4 border border-gray-300 rounded shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-        Upload your Portfolio
-      </button>
-      <p className="text-sm bg-white p-2 rounded text-gray-700 mt-2">
-        Unpublished portfolio will appear here.
-      </p>
-    </div>
+  const [input, setInput] = useState<inputPortfolio>({
+    title: '',
+    thumbnail: '',
+    description: '',
+    link: '',
+  })
 
-    <Dialog
+  const onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    })
+  }
+  console.log(input)
+
+  const onSubmitInput = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    await fetch(`http://localhost:3000/api/portfolios`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        input,
+      }),
+    })
+  }
+  return (
+    <>
+      <div
+        className="w-80 h-52 flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-lg my-8"
+        style={{ minWidth: '300px', maxWidth: '500px' }}
+        onClick={handleOpen}
+      >
+        <div className="flex items-center justify-center rounded-full bg-blue-100 h-16 w-16 mb-4">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-8 w-8 text-gray-600"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 4v16m8-8H4"
+            />
+          </svg>
+        </div>
+        <button className="bg-white py-2 px-4 border border-gray-300 rounded shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          Upload your Portfolio
+        </button>
+        <p className="text-sm bg-white p-2 rounded text-gray-700 mt-2">
+          Unpublished portfolio will appear here.
+        </p>
+      </div>
+
+      <Dialog
         placeholder={''}
         size="xl"
         open={open}
@@ -73,15 +106,24 @@ export function CreateBoxPorto(){
           placeholder={''}
           className="h-auto sm:h-[30rem] md:h-[35rem] lg:h-[37rem] overflow-y-auto flex flex-col gap-3"
         >
-          <form action="">
+          <form action="" onSubmit={onSubmitInput}>
             <p className="font-bold text-lg text-black">Title</p>
             <Input
               crossOrigin={''}
               label="Insert Title"
               size="lg"
               name="title"
-              // value={input.title}
-              // onChange={onChange}
+              value={input.title}
+              onChange={onChange}
+            />
+            <p className="font-bold text-lg text-black">Thumbnail</p>
+            <Input
+              crossOrigin={''}
+              label="Insert Thumbnail"
+              size="lg"
+              name="thumbnail"
+              value={input.thumbnail}
+              onChange={onChange}
             />
             <p className="mt-3 mb-2 font-bold text-lg text-black">
               Description
@@ -90,9 +132,9 @@ export function CreateBoxPorto(){
               placeholder={''}
               label="Insert Description"
               size="lg"
-              name="workDescription"
-              // value={input.workDescription}
-              // onChange={onChange}
+              name="description"
+              value={input.description}
+              onChange={onChange}
             />
             <p className="mt-3 mb-2 font-bold text-lg text-black">
               Website Link
@@ -101,22 +143,22 @@ export function CreateBoxPorto(){
               crossOrigin={''}
               label="Insert Website Link"
               size="lg"
-              name="jobLocation"
-              // value={input.jobLocation}
-              // onChange={onChange}
+              name="link"
+              value={input.link}
+              onChange={onChange}
             />
+            <DialogFooter
+              placeholder={''}
+              className="justify-between flex flex-col border-t-2 lg:flex-row lg:items-center lg:justify-between"
+            >
+              <div className="flex items center gap-3">
+                <Button type="submit" placeholder={''} color="gray" size="md">
+                  Create Portfolio
+                </Button>
+              </div>
+            </DialogFooter>
           </form>
         </DialogBody>
-        <DialogFooter
-          placeholder={''}
-          className="justify-between flex flex-col border-t-2 lg:flex-row lg:items-center lg:justify-between"
-        >
-          <div className="flex items center gap-3">
-            <Button type="submit" placeholder={''} color="gray" size="md">
-              Create Portfolio
-            </Button>
-          </div>
-        </DialogFooter>
       </Dialog>
     </>
   )

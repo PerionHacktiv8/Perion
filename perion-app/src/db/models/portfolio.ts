@@ -13,6 +13,7 @@ export type PortfolioModel = {
   thumbnail: string
   createdAt: string
   updatedAt: string
+  userId: ObjectId
 }
 
 export type inputPortfolio = {
@@ -73,6 +74,7 @@ export class Portfolio {
         ...parsedData,
         createdAt: new Date(),
         updateAt: new Date(),
+        userId: new ObjectId(userId),
       })
 
       return created

@@ -15,6 +15,8 @@ import { usePathname } from 'next/navigation'
 export function ProfileCard({ profData }: { profData: UserModel }) {
   const path = usePathname().split('profile/')[1]
 
+  console.log(profData)
+
   return (
     <Card placeholder={''} className="w-96 mb-10">
       <CardHeader
@@ -62,13 +64,15 @@ export function ProfileCard({ profData }: { profData: UserModel }) {
             </a>{' '}
           </p>
         ) : (
-          <p>You didn't put your CV yet</p>
+          <p>You didn&apos;t put your CV yet</p>
         )}
         <p className="mt-3 font-semibold">Your Top 4 Skills: </p>
-        {profData.cvData.skills ? (
-          profData.cvData.skills
-            .slice(0, 4)
-            .map((el) => <p className="mt-3">- {el}</p>)
+        {profData.cvData ? (
+          profData.cvData.skills.slice(0, 4).map((el, idx) => (
+            <p key={idx} className="mt-3">
+              - {el}
+            </p>
+          ))
         ) : (
           <p>Please Input Your CV to Get Your List of Skills</p>
         )}

@@ -8,7 +8,8 @@ export type PortfolioModel = {
   _id: ObjectId
   title: string
   description: string
-  link: string
+  thumbnail: string
+  link?: string
   createdAt: string
   updatedAt: string
 }
@@ -31,12 +32,13 @@ const PortfolioCreateSchema = z.object({
       invalid_type_error: 'You should be input the Description',
     })
     .min(1, 'You should be input the Description'),
-  link: z
+  thumbnail: z
     .string({
-      required_error: 'You should be input the Link',
-      invalid_type_error: 'You should be input the Link',
+      required_error: 'You should be input the Thumbnail',
+      invalid_type_error: 'You should be input the Thumbnail',
     })
-    .min(1, 'You should be input the Link'),
+    .min(1, 'You should be input the Thumbnail'),
+  link: z.string(),
 })
 
 export class Portfolio {
@@ -46,14 +48,19 @@ export class Portfolio {
 
     return connection
   }
-  static async createPortfolio(input: FormData) {
+  static async createPortfolio(input: PortfolioModel, userId: string) {
     try {
       const collection = await this.connection()
 
       const data = {
-        title: input.get('title'),
-        description: input.get('description'),
-        link: input.get('link'),
+        // title: input.get('title'),
+        // description: input.get('description'),
+        // link: input.get('link'),
+        // thumbnail: input.get('thumbnail'),
+        title: input.title,
+        description: input.description,
+        link: input.link,
+        thumbnail: input.thumbnail,
       }
 
       const parsedData = PortfolioCreateSchema.parse(data)
@@ -62,6 +69,7 @@ export class Portfolio {
         ...parsedData,
         createdAt: new Date(),
         updateAt: new Date(),
+        userId: new ObjectId(userId),
       })
 
       return created

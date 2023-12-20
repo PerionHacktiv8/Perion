@@ -12,7 +12,7 @@ import {
 } from '@material-tailwind/react'
 import Link from 'next/link'
 
-const CardProject = () => {
+const CardProject = ({ onOpen }: { onOpen: () => void }) => {
   const [open, setOpen] = useState(false)
 
   const handleOpen = () => setOpen(true)

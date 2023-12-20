@@ -10,7 +10,7 @@ export function CardPortoPage({ datum }: { datum: PortfolioModel }) {
   return (
     <div className="relative w-80 h-52">
       <img
-        src={datum.link}
+        src={datum.thumbnail}
         alt="Placeholder"
         className="w-full h-full object-cover rounded-lg"
         width={200}

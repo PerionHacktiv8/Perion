@@ -37,6 +37,7 @@ const PortfolioForm = ({
       [e.target.name]: e.target.value,
     })
   }
+
   const onSubmitInput = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const response = await fetch(`http://localhost:3000/api/portfolios`, {
