@@ -52,7 +52,7 @@ const ProjectCreateSchema = z.object({
       invalid_type_error: 'You should be input the Position',
     })
     .min(1, 'You should be input the Position'),
-  location: z
+  jobLocation: z
     .string({
       required_error: 'You should be input the Location',
       invalid_type_error: 'You should be input the Location',
@@ -123,7 +123,7 @@ export class Project {
         projectDescription: input.projectDescription,
         workDescription: input.workDescription,
         position: input.position,
-        location: input.jobLocation,
+        jobLocation: input.jobLocation,
         jobType: inputSelect.jobType,
         experience: input.experience,
         benefits: input.benefits,

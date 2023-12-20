@@ -47,9 +47,12 @@ export function CardComponent({
     }
   }
 
-  const recommendation = rec?.filter((el) =>
-    el.cvData.skills.filter((el) => datum.skills.includes(el)),
-  )
+  const recommendation = rec
+    ?.filter((el) => datum.userId !== el._id)
+    .filter((el) => {
+      if (el.cvData.skills.filter((el) => datum.skills.includes(el)).length)
+        return el
+    })
 
   return (
     <>
