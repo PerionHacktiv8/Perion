@@ -22,7 +22,7 @@ export default function Profile() {
 
   return (
     <div className="grid grid-cols-3 overflow-auto gap-3 py-5 items-center">
-      <CardProjectForm />
+      <CardProjectForm fetchData={fetchData} />
 
       {data &&
         data.map((datum, idx) => <CardComponent key={idx} datum={datum} />)}

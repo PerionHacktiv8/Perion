@@ -31,7 +31,11 @@ type inputSelect = {
   jobCategory: string
 }
 
-const CardProjectForm = () => {
+type Props = {
+  fetchData: () => void
+}
+
+const CardProjectForm = ({ fetchData }: Props) => {
   const [open, setOpen] = useState(false)
 
   const handleOpen = () => setOpen(true)
@@ -72,6 +76,10 @@ const CardProjectForm = () => {
         inputSelect,
       }),
     })
+    if (response.ok) {
+      fetchData()
+      handleClose()
+    }
   }
 
   return (
