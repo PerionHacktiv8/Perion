@@ -109,7 +109,9 @@ export function CardUser({
             <span className="rounded-full border border-white/20 bg-white/20 p-1">
               <CheckIcon />
             </span>
-            <p className="font-normal">{datum.cvData.numOfProjects}</p>
+            <p className="font-normal">
+              {datum.cvData.numOfProjects.split(' ')[0]} Projects
+            </p>
           </li>
           <li className="flex items-center gap-4">
             <span className="rounded-full border border-white/20 bg-white/20 p-1">

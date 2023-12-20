@@ -49,7 +49,7 @@ export function NavbarDefault() {
       <p className="flex items-center gap-x-2 p-1 font-semibold font-lg">
         <Link
           href="/"
-          className={`flex items-center ${
+          className={`flex items-center hover:scale-125 transition-all duration-300 hover:border-b ${
             pathName === ''
               ? `scale-125 border-b-2 ${
                   navbarBackground === 'transparent' ? '' : 'border-black'
@@ -62,7 +62,7 @@ export function NavbarDefault() {
       </p>
       <Link
         href="/recruit"
-        className={`flex font-bold items-center ${
+        className={`flex font-bold items-center hover:scale-125 transition-all duration-300 hover:border-b ${
           pathName === 'recruit'
             ? `scale-125 border-b-2 ${
                 navbarBackground === 'transparent' ? '' : 'border-black'
@@ -74,7 +74,7 @@ export function NavbarDefault() {
       </Link>
       <Link
         href="/project"
-        className={`flex font-bold items-center ${
+        className={`flex font-bold items-center hover:scale-125 transition-all duration-300 hover:border-b ${
           pathName === 'project'
             ? `scale-125 border-b-2 ${
                 navbarBackground === 'transparent' ? '' : 'border-black'

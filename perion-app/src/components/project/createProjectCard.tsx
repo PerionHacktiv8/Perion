@@ -60,7 +60,6 @@ const CardProjectForm = () => {
       [e.target.name]: e.target.value,
     })
   }
-
   const onSubmitInput = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const response = await fetch(`http://localhost:3000/api/projects`, {
@@ -119,15 +118,13 @@ const CardProjectForm = () => {
       >
         <DialogHeader
           placeholder={''}
-          className="justify-center border-b-2 mt-2 flex flex-col lg:flex-row lg:items-center lg:justify-center gap-4"
+          className="justify-center border-b-2 flex flex-col lg:flex-row lg:items-center lg:justify-center"
         >
-          <div className="flex items-center gap-3">
-            <div className="mt-px flex flex-col">
-              <p className="font-bold text-lg">Create a Project</p>
-              <p className="mb-1 font-normal text-sm">
-                Start building your project:
-              </p>
-            </div>
+          <div className="flex flex-col items-center gap-3">
+            <p className="font-bold text-xl">Create a Project</p>
+            <p className="mb-1 font-normal text-sm">
+              Start building your project:
+            </p>
           </div>
         </DialogHeader>
         <DialogBody
@@ -264,7 +261,7 @@ const CardProjectForm = () => {
               >
                 <Option value="Web Developer">Web developer</Option>
                 <Option value="Software Developer">Software Developer</Option>
-                <Option value="Mobile App Deveveloper">
+                <Option value="Mobile App Developer">
                   Mobile App Developer
                 </Option>
                 <Option value="Game Developer">Game Developer</Option>
@@ -288,18 +285,17 @@ const CardProjectForm = () => {
               value={input.teams}
               onChange={onChange}
             />
-          </form>
-        </DialogBody>
-        <DialogFooter
-          placeholder={''}
-          className="justify-between flex flex-col border-t-2 lg:flex-row lg:items-center lg:justify-between"
-        >
-          <div className="flex items center gap-3">
-            <Button type="submit" placeholder={''} color="gray" size="md">
+            <Button
+              type="submit"
+              placeholder={''}
+              color="gray"
+              size="md"
+              className="mt-5"
+            >
               Create Project
             </Button>
-          </div>
-        </DialogFooter>
+          </form>
+        </DialogBody>
       </Dialog>
     </>
   )
