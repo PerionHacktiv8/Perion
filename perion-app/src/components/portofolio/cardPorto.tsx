@@ -13,60 +13,61 @@ import {
 import Link from 'next/link'
 import React, { useState } from 'react'
 
-
-export function CardPortfolio(){
+export function CardPortfolio() {
   const [open, setOpen] = useState(false)
 
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
   return (
-  <>
-    <Card
-      onClick={handleOpen}
-      placeholder={''}
-      className="max-w-xs w-full h-52 sm:w-80 md:max-w-none md:w-80 lg:w-80 overflow-hidden transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-xl"
-    >
-      <CardBody placeholder={''}>
-        <div className="flex items-center gap-4 mb-5">
-          <Avatar
-            placeholder={''}
-            src="https://ik.imagekit.io/naufalrafi/Parion%20Logo%20(1).png?updatedAt=1702368775661"
-            alt="avatar"
-            size="md"
-          />
-          <div>
-            <p className="font-bold text-md">Parion Team</p>
-            <p
-              color="black"
-              className="flex justify-center items-center gap-1 mx-auto text-xs"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="w-3 h-3"
+    <>
+      <Card
+        onClick={handleOpen}
+        placeholder={''}
+        className="max-w-xs w-full h-52 sm:w-80 md:max-w-none md:w-80 lg:w-80 overflow-hidden transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-xl"
+      >
+        <CardBody placeholder={''}>
+          <div className="flex items-center gap-4 mb-5">
+            <Avatar
+              placeholder={''}
+              src="https://ik.imagekit.io/naufalrafi/Parion%20Logo%20(1).png?updatedAt=1702368775661"
+              alt="avatar"
+              size="md"
+            />
+            <div>
+              <p className="font-bold text-md">Parion Team</p>
+              <p
+                color="black"
+                className="flex justify-center items-center gap-1 mx-auto text-xs"
               >
-                <path
-                  fillRule="evenodd"
-                  d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              Jakarta, Indonesia
-            </p>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-3 h-3"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                Jakarta, Indonesia
+              </p>
+            </div>
           </div>
-        </div>
-        <p className="font-bold text-md">Pair Your Passion</p>
-        <p className="text-sm">Because it&apos;s about motivating the doers</p>
-      </CardBody>
-      <CardFooter placeholder={''} className="py-4">
-        <Typography placeholder={''} variant="small">
-          10 December 2023
-        </Typography>
-      </CardFooter>
-    </Card>
+          <p className="font-bold text-md">Pair Your Passion</p>
+          <p className="text-sm">
+            Because it&apos;s about motivating the doers
+          </p>
+        </CardBody>
+        <CardFooter placeholder={''} className="py-4">
+          <Typography placeholder={''} variant="small">
+            10 December 2023
+          </Typography>
+        </CardFooter>
+      </Card>
 
-    <Dialog
+      <Dialog
         placeholder={''}
         size="xl"
         open={open}
@@ -88,10 +89,10 @@ export function CardPortfolio(){
             />
 
             <div className="text-center w-full">
-              <h2 className="text-2xl font-bold">Parion - "Pair Your Passion" </h2>
-              <p className="text-gray-700 text-lg mt-1">
-                PARION TEAM 
-              </p>
+              <h2 className="text-2xl font-bold">
+                Parion - "Pair Your Passion"{' '}
+              </h2>
+              <p className="text-gray-700 text-lg mt-1">PARION TEAM</p>
 
               <div className="flex flex-col items-center gap-2 lg:flex-row justify-center mt-4">
                 <Button
@@ -192,8 +193,6 @@ export function CardPortfolio(){
           </div>
         </DialogFooter>
       </Dialog>
-    </>  
+    </>
   )
 }
-
-

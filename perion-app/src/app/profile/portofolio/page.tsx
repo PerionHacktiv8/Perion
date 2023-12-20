@@ -1,6 +1,6 @@
 'use client'
-import {CreateBoxPorto} from '@/components/portofolio/boxPorto'
-import { CardPortfolio}  from '@/components/portofolio/cardPorto'
+import { CreateBoxPorto } from '@/components/portofolio/boxPorto'
+import { CardPortfolio } from '@/components/portofolio/cardPorto'
 
 export default function Portfolio() {
   return (

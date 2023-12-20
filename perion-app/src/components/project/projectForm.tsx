@@ -1,5 +1,4 @@
 'use client'
-
 import React, { useState, ChangeEvent, FormEvent } from 'react'
 import {
   Button,
@@ -31,16 +30,13 @@ type inputSelect = {
   jobCategory: string
 }
 
-type Props = {
-  fetchData: () => void
-}
-
-const CardProjectForm = ({ fetchData }: Props) => {
-  const [open, setOpen] = useState(false)
-
-  const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
-
+const ProjectFormDialog = ({
+  open,
+  handleOpen,
+}: {
+  open: boolean
+  handleOpen: () => void
+}) => {
   const [input, setInput] = useState<inputProjectModel>({
     title: '',
     projectDescription: '',
@@ -64,8 +60,10 @@ const CardProjectForm = ({ fetchData }: Props) => {
       [e.target.name]: e.target.value,
     })
   }
+
   const onSubmitInput = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
     const response = await fetch(`http://localhost:3000/api/projects`, {
       method: 'POST',
       headers: {
@@ -76,48 +74,15 @@ const CardProjectForm = ({ fetchData }: Props) => {
         inputSelect,
       }),
     })
-    if (response.ok) {
-      fetchData()
-      handleClose()
-    }
   }
 
   return (
     <>
-      <div
-        className="w-80 h-52 flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-lg my-8"
-        style={{ minWidth: '300px', maxWidth: '500px' }}
-        onClick={handleOpen}
-      >
-        <div className="flex items-center justify-center rounded-full bg-blue-100 h-16 w-16 mb-4">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-8 w-8 text-gray-600"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 4v16m8-8H4"
-            />
-          </svg>
-        </div>
-        <button className="bg-white py-2 px-4 border border-gray-300 rounded shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-          Create your Project
-        </button>
-        <p className="text-sm bg-white p-2 rounded text-gray-700 mt-2">
-          Unpublished project will appear here.
-        </p>
-      </div>
-
       <Dialog
         placeholder={''}
         size="xl"
         open={open}
-        handler={handleClose}
+        handler={handleOpen}
         className="shadow-none overflow-y-auto"
         animate={{
           mount: { scale: 1, y: 0 },
@@ -309,4 +274,4 @@ const CardProjectForm = ({ fetchData }: Props) => {
   )
 }
 
-export default CardProjectForm
+export default ProjectFormDialog

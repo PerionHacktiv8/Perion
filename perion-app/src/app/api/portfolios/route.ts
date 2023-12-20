@@ -1,7 +1,10 @@
-import { Project, ProjectModel } from '@/db/models/project'
+import {
+  Portfolio,
+  PortfolioModel,
+  inputPortfolio,
+} from '@/db/models/portfolio'
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
-import { input } from '@material-tailwind/react'
 
 export type MyResponse<T> = {
   statusCode: number
@@ -9,53 +12,33 @@ export type MyResponse<T> = {
   data?: T
   error?: string
 }
-export type input = {
-  title: string
-  projectDescription: string
-  workDescription: string
-  position: string
-  jobLocation: string
-  experience: string
-  benefits: string
-  teams: string
-  skills: string
-}
-export type inputSelect = {
-  jobType: string
-  onSiteRequired: string
-  jobCategory: string
-}
 
 export const POST = async (req: NextRequest) => {
   try {
-    const inputForm = await req.json()
     const userId = req.headers.get('x-user-id') as string
+    console.log(userId)
 
-    let input = inputForm.input as input
-    let inputSelect = inputForm.inputSelect as inputSelect
+    let inputs = await req.json()
+    let input = inputs.input as inputPortfolio
 
-    await Project.createProject(input, inputSelect, userId)
-
+    await Portfolio.createPortfolio(input, userId)
     return NextResponse.json<MyResponse<string>>(
       {
         statusCode: 201,
-        message: 'Project Has Created',
+        message: 'A Portfolio Has Created',
       },
       {
         status: 201,
       },
     )
   } catch (err) {
-    console.log(err)
-
     let errCode = 500
-    let errMsg = 'Internal Server Error'
+    let errMsg = 'INTERNAL SERVER ERROR'
 
     if (err instanceof z.ZodError) {
       errCode = 400
       errMsg = err.issues[0].message
     }
-
     return NextResponse.json<MyResponse<unknown>>(
       {
         statusCode: errCode,
@@ -70,12 +53,16 @@ export const POST = async (req: NextRequest) => {
 
 export const GET = async () => {
   try {
-    const projects = await Project.readProjects()
-    return NextResponse.json<MyResponse<ProjectModel[]>>(
+    const portfolios = await Portfolio.readPortfolios()
+    if (!portfolios) {
+      throw new Error('Porfolios Not Found')
+    }
+
+    return NextResponse.json<MyResponse<PortfolioModel[]>>(
       {
         statusCode: 200,
-        message: 'Success on fetching',
-        data: projects,
+        message: 'Pong from GET /api/portfolios !',
+        data: portfolios,
       },
       {
         status: 200,
@@ -83,13 +70,16 @@ export const GET = async () => {
     )
   } catch (err) {
     let errCode = 500
-    let errMsg = 'Internal Server Error'
+    let errMsg = 'INTERNAL SERVER ERROR'
 
     if (err instanceof z.ZodError) {
       errCode = 400
       errMsg = err.issues[0].message
     }
-
+    if (err instanceof Error) {
+      errCode = 404
+      errMsg = err.message
+    }
     return NextResponse.json<MyResponse<unknown>>(
       {
         statusCode: errCode,
@@ -107,11 +97,12 @@ export const DELETE = async (req: NextRequest) => {
     const data = await req.json()
     const id = data._id
 
-    await Project.deleteProject(id)
-    return NextResponse.json<MyResponse<ProjectModel>>(
+    await Portfolio.deletePortfolio(id)
+
+    return NextResponse.json<MyResponse<string>>(
       {
         statusCode: 200,
-        message: 'Pong from DELETE /api/projects !',
+        message: 'Pong from DELETE /api/portfolios !',
       },
       {
         status: 200,
@@ -119,18 +110,16 @@ export const DELETE = async (req: NextRequest) => {
     )
   } catch (err) {
     let errCode = 500
-    let errMsg = 'Internal Server Error'
+    let errMsg = 'INTERNAL SERVER ERROR'
 
     if (err instanceof z.ZodError) {
       errCode = 400
       errMsg = err.issues[0].message
     }
-
     if (err instanceof Error) {
       errCode = 404
       errMsg = err.message
     }
-
     return NextResponse.json<MyResponse<unknown>>(
       {
         statusCode: errCode,

@@ -2,16 +2,25 @@ import { MongoServerError, ObjectId } from 'mongodb'
 import { getMongoClientInstance } from '../config'
 import { z } from 'zod'
 
+const DB_NAME = process.env.MONGODB_DB_NAME
 const COLLECTION_NAME = 'portfolios'
 
 export type PortfolioModel = {
   _id: ObjectId
   title: string
   description: string
-  thumbnail: string
   link?: string
+  thumbnail: string
   createdAt: string
   updatedAt: string
+  userId: ObjectId
+}
+
+export type inputPortfolio = {
+  title: string
+  thumbnail: string
+  description: string
+  link: string
 }
 
 type PortfoliosModelInput = Omit<
@@ -34,10 +43,10 @@ const PortfolioCreateSchema = z.object({
     .min(1, 'You should be input the Description'),
   thumbnail: z
     .string({
-      required_error: 'You should be input the Thumbnail',
-      invalid_type_error: 'You should be input the Thumbnail',
+      required_error: 'You should be input the Thumbnail Or Image',
+      invalid_type_error: 'You should be input the Thumbnail Or Image',
     })
-    .min(1, 'You should be input the Thumbnail'),
+    .min(1, 'You should be input the Thumbnail Or Image'),
   link: z.string(),
 })
 
@@ -48,15 +57,11 @@ export class Portfolio {
 
     return connection
   }
-  static async createPortfolio(input: PortfolioModel, userId: string) {
+  static async createPortfolio(input: inputPortfolio, userId: string) {
     try {
       const collection = await this.connection()
 
       const data = {
-        // title: input.get('title'),
-        // description: input.get('description'),
-        // link: input.get('link'),
-        // thumbnail: input.get('thumbnail'),
         title: input.title,
         description: input.description,
         link: input.link,
