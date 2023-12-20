@@ -2,10 +2,7 @@
 
 import { ProfileCard } from '@/components/profile/profileCard'
 import { ProfileNav } from '@/components/profile/profileNav'
-import { UserModel } from '@/db/models/user'
 import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
-import { ResponseAPIType } from '../api/user/route'
 import useProfile from '@/utils/fetchProfile'
 // import { profile } from '@/utils/fetchProfile'
 

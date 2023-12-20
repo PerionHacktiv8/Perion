@@ -14,10 +14,13 @@ const Home = async () => {
   const cookie = cookies()
   const token = cookie.get('token')
 
-  const res = await fetch('http://localhost:3000/api/projects/apply')
-  const resJson = (await res.json()) as ResponseAPIType<AppliersModel>
-  // const profData = resJson.data
-  // console.log(resJson)
+  const res = await fetch('http://localhost:3000/api/projects/apply', {
+    headers: {
+      Cookie: cookie.toString(),
+    },
+  })
+  const resJson = (await res.json()) as ResponseAPIType<AppliersModel[]>
+  const profData = resJson.data?.map((el) => el.projectId)
 
   return (
     <div className="flex flex-col bg-[#f5f5f5] min-h-screen">
@@ -28,7 +31,7 @@ const Home = async () => {
           <DialogDefault />
           <div className="flex justify-center py-10 px-4 sm:px-10">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {data.map((datum, idx) => (
+              {data.map((datum, idx: number) => (
                 <CardComponent key={idx} datum={datum} />
               ))}
             </div>
