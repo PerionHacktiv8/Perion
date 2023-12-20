@@ -191,14 +191,12 @@ export const addUserToRoom = async (
   const currentUser = authN.currentUser
   if (!currentUser) return null
   const userId = currentUser.uid
-  const q = query(
-    roomsCollection,
-    where('userIds', 'not-in', [[userId, user2]]),
-  )
+  const q = query(roomsCollection, where('userIds', 'in', [[userId, user2]]))
   const snapshot = await getDocs(q)
   let availableRoom = snapshot.docs.find(
     (doc) =>
-      doc.data().userIds.includes(user2) && doc.data().userIds.includes(userId),
+      doc.data().userIds.filter((el: string) => el === userId) &&
+      doc.data().userIds.filter((el: string) => el === user2),
   )
 
   if (availableRoom) {

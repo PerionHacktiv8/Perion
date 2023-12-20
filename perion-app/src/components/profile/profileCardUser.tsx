@@ -29,7 +29,6 @@ export function ProfileCardUser({ datum }: { datum: UserModel }) {
       `${datum.username}_${authN.currentUser?.email?.split('@')[0]}`,
       user2,
     )
-    console.log(roomId)
     if (roomId && user1 && user2) {
       setCurrentRoom(roomId)
       setRoomName('')

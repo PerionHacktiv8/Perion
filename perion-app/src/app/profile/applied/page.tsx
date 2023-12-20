@@ -15,6 +15,7 @@ export default function RecomPage() {
 
     if (res && resJson.data) {
       const data = resJson.data.map((el) => el.projectInfo) as ProjectModel[]
+      console.log(resJson.data)
 
       setData(data)
     }
@@ -26,7 +27,13 @@ export default function RecomPage() {
 
   return (
     <div className="h-full w-full grid grid-cols-3 mt-5 gap-5">
-      {data && data.map((datum) => <CardComponent datum={datum} />)}
+      {data && data?.length > 0 ? (
+        data.map((datum) => <CardComponent datum={datum} />)
+      ) : (
+        <h2 className="font-bold text-white text-md">
+          You Haven't Applied On Any Project Yet
+        </h2>
+      )}
     </div>
   )
 }
