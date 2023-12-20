@@ -35,7 +35,7 @@ export default function ProfileLayout({
         {path !== 'edit-profile' && profData && (
           <ProfileNav subs={profData.subscription} />
         )}
-        <div className="overflow-auto">{children}</div>
+        <div className="overflow-auto h-full">{children}</div>
       </div>
     </article>
   )

@@ -38,6 +38,15 @@ export function ProfileNav({ subs }: { subs: boolean }) {
           Job Suggestion
         </Button>
       </Link>
+      <Link href={'/profile/applied'}>
+        <Button
+          placeholder={''}
+          variant={path.includes('applied') ? 'gradient' : 'outlined'}
+          className="rounded-full"
+        >
+          Applied
+        </Button>
+      </Link>
     </div>
   )
 }

@@ -257,18 +257,17 @@ const ProjectFormDialog = ({
               value={input.teams}
               onChange={onChange}
             />
-          </form>
-        </DialogBody>
-        <DialogFooter
-          placeholder={''}
-          className="justify-between flex flex-col border-t-2 lg:flex-row lg:items-center lg:justify-between"
-        >
-          <div className="flex items center gap-3">
-            <Button type="submit" placeholder={''} color="gray" size="md">
+            <Button
+              type="submit"
+              placeholder={''}
+              color="gray"
+              size="md"
+              className="mt-5"
+            >
               Create Project
             </Button>
-          </div>
-        </DialogFooter>
+          </form>
+        </DialogBody>
       </Dialog>
     </>
   )

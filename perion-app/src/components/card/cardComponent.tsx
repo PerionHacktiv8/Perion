@@ -1,15 +1,11 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import {
   Card,
-  CardHeader,
   CardBody,
   CardFooter,
   Typography,
-  Avatar,
-  Tooltip,
-  IconButton,
   Dialog,
   DialogHeader,
   DialogBody,
@@ -20,19 +16,28 @@ import { RequirementCard } from './cardRequirement'
 import { ProjectModel } from '@/db/models/project'
 import dateFormat from '@/db/helpers/dateFormat'
 import { format } from 'date-fns'
+import { usePathname } from 'next/navigation'
 
 export function CardComponent({ datum }: { datum: ProjectModel }) {
-  const [liked, setLiked] = useState(false)
-
-  const handleLikeButtonClick = () => {
-    setLiked((prevLiked) => !prevLiked)
-  }
-
+  const path = usePathname()
   const [open, setOpen] = React.useState(false)
-  const [isFavorite, setIsFavorite] = React.useState(false)
+  const [applied, setApplied] = useState<boolean>(false)
 
   const handleOpen = () => setOpen((cur) => !cur)
-  const handleIsFavorite = () => setIsFavorite((cur) => !cur)
+
+  const apply = async () => {
+    const res = await fetch('http://localhost:3000/api/projects/apply', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(datum._id),
+    })
+
+    if (res.ok) {
+      setApplied(true)
+    }
+  }
 
   return (
     <>
@@ -87,35 +92,8 @@ export function CardComponent({ datum }: { datum: ProjectModel }) {
       >
         <DialogHeader
           placeholder={''}
-          className="justify-between border-b-2 mt-2 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4"
+          className="border-b-2 mt-2 flex flex-col"
         >
-          <div className="flex items-center gap-3">
-            <Avatar
-              placeholder={''}
-              size="md"
-              variant="circular"
-              alt="tania andrew"
-              src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
-            />
-            <div className="-mt-px flex flex-col">
-              <Typography
-                placeholder={''}
-                variant="small"
-                color="blue-gray"
-                className="font-bold"
-              >
-                Tania Andrew
-              </Typography>
-              <Typography
-                placeholder={''}
-                variant="small"
-                color="gray"
-                className="text-xs font-normal"
-              >
-                @emmaroberts
-              </Typography>
-            </div>
-          </div>
           <div className="flex items-center gap-2">
             <div className="flex flex-col items-center">
               <h5>{datum.title}</h5>
@@ -123,30 +101,6 @@ export function CardComponent({ datum }: { datum: ProjectModel }) {
                 <p className="font-normal text-sm">{datum.position}</p>
               </div>
             </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <Button
-              placeholder={''}
-              color="white"
-              size="sm"
-              className="hover:bg-gray-100 border-2 flex items-center"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="w-6 h-6 mr-2"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
-                />
-              </svg>
-              <span>Save Project</span>
-            </Button>
           </div>
         </DialogHeader>
         <DialogBody
@@ -230,9 +184,11 @@ export function CardComponent({ datum }: { datum: ProjectModel }) {
               </Typography>
             </div>
           </div>
-          <Button placeholder={''} color="gray" size="md">
-            Join Project
-          </Button>
+          {!path.includes('applied') && (
+            <Button onClick={apply} placeholder={''} color="gray" size="md">
+              {applied ? 'Applied' : 'Join Project'}
+            </Button>
+          )}
         </DialogFooter>
       </Dialog>
     </>
