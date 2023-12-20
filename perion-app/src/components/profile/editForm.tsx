@@ -14,7 +14,7 @@ export function EditForm({ router }: { router: AppRouterInstance }) {
   const [pdf, setPdf] = useState<File>()
   const { setRefresh, refresh } = useProfile()
 
-  console.log(profData)
+  // console.log(profData)
 
   const profileData = async () => {
     const res = await fetch('http://localhost:3000/api/user')
@@ -26,6 +26,7 @@ export function EditForm({ router }: { router: AppRouterInstance }) {
   }
 
   const updateProfile = async () => {
+    // console.log(profData)
     const res = await fetch('http://localhost:3000/api/user', {
       method: 'POST',
       headers: {

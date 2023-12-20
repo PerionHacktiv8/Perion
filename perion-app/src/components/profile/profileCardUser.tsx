@@ -26,8 +26,8 @@ export function ProfileCardUser({ datum }: { datum: UserModel }) {
           size="xxl"
           className="mb-3 mx-auto"
         />
-        <p className="mb-2 text-xl font-bold text-black">Naufal Rafi</p>
-        <p className="mb-2 text-md">Web Developers</p>
+        <p className="mb-2 text-xl font-bold text-black">{datum.name}</p>
+
         <p className="flex justify-center items-center gap-2 mx-auto text-sm">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -44,7 +44,7 @@ export function ProfileCardUser({ datum }: { datum: UserModel }) {
           {datum.location}
         </p>
         <p className="mt-3 text-sm text-black">
-          Member Since : 16 December 2023
+          Member Since : {format(new Date(datum.createdAt), 'MMMM do, yyyy')}
         </p>
       </CardHeader>
       <CardBody placeholder={''}>
