@@ -3,7 +3,7 @@ import {
   GoogleAuthProvider,
   GithubAuthProvider,
   FacebookAuthProvider,
-  signInWithRedirect,
+  signInWithEmailAndPassword
 } from 'firebase/auth'
 import { authN } from './firebaseConfig'
 import { redirect } from 'next/navigation'
@@ -87,12 +87,6 @@ export const signInWithGithub = async () => {
     console.error('Error during Github Sign-In:', error);
     throw error;
   }
-
-  return responseJson
-} catch (error) {
-  console.error('Error during Github Sign-In:', error)
-  throw error
-}
 }
 
 export const signInWithGoogle = async () => {
@@ -114,38 +108,50 @@ export const signInWithGoogle = async () => {
       }),
     })
 
-<<<<<<< HEAD
-    console.log(response);
-
-
-    const responseJson: MyResponse<unknown> = await response.json();
-
-    console.log(responseJson.data);
-
-
-    if (!response.ok) {
-      let message = responseJson.error ?? "Something went wrong!";
-
-      return redirect(`/error?message=${message}`);
-    }
-
-    return responseJson;
-  } catch (error) {
-    console.error('Error during Google Sign-In:', error);
-    throw error;
-=======
     const responseJson: MyResponse<unknown> = await response.json()
 
     if (!response.ok) {
       let message = responseJson.error ?? 'Something went wrong!'
 
       return redirect(`/error?message=${message}`)
->>>>>>> 4fd30bf3daa1d783a5a32a18b5fcf3497ff78a5e
-  }
+    }
 
-  return responseJson
-} catch (error) {
-  console.error('Error during Google Sign-In:', error)
-  throw error
+    return responseJson
+  } catch (error) {
+    console.error('Error during Google Sign-In:', error)
+    throw error
+  }
 }
+
+export const signInWithEmail = async (email: string, password: string) => {
+  try {
+    const result = await signInWithEmailAndPassword(authN, email, password)
+    const user = result.user
+    const token = await user.getIdToken()
+
+    const response = await fetch('http://localhost:3000/api/auth', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        email: user.email,
+        uid: user.uid,
+      }),
+    })
+
+    const responseJson: MyResponse<unknown> = await response.json()
+
+    if (!response.ok) {
+      let message = responseJson.error ?? 'Something went wrong!'
+
+      return redirect(`/error?message=${message}`)
+    }
+
+    return responseJson
+  } catch (error) {
+    console.error('Error during Email/Password Sign-In:', error)
+    throw error
+  }
 }

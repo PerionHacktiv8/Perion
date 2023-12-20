@@ -1,8 +1,12 @@
-import { firestore } from '../config/firebaseConfig';
+// Importing necessary libraries and components
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { authN, firestore } from '../config/firebaseConfig';
 import {
-    collection, addDoc, query, orderBy, onSnapshot, where, getDocs, doc, updateDoc, arrayUnion, Timestamp
+    collection, addDoc, query, orderBy, onSnapshot, where, getDocs, doc, updateDoc, arrayUnion, Timestamp, getDoc
 } from 'firebase/firestore';
+import swall from 'sweetalert2';
 
+// Interface definitions
 export interface Room {
     id: string;
     name: string;
@@ -18,10 +22,19 @@ export interface Message {
     createdAt: Date;
 }
 
+interface UserDetails {
+    [key: string]: {
+        displayName: string;
+        photoURL: string;
+    }
+}
+
+// Firestore collections
 export const usersCollection = collection(firestore, 'users');
 export const roomsCollection = collection(firestore, 'chatRooms');
 export const messagesCollection = collection(firestore, 'chatMessages');
 
+// Firestore service functions
 export const getChatRooms = async (userId: string): Promise<Room[]> => {
     const q = query(roomsCollection, where('userIds', 'array-contains', userId));
     const snapshot = await getDocs(q);
@@ -29,16 +42,12 @@ export const getChatRooms = async (userId: string): Promise<Room[]> => {
 };
 
 export const postMessage = async (roomId: string, userId: string, text: string): Promise<void> => {
-    try {
-        await addDoc(messagesCollection, {
-            roomId,
-            userId,
-            text,
-            createdAt: Timestamp.now()
-        });
-    } catch (error) {
-        console.error("Error posting message:", error);
-    }
+    await addDoc(messagesCollection, {
+        roomId,
+        userId,
+        text,
+        createdAt: Timestamp.now()
+    });
 };
 
 export const subscribeToChat = (roomId: string, callback: (messages: Message[]) => void) => {
@@ -50,33 +59,21 @@ export const subscribeToChat = (roomId: string, callback: (messages: Message[]) 
 };
 
 export const createOrJoinRoom = async (name: string, userId: string): Promise<string | null> => {
-    try {
-        const q = query(roomsCollection, where('userIds', 'not-in', [[userId]]));
-        const snapshot = await getDocs(q);
-        let availableRoom: any = null;
-
-        snapshot.forEach(doc => {
-            if (doc.data().userIds.length < 2) {
-                availableRoom = doc;
-            }
+    const q = query(roomsCollection, where('userIds', 'not-in', [[userId]]));
+    const snapshot = await getDocs(q);
+    let availableRoom = snapshot.docs.find(doc => doc.data().userIds.length < 2);
+    if (availableRoom) {
+        const roomId = availableRoom.id;
+        await updateDoc(doc(firestore, 'chatRooms', roomId), {
+            userIds: arrayUnion(userId)
         });
-
-        if (availableRoom) {
-            const roomId = availableRoom.id;
-            await updateDoc(doc(firestore, 'chatRooms', roomId), {
-                userIds: arrayUnion(userId)
-            });
-            return roomId;
-        } else {
-            const roomRef = await addDoc(roomsCollection, {
-                name,
-                userIds: [userId]
-            });
-            return roomRef.id;
-        }
-    } catch (error) {
-        console.error("Error creating or joining room:", error);
-        return null;
+        return roomId;
+    } else {
+        const roomRef = await addDoc(roomsCollection, {
+            name,
+            userIds: [userId]
+        });
+        return roomRef.id;
     }
 };
 
@@ -99,7 +96,6 @@ export const subscribeToTyping = (roomId: string, callback: (typing: Record<stri
 
 export const subscribeToRoomMessages = (roomId: string, callback: (message: Message, roomId: string) => void) => {
     const q = query(messagesCollection, where('roomId', '==', roomId), orderBy('createdAt', 'desc'));
-
     return onSnapshot(q, (snapshot) => {
         snapshot.docChanges().forEach((change) => {
             if (change.type === 'added') {
@@ -119,37 +115,53 @@ export const subscribeToRooms = (userId: string, callback: (rooms: Room[]) => vo
 };
 
 export const sendPrivateMessage = async (recipientId: string, senderId: string, initialMessage: string): Promise<string> => {
-    // Validate recipientId and senderId
-    if (!recipientId || !senderId) {
-        console.error('Invalid recipientId or senderId', { recipientId, senderId });
-        throw new Error('Invalid recipientId or senderId');
-    }
-
     let roomId;
-
-    try {
-        const q = query(roomsCollection, where('userIds', 'array-contains', senderId));
-        const snapshot = await getDocs(q);
-
-        snapshot.forEach(doc => {
-            if (doc.data().userIds.includes(recipientId)) {
-                roomId = doc.id;
-            }
-        });
-
-        if (!roomId) {
-            const roomRef = await addDoc(roomsCollection, {
-                userIds: [senderId, recipientId],
-                private: true,
-            });
-            roomId = roomRef.id;
+    const q = query(roomsCollection, where('userIds', 'array-contains', senderId));
+    const snapshot = await getDocs(q);
+    snapshot.forEach(doc => {
+        if (doc.data().userIds.includes(recipientId)) {
+            roomId = doc.id;
         }
+    });
+    if (!roomId) {
+        const roomRef = await addDoc(roomsCollection, {
+            userIds: [senderId, recipientId],
+            private: true,
+        });
+        roomId = roomRef.id;
+    }
+    await postMessage(roomId, senderId, initialMessage);
+    return roomId;
+};
 
-        await postMessage(roomId, senderId, initialMessage);
-
+export const addUserToRoom = async (name: string): Promise<string | null> => {
+    const currentUser = authN.currentUser;
+    if (!currentUser) return null;
+    const userId = currentUser.uid;
+    const q = query(roomsCollection, where('userIds', 'not-in', [[userId]]));
+    const snapshot = await getDocs(q);
+    let availableRoom = snapshot.docs.find(doc => doc.data().userIds.length < 2);
+    if (availableRoom) {
+        const roomId = availableRoom.id;
+        await updateDoc(doc(firestore, 'chatRooms', roomId), {
+            userIds: arrayUnion(userId)
+        });
         return roomId;
-    } catch (error) {
-        console.error('Error in sendPrivateMessage:', error);
-        throw error;
+    } else {
+        const roomRef = await addDoc(roomsCollection, {
+            name,
+            userIds: [userId]
+        });
+        return roomRef.id;
+    }
+};
+
+export const getUserDetails = async (uid: string): Promise<any> => {
+    const userRef = doc(firestore, 'users', uid);
+    const userSnap = await getDoc(userRef);
+    if (userSnap.exists()) {
+        return { uid, ...userSnap.data() };
+    } else {
+        return null;
     }
 };

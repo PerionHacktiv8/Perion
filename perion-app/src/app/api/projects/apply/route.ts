@@ -1,8 +1,9 @@
+import { Appliers, AppliersModel } from '@/db/models/appliers'
 import { Project, ProjectModel } from '@/db/models/project'
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 
-export type MyResponse<T> = {
+type MyResponse<T> = {
   statusCode: number
   message?: string
   data?: T
@@ -11,17 +12,18 @@ export type MyResponse<T> = {
 
 export const POST = async (req: NextRequest) => {
   try {
-    const input = await req.formData()
+    const userId = req.headers.get('x-user-id') as string
+    const projectId = (await req.json()) as string
 
-    await Project.createProject(input)
+    const res = await Appliers.applyProject(userId, projectId)
 
     return NextResponse.json<MyResponse<string>>(
       {
-        statusCode: 200,
-        message: 'Project Has Created',
+        statusCode: 201,
+        message: 'Applied Project',
       },
       {
-        status: 200,
+        status: 201,
       },
     )
   } catch (err) {
@@ -45,15 +47,17 @@ export const POST = async (req: NextRequest) => {
   }
 }
 
-export const GET = async () => {
+export const GET = async (req: NextRequest) => {
   try {
-    const projects = await Project.readProjects()
+    const userId = req.headers.get('x-user-id') as string
 
-    return NextResponse.json<MyResponse<ProjectModel[]>>(
+    const appliers = await Appliers.getApplied(userId)
+
+    return NextResponse.json<MyResponse<AppliersModel[]>>(
       {
         statusCode: 200,
         message: 'Success on fetching',
-        data: projects,
+        data: appliers,
       },
       {
         status: 200,

@@ -1,98 +1,56 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import {
   Card,
-  CardHeader,
   CardBody,
   CardFooter,
   Typography,
-  Avatar,
-  Tooltip,
-  IconButton,
   Dialog,
   DialogHeader,
   DialogBody,
   DialogFooter,
   Button,
 } from '@material-tailwind/react'
-import Image from 'next/image'
 import { RequirementCard } from './cardRequirement'
-import { CarouselProject } from '../carousel'
 import { ProjectModel } from '@/db/models/project'
 import dateFormat from '@/db/helpers/dateFormat'
+import { format } from 'date-fns'
+import { usePathname } from 'next/navigation'
 
 export function CardComponent({ datum }: { datum: ProjectModel }) {
-  const [liked, setLiked] = useState(false)
-
-  const handleLikeButtonClick = () => {
-    setLiked((prevLiked) => !prevLiked)
-  }
-
+  const path = usePathname()
   const [open, setOpen] = React.useState(false)
-  const [isFavorite, setIsFavorite] = React.useState(false)
+  const [applied, setApplied] = useState<boolean>(false)
 
   const handleOpen = () => setOpen((cur) => !cur)
-  const handleIsFavorite = () => setIsFavorite((cur) => !cur)
 
-  console.log(datum.benefits)
+  const apply = async () => {
+    const res = await fetch('http://localhost:3000/api/projects/apply', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(datum._id),
+    })
+
+    if (res.ok) {
+      setApplied(true)
+    }
+  }
 
   return (
     <>
       <Card
         placeholder={''}
-        className="max-w-[24rem] overflow-hidden transition duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-xl"
+        className="max-w-[24rem] h-[20rem] overflow-hidden transition duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-xl"
         onClick={handleOpen}
       >
-        <CardHeader
-          placeholder={''}
-          floated={false}
-          shadow={false}
-          color="transparent"
-          className="m-0 rounded-none"
-        >
-          <div className="relative h-56 w-full">
-            <Image
-              src="https://images.unsplash.com/photo-1534423861386-85a16f5d13fd?q=80&w=2970&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              width={1184}
-              height={500}
-              alt="ui/ux review check"
-            />
-          </div>
-          <IconButton
-            placeholder={''}
-            color={liked ? 'orange' : 'white'}
-            size="lg"
-            variant="text"
-            className="!absolute top-4 right-4 rounded-full"
-            onClick={handleLikeButtonClick}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                fillRule="evenodd"
-                d="M6.32 2.577a49.255 49.255 0 0111.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 01-1.085.67L12 18.089l-7.165 3.583A.75.75 0 013.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </IconButton>
-        </CardHeader>
-        <CardBody placeholder={''}>
+        <CardBody placeholder={''} className="flex flex-col justify-between">
           <Typography placeholder={''} className="font-normal mb-2">
-            {dateFormat(datum.createdAt)}
+            {format(new Date(datum.createdAt), 'MMMM do, yyyy')}
           </Typography>
-          <Typography
-            placeholder={''}
-            variant="h4"
-            color="blue-gray"
-            className="truncate"
-          >
-            {datum.title}
-          </Typography>
+          <p className="text-lg text-black h-14 font-semibold">{datum.title}</p>
           <Typography
             placeholder={''}
             variant="h6"
@@ -115,16 +73,6 @@ export function CardComponent({ datum }: { datum: ProjectModel }) {
           className="flex items-center justify-between"
         >
           <div className="flex -space-x-3">
-            {/* <Tooltip content="Natali Craig">
-              <Avatar
-                placeholder={''}
-                size="sm"
-                variant="circular"
-                alt="natali craig"
-                src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1061&q=80"
-                className="border-2 border-white hover:z-10"
-              />
-            </Tooltip> */}
             <Typography placeholder={''} className="font-normal">
               {datum.teams}
             </Typography>
@@ -144,35 +92,8 @@ export function CardComponent({ datum }: { datum: ProjectModel }) {
       >
         <DialogHeader
           placeholder={''}
-          className="justify-between border-b-2 mt-2 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4"
+          className="border-b-2 mt-2 flex flex-col"
         >
-          <div className="flex items-center gap-3">
-            <Avatar
-              placeholder={''}
-              size="md"
-              variant="circular"
-              alt="tania andrew"
-              src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
-            />
-            <div className="-mt-px flex flex-col">
-              <Typography
-                placeholder={''}
-                variant="small"
-                color="blue-gray"
-                className="font-bold"
-              >
-                Tania Andrew
-              </Typography>
-              <Typography
-                placeholder={''}
-                variant="small"
-                color="gray"
-                className="text-xs font-normal"
-              >
-                @emmaroberts
-              </Typography>
-            </div>
-          </div>
           <div className="flex items-center gap-2">
             <div className="flex flex-col items-center">
               <h5>{datum.title}</h5>
@@ -180,30 +101,6 @@ export function CardComponent({ datum }: { datum: ProjectModel }) {
                 <p className="font-normal text-sm">{datum.position}</p>
               </div>
             </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <Button
-              placeholder={''}
-              color="white"
-              size="sm"
-              className="hover:bg-gray-100 border-2 flex items-center"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="w-6 h-6 mr-2"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
-                />
-              </svg>
-              <span>Save Project</span>
-            </Button>
           </div>
         </DialogHeader>
         <DialogBody
@@ -287,9 +184,11 @@ export function CardComponent({ datum }: { datum: ProjectModel }) {
               </Typography>
             </div>
           </div>
-          <Button placeholder={''} color="gray" size="md">
-            Join Project
-          </Button>
+          {!path.includes('applied') && (
+            <Button onClick={apply} placeholder={''} color="gray" size="md">
+              {applied ? 'Applied' : 'Join Project'}
+            </Button>
+          )}
         </DialogFooter>
       </Dialog>
     </>

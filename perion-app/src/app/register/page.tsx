@@ -7,6 +7,7 @@ import {
   signInWithFacebook,
   signInWithGithub,
   signInWithGoogle,
+  signInWithEmail,
 } from './action'
 import { ResponseAPIType } from '../api/user/route'
 import Link from 'next/link'
@@ -76,11 +77,22 @@ const RegisterPage: FunctionComponent = () => {
     if (resJson && resJson.statusCode === 400) console.log(resJson)
   }
 
+  const handleSignInWithEmail = async () => {
+    try {
+      const res = await signInWithEmail(regData.email, regData.password)
+
+      if (res.message === 'success') {
+        router.push('/')
+      }
+    } catch (error) {
+      console.error('Error signing in with Facebook:', error)
+    }
+  }
   return (
     <div className="flex flex-col bg-[url(https://static.vecteezy.com/system/resources/previews/032/976/063/non_2x/artificial-intelligence-tech-background-digital-technology-deep-learning-and-big-data-concept-ai-generated-free-photo.jpg)] lg:flex-row justify-around items-center bg-cover w-full min-h-screen">
       {/* Logo and Text */}
       <div className="z-10 flex w-full lg:flex-row lg:w-1/3 items-center justify-center lg:justify-center bg-opacity-60 lg:bg-transparent p-8 text-center lg:text-left">
-        <img
+        <Image
           src="https://ik.imagekit.io/naufalrafi/Parion%20Logo%20(1).png?updatedAt=1702368775661"
           alt="Company Logo"
           width={100}
@@ -261,7 +273,13 @@ const RegisterPage: FunctionComponent = () => {
                 }}
               />
             </div>
-            <Button type="submit" placeholder={''} className="mt-6" fullWidth>
+            <Button
+              type="submit"
+              placeholder={''}
+              className="mt-6"
+              fullWidth
+              onClick={() => handleSignInWithEmail()}
+            >
               sign up
             </Button>
           </form>

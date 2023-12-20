@@ -1,6 +1,5 @@
 'use client'
 
-import { CreateProjectCard } from '@/components/project/createProjectCard'
 import { ProfileCardUser } from '@/components/profile/profileCardUser'
 import { ProfileNav } from '@/components/profile/profileNav'
 import { useEffect, useState } from 'react'
@@ -52,9 +51,7 @@ export default function Profile({ params }: { params: { slug: string } }) {
           {/* Content Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Create Box */}
-            <div className="flex justify-center items-center">
-              <CreateProjectCard />
-            </div>
+            <div className="flex justify-center items-center"></div>
             <div className="flex justify-center items-center"></div>
           </div>
         </div>

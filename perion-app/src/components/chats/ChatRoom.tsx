@@ -1,33 +1,54 @@
-// chats/ChatRoom.tsx
 'use client'
 import React, { useState, useEffect, useCallback, useRef } from 'react'
 import {
   getChatRooms,
   postMessage,
   subscribeToChat,
-  createOrJoinRoom,
   Room,
   Message,
   setTypingStatus,
   subscribeToTyping,
   subscribeToRoomMessages,
+  addUserToRoom,
+  getUserDetails,
 } from '../../db/config/firestoreService'
 import { authN } from '../../db/config/firebaseConfig'
-import Image from 'next/image'
 import Cookies from 'js-cookie'
-import { useRouter } from 'next/navigation'
+import swall from 'sweetalert2'
+
+interface UserDetails {
+  [key: string]: {
+    displayName: string
+    photoURL: string
+  }
+}
 
 const ChatComponent: React.FC = () => {
+  // State and variables
   const [currentRoom, setCurrentRoom] = useState<string | null>(null)
   const [rooms, setRooms] = useState<Room[]>([])
   const [messages, setMessages] = useState<Message[]>([])
   const [newMessage, setNewMessage] = useState<string>('')
   const [roomName, setRoomName] = useState<string>('')
   const [typing, setTyping] = useState<Record<string, boolean>>({})
-  const user = authN.currentUser // this is auth firebase
+  const user = authN.currentUser
   const [mongoObjectId, setMongoObjectId] = useState<string | null>(null)
   const messagesEndRef = useRef(null)
-  const [selectedUser, setSelectedUser] = useState<string>('')
+  const [userDetails, setUserDetails] = useState<UserDetails>({})
+
+  // Functions
+  const fetchUserDetails = async (uid: string) => {
+    if (!userDetails[uid]) {
+      const details = await getUserDetails(uid)
+      setUserDetails((prev) => ({ ...prev, [uid]: details }))
+    }
+  }
+
+  useEffect(() => {
+    messages.forEach((message) => {
+      fetchUserDetails(message.userId)
+    })
+  }, [messages])
 
   useEffect(() => {
     if (user?.uid) {
@@ -37,10 +58,8 @@ const ChatComponent: React.FC = () => {
   }, [user?.uid])
 
   useEffect(() => {
-    // Retrieve the MongoDB ObjectId from cookies
     const objectId = Cookies.get('token')
     if (objectId) {
-      console.log('MongoDB ObjectId:', objectId) // Debug log
       setMongoObjectId(objectId)
     }
   }, [])
@@ -55,22 +74,24 @@ const ChatComponent: React.FC = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
-  const handlePrivateChatCreation = async () => {
-    if (selectedUser && user?.uid) {
-      const roomId = await createOrJoinPrivateRoom(user.uid, selectedUser)
-      setCurrentRoom(roomId)
-    }
-  }
-
   const handleNewMessage = (message: Message, roomId: string) => {
-    // Notification logic here
-    const isTyping = typing[roomId]
-    if (message.userId !== user?.uid && !isTyping) {
-      console.log('New message:', message) // Debug log
+    setMessages((prevMessages) => [...prevMessages, message])
+    if (roomId !== currentRoom) {
+      swall
+        .fire({
+          title: 'New Message',
+          text: `You have a new message in ${message.roomId}: "${message.text}"`,
+          icon: 'info',
+          confirmButtonText: 'View',
+          showCancelButton: true,
+          cancelButtonText: 'Close',
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            setCurrentRoom(roomId)
+          }
+        })
     }
-
-    // Update messages state
-    setMessages((messages) => [...messages, message])
   }
 
   useEffect(() => {
@@ -97,7 +118,6 @@ const ChatComponent: React.FC = () => {
   }, [currentRoom])
 
   const handleSendMessage = useCallback(async () => {
-    // Use MongoDB ObjectId if available, else fall back to Firebase UID
     const userId = mongoObjectId || user?.uid
     if (newMessage.trim() && currentRoom && userId) {
       await postMessage(currentRoom, userId, newMessage)
@@ -120,31 +140,52 @@ const ChatComponent: React.FC = () => {
   }
 
   const handleRoomCreation = async () => {
-    if (roomName.trim() && user?.uid) {
-      const roomId = await createOrJoinRoom(roomName, user.uid)
-      setCurrentRoom(roomId)
-      setRoomName('')
-      getChatRooms(user.uid).then(setRooms)
+    if (roomName.trim()) {
+      const roomId = await addUserToRoom(roomName)
+      if (roomId) {
+        setCurrentRoom(roomId)
+        setRoomName('')
+        getChatRooms(user?.uid || '').then(setRooms)
+      }
     }
   }
 
+  // JSX for the ChatComponent
   return (
     <div className="flex flex-col h-screen">
-      {' '}
-      {/* Full viewport height */}
+      {/* Header */}
       <header className="bg-gray-800 p-4 flex justify-between items-center text-white">
         <div className="flex items-center">
           <span className="ml-2">{user?.displayName}</span>
         </div>
       </header>
+
       {/* Main Content */}
       <div className="flex flex-1 overflow-hidden">
-        {' '}
-        {/* Flex container for sidebar and chat area */}
+        {/* Room Creation */}
         <aside className="w-1/4 bg-gray-900 overflow-y-auto">
-          {' '}
-          {/* Sidebar with fixed width */}
-          {/* Add h-full */}
+          <h2 className="text-lg font-semibold mb-4 text-white">
+            Create a Room
+          </h2>
+          <div className="p-3">
+            <input
+              type="text"
+              placeholder="Room Name"
+              className="border p-2 w-full rounded focus:outline-none focus:ring-2 focus:ring-gray-600"
+              value={roomName}
+              onChange={(e) => setRoomName(e.target.value)}
+            />
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
+              onClick={handleRoomCreation}
+            >
+              Create
+            </button>
+          </div>
+        </aside>
+
+        {/* Room List */}
+        <aside className="w-1/4 bg-gray-900 overflow-y-auto">
           <h2 className="text-lg font-semibold mb-4 text-white">Rooms</h2>
           <ul className="overflow-auto">
             {rooms.map((room) => (
@@ -166,77 +207,55 @@ const ChatComponent: React.FC = () => {
             ))}
           </ul>
         </aside>
+
         {/* Chat Area */}
         <main className="flex-1 flex flex-col bg-gray-200">
-          {' '}
-          {/* Chat area taking the remaining width */}
-          {/* Chat messages area */}
           <div className="flex-1 overflow-y-auto">
-            {' '}
-            {/* Messages should scroll within this container */}
-            {/* Room Creation Input */}
-            {!currentRoom && (
-              <div className="p-4">
-                <input
-                  type="text"
-                  placeholder="Room name"
-                  className="border p-2 w-full rounded focus:outline-none focus:ring-2 focus:ring-gray-600"
-                  value={roomName}
-                  onChange={(e) => setRoomName(e.target.value)}
-                />
-                <button
-                  className="bg-gray-700 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded mt-4"
-                  onClick={handleRoomCreation}
-                >
-                  Create/Join Room
-                </button>
-              </div>
-            )}
-            {/* Messages Display */}
-            <div className="flex-1 flex flex-col overflow-y-auto p-4 space-y-4">
-              {/* Messages will start from the top and stack downwards */}
-              {messages.map((message, index) => (
+            {/* Chat Messages with User Display Names */}
+            {messages.map((message, index) => (
+              <div
+                key={index}
+                className={`flex ${
+                  message.userId === user?.uid ? 'justify-end' : 'justify-start'
+                }`}
+              >
                 <div
-                  key={index}
-                  className={`flex ${
+                  className={`max-w-xs md:max-w-md lg:max-w-lg px-4 py-2 rounded ${
                     message.userId === user?.uid
-                      ? 'justify-end'
-                      : 'justify-start'
+                      ? 'bg-blue-500 text-white'
+                      : 'bg-gray-300 text-gray-800'
                   }`}
                 >
-                  <div
-                    className={`max-w-xs md:max-w-md lg:max-w-lg px-4 py-2 rounded ${
-                      message.userId === user?.uid
-                        ? 'bg-blue-500 text-white'
-                        : 'bg-gray-300 text-gray-800'
-                    }`}
-                  >
-                    {message.text}
-                  </div>
+                  {message.userId !== user?.uid && (
+                    <div className="text-xs mb-1">
+                      {userDetails[message.userId]?.displayName}
+                    </div>
+                  )}
+                  {message.text}
                 </div>
-              ))}
-              <div ref={messagesEndRef} />
-            </div>
-            {/* Message Input */}
-            {currentRoom && (
-              <div className="border-t border-gray-300 p-4">
-                <input
-                  type="text"
-                  placeholder="Type a message..."
-                  className="border p-2 w-full rounded focus:outline-none focus:ring-2 focus:ring-gray-600"
-                  value={newMessage}
-                  onChange={handleTyping}
-                  onKeyDown={handleKeyDown}
-                />
-                <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
-                  onClick={handleSendMessage}
-                >
-                  Send
-                </button>
               </div>
-            )}
+            ))}
+            <div ref={messagesEndRef} />
           </div>
+          {/* Message Input */}
+          {currentRoom && (
+            <div className="border-t border-gray-300 p-4">
+              <input
+                type="text"
+                placeholder="Type a message..."
+                className="border p-2 w-full rounded focus:outline-none focus:ring-2 focus:ring-gray-600"
+                value={newMessage}
+                onChange={handleTyping}
+                onKeyDown={handleKeyDown}
+              />
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
+                onClick={handleSendMessage}
+              >
+                Send
+              </button>
+            </div>
+          )}
         </main>
       </div>
     </div>

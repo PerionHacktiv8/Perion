@@ -30,8 +30,13 @@ type inputSelect = {
   jobCategory: string
 }
 
-const ProjectFormDialog = ({ open , handleOpen } : {open: boolean, handleOpen : () => void} ) => {
-
+const ProjectFormDialog = ({
+  open,
+  handleOpen,
+}: {
+  open: boolean
+  handleOpen: () => void
+}) => {
   const [input, setInput] = useState<inputProjectModel>({
     title: '',
     projectDescription: '',
@@ -69,11 +74,10 @@ const ProjectFormDialog = ({ open , handleOpen } : {open: boolean, handleOpen : 
       }),
     })
   }
-  
 
   return (
     <>
-    <Dialog
+      <Dialog
         placeholder={''}
         size="xl"
         open={open}
@@ -84,31 +88,23 @@ const ProjectFormDialog = ({ open , handleOpen } : {open: boolean, handleOpen : 
           unmount: { scale: 0.9, y: -100 },
         }}
       >
-      <DialogHeader
-        placeholder={''}
-        className="justify-center border-b-2 mt-2 flex flex-col lg:flex-row lg:items-center lg:justify-center gap-4"
-      >
-        <div className="flex items-center gap-3">
-          <div className="mt-px flex flex-col">
-            <p className='font-bold text-lg'>
-              Create a Project
-            </p>
-            <p
-              className="mb-1 font-normal text-sm"
-            >
+        <DialogHeader
+          placeholder={''}
+          className="justify-center border-b-2 flex flex-col lg:flex-row lg:items-center lg:justify-center"
+        >
+          <div className="flex flex-col items-center gap-3">
+            <p className="font-bold text-xl">Create a Project</p>
+            <p className="mb-1 font-normal text-sm">
               Start building your project:
             </p>
           </div>
-        </div>
-      </DialogHeader>
-      <DialogBody
+        </DialogHeader>
+        <DialogBody
           placeholder={''}
           className="h-auto sm:h-[30rem] md:h-[35rem] lg:h-[37rem] overflow-y-auto flex flex-col gap-3"
         >
-        <form action="" onSubmit={onSubmitInput}>
-            <p className='font-bold text-lg text-black'>
-              Title
-            </p>
+          <form action="" onSubmit={onSubmitInput}>
+            <p className="font-bold text-lg text-black">Title</p>
             <Input
               crossOrigin={''}
               label="Insert Title"
@@ -117,7 +113,7 @@ const ProjectFormDialog = ({ open , handleOpen } : {open: boolean, handleOpen : 
               value={input.title}
               onChange={onChange}
             />
-            <p className='mt-3 mb-2 font-bold text-lg text-black'>
+            <p className="mt-3 mb-2 font-bold text-lg text-black">
               Project Description
             </p>
             <Textarea
@@ -128,7 +124,7 @@ const ProjectFormDialog = ({ open , handleOpen } : {open: boolean, handleOpen : 
               value={input.projectDescription}
               onChange={onChange}
             />
-            <p className='mt-3 mb-2 font-bold text-lg text-black'>
+            <p className="mt-3 mb-2 font-bold text-lg text-black">
               Work Description
             </p>
             <Textarea
@@ -139,7 +135,7 @@ const ProjectFormDialog = ({ open , handleOpen } : {open: boolean, handleOpen : 
               value={input.workDescription}
               onChange={onChange}
             />
-            <p className='mt-3 mb-2 font-bold text-lg text-black'>
+            <p className="mt-3 mb-2 font-bold text-lg text-black">
               Project Location
             </p>
             <Input
@@ -150,7 +146,7 @@ const ProjectFormDialog = ({ open , handleOpen } : {open: boolean, handleOpen : 
               value={input.jobLocation}
               onChange={onChange}
             />
-            <p className='mt-3 mb-2 font-bold text-lg text-black'>
+            <p className="mt-3 mb-2 font-bold text-lg text-black">
               On Site Required
             </p>
             <div className="w-full">
@@ -172,9 +168,7 @@ const ProjectFormDialog = ({ open , handleOpen } : {open: boolean, handleOpen : 
                 <Option value="Hybrid">Hybrid</Option>
               </Select>
             </div>
-            <p className='mt-3 mb-2 font-bold text-lg text-black'>
-              Experience
-            </p>
+            <p className="mt-3 mb-2 font-bold text-lg text-black">Experience</p>
             <Input
               crossOrigin={''}
               label="Insert Experience"
@@ -183,9 +177,7 @@ const ProjectFormDialog = ({ open , handleOpen } : {open: boolean, handleOpen : 
               value={input.experience}
               onChange={onChange}
             />
-            <p className='mt-3 mb-2 font-bold text-lg text-black'>
-              Benefits
-            </p>
+            <p className="mt-3 mb-2 font-bold text-lg text-black">Benefits</p>
             <Input
               crossOrigin={''}
               label="Insert Benefits"
@@ -194,9 +186,7 @@ const ProjectFormDialog = ({ open , handleOpen } : {open: boolean, handleOpen : 
               value={input.benefits}
               onChange={onChange}
             />
-            <p className='mt-3 mb-2 font-bold text-lg text-black'>
-              Position
-            </p>
+            <p className="mt-3 mb-2 font-bold text-lg text-black">Position</p>
             <Input
               crossOrigin={''}
               label="Insert Position"
@@ -205,9 +195,7 @@ const ProjectFormDialog = ({ open , handleOpen } : {open: boolean, handleOpen : 
               value={input.position}
               onChange={onChange}
             />
-            <p className='mt-3 mb-2 font-bold text-lg text-black'>
-              Job Type
-            </p>
+            <p className="mt-3 mb-2 font-bold text-lg text-black">Job Type</p>
             <div className="w-full">
               <Select
                 placeholder={''}
@@ -226,7 +214,7 @@ const ProjectFormDialog = ({ open , handleOpen } : {open: boolean, handleOpen : 
                 <Option value="Freelance">Freelance</Option>
               </Select>
             </div>
-            <p className='mt-3 mb-2 font-bold text-lg text-black'>
+            <p className="mt-3 mb-2 font-bold text-lg text-black">
               Job Category
             </p>
             <div className="w-full">
@@ -251,9 +239,7 @@ const ProjectFormDialog = ({ open , handleOpen } : {open: boolean, handleOpen : 
                 <Option value="Game Developer">Game Developer</Option>
               </Select>
             </div>
-            <p className='mt-3 mb-2 font-bold text-lg text-black'>
-              Skills
-            </p>
+            <p className="mt-3 mb-2 font-bold text-lg text-black">Skills</p>
             <Textarea
               placeholder={''}
               label="Insert Skills"
@@ -262,9 +248,7 @@ const ProjectFormDialog = ({ open , handleOpen } : {open: boolean, handleOpen : 
               value={input.skills}
               onChange={onChange}
             />
-            <p className='mt-3 mb-2 font-bold text-lg text text-black'>
-              Teams
-            </p>
+            <p className="mt-3 mb-2 font-bold text-lg text text-black">Teams</p>
             <Input
               crossOrigin={''}
               label="Insert Teams"
@@ -273,18 +257,17 @@ const ProjectFormDialog = ({ open , handleOpen } : {open: boolean, handleOpen : 
               value={input.teams}
               onChange={onChange}
             />
-        </form>
-      </DialogBody>  
-      <DialogFooter
-          placeholder={''}
-          className="justify-between flex flex-col border-t-2 lg:flex-row lg:items-center lg:justify-between"
-        >
-          <div className="flex items center gap-3">
-            <Button type="submit" placeholder={''} color="gray" size="md">
+            <Button
+              type="submit"
+              placeholder={''}
+              color="gray"
+              size="md"
+              className="mt-5"
+            >
               Create Project
             </Button>
-          </div>
-      </DialogFooter>
+          </form>
+        </DialogBody>
       </Dialog>
     </>
   )
