@@ -16,7 +16,10 @@ export default async function Recruit() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 py-10 px-7">
             {recruits.map((datum) => (
-              <CardUser datum={datum} />
+              <CardUser
+                datum={datum}
+                skills={datum.cvData.skills.splice(0, 5).join(', ')}
+              />
             ))}
           </div>
         </div>

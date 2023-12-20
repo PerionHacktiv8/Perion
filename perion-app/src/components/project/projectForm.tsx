@@ -92,15 +92,13 @@ const ProjectFormDialog = ({
       >
         <DialogHeader
           placeholder={''}
-          className="justify-center border-b-2 mt-2 flex flex-col lg:flex-row lg:items-center lg:justify-center gap-4"
+          className="justify-center border-b-2 flex flex-col lg:flex-row lg:items-center lg:justify-center"
         >
-          <div className="flex items-center gap-3">
-            <div className="mt-px flex flex-col">
-              <p className="font-bold text-lg">Create a Project</p>
-              <p className="mb-1 font-normal text-sm">
-                Start building your project:
-              </p>
-            </div>
+          <div className="flex flex-col items-center gap-3">
+            <p className="font-bold text-xl">Create a Project</p>
+            <p className="mb-1 font-normal text-sm">
+              Start building your project:
+            </p>
           </div>
         </DialogHeader>
         <DialogBody
@@ -261,16 +259,15 @@ const ProjectFormDialog = ({
               value={input.teams}
               onChange={onChange}
             />
-            <DialogFooter
+            <Button
+              type="submit"
               placeholder={''}
-              className="justify-between flex flex-col border-t-2 lg:flex-row lg:items-center lg:justify-between"
+              color="gray"
+              size="md"
+              className="mt-5"
             >
-              <div className="flex items center gap-3">
-                <Button type="submit" placeholder={''} color="gray" size="md">
-                  Create Project
-                </Button>
-              </div>
-            </DialogFooter>
+              Create Project
+            </Button>
           </form>
         </DialogBody>
       </Dialog>

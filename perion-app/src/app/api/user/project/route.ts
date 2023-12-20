@@ -1,53 +1,30 @@
 import { Project, ProjectModel } from '@/db/models/project'
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
-import { input } from '@material-tailwind/react'
 
-export type MyResponse<T> = {
+type MyResponse<T> = {
   statusCode: number
   message?: string
   data?: T
   error?: string
 }
-export type input = {
-  title: string
-  projectDescription: string
-  workDescription: string
-  position: string
-  jobLocation: string
-  experience: string
-  benefits: string
-  teams: string
-  skills: string
-}
-export type inputSelect = {
-  jobType: string
-  onSiteRequired: string
-  jobCategory: string
-}
 
 export const POST = async (req: NextRequest) => {
   try {
-    const inputForm = await req.json()
-    const userId = req.headers.get('x-user-id') as string
+    const input = await req.formData()
 
-    let input = inputForm.input as input
-    let inputSelect = inputForm.inputSelect as inputSelect
-
-    await Project.createProject(input, inputSelect, userId)
+    await Project.createProject(input)
 
     return NextResponse.json<MyResponse<string>>(
       {
-        statusCode: 201,
+        statusCode: 200,
         message: 'Project Has Created',
       },
       {
-        status: 201,
+        status: 200,
       },
     )
   } catch (err) {
-    console.log(err)
-
     let errCode = 500
     let errMsg = 'Internal Server Error'
 
@@ -68,9 +45,16 @@ export const POST = async (req: NextRequest) => {
   }
 }
 
-export const GET = async () => {
+export const GET = async (req: NextRequest) => {
   try {
-    const projects = await Project.readProjects()
+    const userId = req.headers.get('x-user-id') as string
+
+    const projects = await Project.readUserProject(userId)
+
+    if (!projects) {
+      throw new Error('Cannot find data')
+    }
+
     return NextResponse.json<MyResponse<ProjectModel[]>>(
       {
         statusCode: 200,

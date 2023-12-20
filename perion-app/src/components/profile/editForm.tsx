@@ -4,17 +4,19 @@ import { Avatar, Button, Input, Textarea } from '@material-tailwind/react'
 import { useEffect, useState } from 'react'
 import { UserModel } from '@/db/models/user'
 import { ResponseAPIType } from '@/app/api/user/route'
-import { useRouter } from 'next/navigation'
-import { revalidatePath } from 'next/cache'
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
+import useProfile from '@/utils/fetchProfile'
 
-export function EditForm() {
+export function EditForm({ router }: { router: AppRouterInstance }) {
   const [profData, setProfData] = useState<UserModel>()
   const [preview, setPreview] = useState<string>()
   const [image, setImage] = useState<File>()
   const [pdf, setPdf] = useState<File>()
-  const router = useRouter()
+  const { setRefresh, refresh } = useProfile()
 
-  const profile = async () => {
+  console.log(profData)
+
+  const profileData = async () => {
     const res = await fetch('http://localhost:3000/api/user')
     const resJson = (await res.json()) as ResponseAPIType<UserModel>
 
@@ -54,17 +56,17 @@ export function EditForm() {
   }
 
   useEffect(() => {
-    profile()
+    profileData()
   }, [])
 
   return (
     <div className="p-5">
       <form
-        action={() => {
+        onSubmit={() => {
           updateImage()
           updatePDF()
           updateProfile()
-          router.refresh()
+          setRefresh(!refresh)
         }}
         className="flex flex-col gap-2 mb-5"
       >

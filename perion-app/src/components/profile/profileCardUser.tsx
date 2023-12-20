@@ -8,6 +8,7 @@ import {
   Avatar,
   Button,
 } from '@material-tailwind/react'
+import { format } from 'date-fns'
 import Link from 'next/link'
 
 export function ProfileCardUser({ datum }: { datum: UserModel }) {
@@ -20,12 +21,13 @@ export function ProfileCardUser({ datum }: { datum: UserModel }) {
       >
         <Avatar
           placeholder={''}
-          src="https://docs.material-tailwind.com/img/face-3.jpg"
+          src={datum.picture}
           alt="avatar"
           size="xxl"
           className="mb-3 mx-auto"
         />
-        <p className="mb-2 text-xl font-bold text-black">Naufal Rafi</p>
+        <p className="mb-2 text-xl font-bold text-black">{datum.name}</p>
+
         <p className="flex justify-center items-center gap-2 mx-auto text-sm">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -39,10 +41,10 @@ export function ProfileCardUser({ datum }: { datum: UserModel }) {
               clipRule="evenodd"
             />
           </svg>
-          Jakarta, Indonesia
+          {datum.location}
         </p>
         <p className="mt-3 text-sm text-black">
-          Member Since : 16 December 2023
+          Member Since : {format(new Date(datum.createdAt), 'MMMM do, yyyy')}
         </p>
       </CardHeader>
       <CardBody placeholder={''}>
@@ -85,7 +87,7 @@ export function ProfileCardUser({ datum }: { datum: UserModel }) {
       <CardFooter placeholder={''} className="flex justify-center gap-7 pt-2">
         <div className="bg-white rounded-lg p-6 shadow-md max-w-sm mx-auto w-full">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">
-            Hire Naufal
+            Hire {datum.name}
           </h2>
 
           <div className="border-t-2 border-gray-200 my-3"></div>
@@ -131,8 +133,17 @@ export function ProfileCardUser({ datum }: { datum: UserModel }) {
 
           <div className="border-t-2 border-gray-200 my-3"></div>
 
-          {/* Freelance / Project Option */}
           <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center">CV Link</div>
+            <span className="inline-block p-2 text-blue-500">
+              <a href={datum.cvLink} target="_blank">
+                Click Here
+              </a>
+            </span>
+          </div>
+
+          {/* Freelance / Project Option */}
+          {/* <div className="flex items-center justify-between mb-4">
             <div className="flex items-center">
               <span className="inline-block p-2 text-gray-500 rounded mr-2">
                 <svg
@@ -168,7 +179,7 @@ export function ProfileCardUser({ datum }: { datum: UserModel }) {
                 />
               </svg>
             </span>
-          </div>
+          </div> */}
         </div>
       </CardFooter>
 
@@ -180,7 +191,7 @@ export function ProfileCardUser({ datum }: { datum: UserModel }) {
             variant="h5"
             className="font-bold text-sm"
           >
-            WORK EXPERIENCE
+            List Of Projects
           </Typography>
           <div className="mt-4">
             <Typography placeholder={''} className="font-bold">

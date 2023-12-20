@@ -35,7 +35,7 @@ const ProjectDialog = ({
           placeholder={''}
           className="justify-between border-b-2 mt-2 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4"
         >
-          <div className="flex items-center gap-3">
+          {/* <div className="flex items-center gap-3">
             <Avatar
               placeholder={''}
               size="md"
@@ -61,7 +61,7 @@ const ProjectDialog = ({
                 @emmaroberts
               </Typography>
             </div>
-          </div>
+          </div> */}
           <div className="flex items-center gap-2">
             <div className="flex flex-col items-center">
               <h5>ini title</h5>
