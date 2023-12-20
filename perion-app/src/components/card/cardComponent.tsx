@@ -224,9 +224,14 @@ export function CardComponent({
               </Typography>
             </div>
           </div>
-          {!path.includes('applied') && !path.includes('/profile/project') && (
+          {!path.includes('/profile/project') && (
             <Button onClick={apply} placeholder={''} color="gray" size="md">
               {applied ? 'Applied' : 'Join Project'}
+            </Button>
+          )}{' '}
+          {path.includes('/profile/project') && (
+            <Button onClick={apply} placeholder={''} color="gray" size="md">
+              Delete
             </Button>
           )}
         </DialogFooter>
