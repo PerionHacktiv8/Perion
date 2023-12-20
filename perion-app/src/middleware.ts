@@ -9,6 +9,9 @@ export const middleware = async (req: NextRequest) => {
 
   if (
     req.url.includes('/api/user') ||
+    req.url.includes('/api/user/free') ||
+    req.url.includes('/api/recommendation') ||
+    req.url.includes('/api/projects/apply') ||
     (req.url.includes('/api/invoiceXendit') && req.method === 'POST') ||
     (req.url.includes('/api/login') && req.method !== 'POST') ||
     (req.url.includes('/api/image') && req.method === 'POST') ||

@@ -1,84 +1,25 @@
 'use client'
-import React, { useEffect, useState } from 'react'
-
 import {
-  Card,
-  CardBody,
-  CardFooter,
   Typography,
+  Avatar,
   Dialog,
   DialogHeader,
   DialogBody,
   DialogFooter,
   Button,
 } from '@material-tailwind/react'
-import { RequirementCard } from './cardRequirement'
-import { ProjectModel } from '@/db/models/project'
-import dateFormat from '@/db/helpers/dateFormat'
-import { format } from 'date-fns'
-import { usePathname } from 'next/navigation'
+import Link from 'next/link'
+import React from 'react'
 
-export function CardComponent({ datum }: { datum: ProjectModel }) {
-  const path = usePathname()
-  const [open, setOpen] = React.useState(false)
-  const [applied, setApplied] = useState<boolean>(false)
-
-  const handleOpen = () => setOpen((cur) => !cur)
-
-  const apply = async () => {
-    const res = await fetch('http://localhost:3000/api/projects/apply', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(datum._id),
-    })
-
-    if (res.ok) {
-      setApplied(true)
-    }
-  }
-
+const ProjectDialog = ({
+  open,
+  handleOpen,
+}: {
+  open: boolean
+  handleOpen: () => void
+}) => {
   return (
     <>
-      <Card
-        placeholder={''}
-        className="max-w-[24rem] h-[20rem] overflow-hidden transition duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-xl"
-        onClick={handleOpen}
-      >
-        <CardBody placeholder={''} className="flex flex-col justify-between">
-          <Typography placeholder={''} className="font-normal mb-2">
-            {format(new Date(datum.createdAt), 'MMMM do, yyyy')}
-          </Typography>
-          <p className="text-lg text-black h-14 font-semibold">{datum.title}</p>
-          <Typography
-            placeholder={''}
-            variant="h6"
-            color="blue-gray"
-            className="mt-3"
-          >
-            {datum.position}
-          </Typography>
-          <Typography
-            placeholder={''}
-            variant="paragraph"
-            color="gray"
-            className="font-normal h-[5rem] line-clamp-3"
-          >
-            {datum.projectDescription}
-          </Typography>
-        </CardBody>
-        <CardFooter
-          placeholder={''}
-          className="flex items-center justify-between"
-        >
-          <div className="flex -space-x-3">
-            <Typography placeholder={''} className="font-normal">
-              {datum.teams}
-            </Typography>
-          </div>
-        </CardFooter>
-      </Card>
       <Dialog
         placeholder={''}
         size="xl"
@@ -92,15 +33,66 @@ export function CardComponent({ datum }: { datum: ProjectModel }) {
       >
         <DialogHeader
           placeholder={''}
-          className="border-b-2 mt-2 flex flex-col"
+          className="justify-between border-b-2 mt-2 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4"
         >
+          {/* <div className="flex items-center gap-3">
+            <Avatar
+              placeholder={''}
+              size="md"
+              variant="circular"
+              alt="tania andrew"
+              src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
+            />
+            <div className="-mt-px flex flex-col">
+              <Typography
+                placeholder={''}
+                variant="small"
+                color="blue-gray"
+                className="font-bold"
+              >
+                Tania Andrew
+              </Typography>
+              <Typography
+                placeholder={''}
+                variant="small"
+                color="gray"
+                className="text-xs font-normal"
+              >
+                @emmaroberts
+              </Typography>
+            </div>
+          </div> */}
           <div className="flex items-center gap-2">
             <div className="flex flex-col items-center">
-              <h5>{datum.title}</h5>
+              <h5>ini title</h5>
               <div className="flex flex-row gap-2 w-full justify-center">
-                <p className="font-normal text-sm">{datum.position}</p>
+                <p className="font-normal text-sm">ini posisi</p>
               </div>
             </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <Button
+              placeholder={''}
+              color="white"
+              size="sm"
+              className="hover:bg-gray-100 border-2 flex items-center"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-6 h-6 mr-2"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
+                />
+              </svg>
+              <span>Save Project</span>
+            </Button>
           </div>
         </DialogHeader>
         <DialogBody
@@ -113,35 +105,33 @@ export function CardComponent({ datum }: { datum: ProjectModel }) {
               <div className="flex flex-col gap-5">
                 <div className="flex flex-col gap-2">
                   <p className="text-black text-lg font-bold">About Us</p>
-                  <p>{datum.workDescription}</p>
+                  <p>ini work description</p>
                 </div>
                 <div className="flex flex-col gap-2">
                   <p className="text-black text-lg font-bold">
                     About The Project
                   </p>
-                  <p>{datum.projectDescription}</p>
+                  <p>ini project description</p>
                 </div>
                 <div className="flex flex-col gap-2">
                   <p className="text-black text-lg font-bold">
                     Minimum experience
                   </p>
-                  <p>{datum.experience}</p>
+                  <p>ini minimun experience</p>
                 </div>
                 <div className="flex flex-col gap-2">
                   <p className="text-black text-lg font-bold">Benefits</p>
-                  {datum.benefits}
+                  <p>- ini benefit 1</p>
+                  <p>- ini benefit 2</p>
                 </div>
                 <div className="flex flex-col gap-2">
                   <p className="text-black text-lg font-bold">Skills Needed</p>
-                  {datum.skills.map((el, idx) => (
-                    <p key={idx}>- {el}</p>
-                  ))}
+                  <p>- ini skill 1</p>
+                  <p>- ini skill 2</p>
                 </div>
               </div>
             </section>
-            <section className="w-1/3">
-              <RequirementCard datum={datum} />
-            </section>
+            <section className="w-1/3">{/* <RequirementCard /> */}</section>
           </div>
         </DialogBody>
         <DialogFooter
@@ -163,7 +153,7 @@ export function CardComponent({ datum }: { datum: ProjectModel }) {
                 color="blue-gray"
                 className="font-medium"
               >
-                {dateFormat(datum.createdAt)}
+                27 September 2023
               </Typography>
             </div>
             <div>
@@ -180,17 +170,24 @@ export function CardComponent({ datum }: { datum: ProjectModel }) {
                 color="blue-gray"
                 className="font-medium"
               >
-                {datum.teams}
+                Parion team
               </Typography>
             </div>
           </div>
-          {!path.includes('applied') && (
-            <Button onClick={apply} placeholder={''} color="gray" size="md">
-              {applied ? 'Applied' : 'Join Project'}
+          <div className="flex items center gap-3">
+            <Link href={'/profile/project/edit-project'}>
+              <Button placeholder={''} color="gray" size="md">
+                Edit Project
+              </Button>
+            </Link>
+            <Button placeholder={''} color="gray" size="md">
+              Join Project
             </Button>
-          )}
+          </div>
         </DialogFooter>
       </Dialog>
     </>
   )
 }
+
+export default ProjectDialog

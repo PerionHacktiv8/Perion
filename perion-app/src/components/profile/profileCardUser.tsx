@@ -1,3 +1,4 @@
+import { UserModel } from '@/db/models/user'
 import {
   Card,
   CardHeader,
@@ -7,9 +8,10 @@ import {
   Avatar,
   Button,
 } from '@material-tailwind/react'
+import { format } from 'date-fns'
 import Link from 'next/link'
 
-export function ProfileCardUser() {
+export function ProfileCardUser({ datum }: { datum: UserModel }) {
   return (
     <Card placeholder={''} className="w-96 mb-10">
       <CardHeader
@@ -19,7 +21,7 @@ export function ProfileCardUser() {
       >
         <Avatar
           placeholder={''}
-          src="https://docs.material-tailwind.com/img/face-3.jpg"
+          src={datum.picture}
           alt="avatar"
           size="xxl"
           className="mb-3 mx-auto"
@@ -39,7 +41,7 @@ export function ProfileCardUser() {
               clipRule="evenodd"
             />
           </svg>
-          Jakarta, Indonesia
+          {datum.location}
         </p>
         <p className="mt-3 text-sm text-black">
           Member Since : 16 December 2023
@@ -85,7 +87,7 @@ export function ProfileCardUser() {
       <CardFooter placeholder={''} className="flex justify-center gap-7 pt-2">
         <div className="bg-white rounded-lg p-6 shadow-md max-w-sm mx-auto w-full">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">
-            Hire Naufal
+            Hire {datum.name}
           </h2>
 
           <div className="border-t-2 border-gray-200 my-3"></div>
@@ -116,13 +118,13 @@ export function ProfileCardUser() {
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="1.5"
+                strokeWidth="1.5"
                 stroke="currentColor"
                 className="w-6 h-6"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
@@ -131,21 +133,30 @@ export function ProfileCardUser() {
 
           <div className="border-t-2 border-gray-200 my-3"></div>
 
-          {/* Freelance / Project Option */}
           <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center">CV Link</div>
+            <span className="inline-block p-2 text-blue-500">
+              <a href={datum.cvLink} target="_blank">
+                Click Here
+              </a>
+            </span>
+          </div>
+
+          {/* Freelance / Project Option */}
+          {/* <div className="flex items-center justify-between mb-4">
             <div className="flex items-center">
               <span className="inline-block p-2 text-gray-500 rounded mr-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  stroke-width="1.5"
+                  strokeWidth="1.5"
                   stroke="currentColor"
                   className="w-6 h-6"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
@@ -157,18 +168,18 @@ export function ProfileCardUser() {
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="1.5"
+                strokeWidth="1.5"
                 stroke="currentColor"
                 className="w-6 h-6"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
             </span>
-          </div>
+          </div> */}
         </div>
       </CardFooter>
 
@@ -180,7 +191,7 @@ export function ProfileCardUser() {
             variant="h5"
             className="font-bold text-sm"
           >
-            WORK EXPERIENCE
+            List Of Projects
           </Typography>
           <div className="mt-4">
             <Typography placeholder={''} className="font-bold">
@@ -205,28 +216,6 @@ export function ProfileCardUser() {
             <Typography placeholder={''} className="text-sm text-gray-600">
               Freelance — Dessau, Germany
             </Typography>
-          </div>
-          <div className="mt-4 flex items-center">
-            <a
-              href="#"
-              className="text-gray-600 hover:underline text-sm flex items-center"
-            >
-              View Full Resume
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                className="w-4 h-4 ml-1"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                />
-              </svg>
-            </a>
           </div>
         </div>
       </CardFooter>
