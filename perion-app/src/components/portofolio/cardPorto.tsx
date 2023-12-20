@@ -12,8 +12,16 @@ import {
 } from '@material-tailwind/react'
 import Link from 'next/link'
 import React, { useState } from 'react'
+import { PortfolioModel } from '@/db/models/portfolio'
+import { ButtonDeletePortfolio } from '../ButtonDeletePortfolio'
 
-export function CardPortfolio() {
+export function CardPortfolio({
+  datum,
+  fetchData,
+}: {
+  datum: PortfolioModel
+  fetchData: () => void
+}) {
   const [open, setOpen] = useState(false)
 
   const handleOpen = () => setOpen(true)
@@ -29,13 +37,13 @@ export function CardPortfolio() {
           <div className="flex items-center gap-4 mb-5">
             <Avatar
               placeholder={''}
-              src="https://ik.imagekit.io/naufalrafi/Parion%20Logo%20(1).png?updatedAt=1702368775661"
+              src={datum.thumbnail}
               alt="avatar"
               size="md"
             />
             <div>
-              <p className="font-bold text-md">Parion Team</p>
-              <p
+              <p className="font-bold text-md">{datum.title}</p>
+              {/* <p
                 color="black"
                 className="flex justify-center items-center gap-1 mx-auto text-xs"
               >
@@ -52,13 +60,11 @@ export function CardPortfolio() {
                   />
                 </svg>
                 Jakarta, Indonesia
-              </p>
+              </p> */}
             </div>
           </div>
-          <p className="font-bold text-md">Pair Your Passion</p>
-          <p className="text-sm">
-            Because it&apos;s about motivating the doers
-          </p>
+          {/* <p className="font-bold text-md">Pair Your Passion</p> */}
+          <p className="text-sm">{datum.description}</p>
         </CardBody>
         <CardFooter placeholder={''} className="py-4">
           <Typography placeholder={''} variant="small">
@@ -82,17 +88,15 @@ export function CardPortfolio() {
           <div className="flex flex-col items-center justify-center gap-4 p-2 w-full">
             <Avatar
               placeholder={''}
-              src="https://docs.material-tailwind.com/img/face-2.jpg"
+              src={datum.thumbnail}
               alt="avatar"
               size="xl"
               className="mb-4 lg:mb-0"
             />
 
             <div className="text-center w-full">
-              <h2 className="text-2xl font-bold">
-                Parion - "Pair Your Passion"{' '}
-              </h2>
-              <p className="text-gray-700 text-lg mt-1">PARION TEAM</p>
+              <h2 className="text-2xl font-bold">{datum.title}</h2>
+              {/* <p className="text-gray-700 text-lg mt-1">{}</p> */}
 
               <div className="flex flex-col items-center gap-2 lg:flex-row justify-center mt-4">
                 <Button
@@ -134,7 +138,11 @@ export function CardPortfolio() {
                   <p className="text-black text-lg font-bold">
                     About The Portfolio
                   </p>
-                  <p>ini portfolio description</p>
+                  <p>{datum.description}</p>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <p className="text-black text-lg font-bold">Link App</p>
+                  <p>{datum.link}</p>
                 </div>
               </div>
             </section>
@@ -182,11 +190,9 @@ export function CardPortfolio() {
             </div> */}
           </div>
           <div className="flex items center gap-3">
-            <Link href={'/profile/project/edit-project'}>
-              <Button placeholder={''} color="gray" size="md">
-                Edit Portfolio
-              </Button>
-            </Link>
+            {/* <Link href={'/profile/project/edit-project'}> */}
+            <ButtonDeletePortfolio _id={datum._id} fetchData={fetchData} />
+            {/* </Link> */}
             {/* <Button placeholder={''} color="gray" size="md">
               Join Project
             </Button> */}

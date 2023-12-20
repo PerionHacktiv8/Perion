@@ -19,13 +19,16 @@ import dateFormat from '@/db/helpers/dateFormat'
 import { format } from 'date-fns'
 import { usePathname } from 'next/navigation'
 import { UserModel } from '@/db/models/user'
+import { ButtonDeleteProject } from '../ButtonDeleteProject'
 
 export function CardComponent({
   datum,
   rec,
+  fetchData,
 }: {
   datum: ProjectModel
   rec?: UserModel[]
+  fetchData: () => void
 }) {
   const path = usePathname()
   const [open, setOpen] = React.useState(false)
@@ -159,8 +162,11 @@ export function CardComponent({
                     </h2>
                     <div className="grid grid-cols-2 gap-3 w-[50rem]">
                       {recommendation &&
-                        recommendation.map((datum) => (
-                          <div className="flex justify-center gap-4 items-center border h-24 rounded-md shadow-md hover:-translate-y-1 p-4 transition-all duration-200">
+                        recommendation.map((datum, idx) => (
+                          <div
+                            key={idx}
+                            className="flex justify-center gap-4 items-center border h-24 rounded-md shadow-md hover:-translate-y-1 p-4 transition-all duration-200"
+                          >
                             <Avatar placeholder={''} src={datum.picture} />
                             <div className="w-full">
                               <p className="font-semibold">{datum.name}</p>
@@ -230,9 +236,7 @@ export function CardComponent({
             </Button>
           )}{' '}
           {path.includes('/profile/project') && (
-            <Button onClick={apply} placeholder={''} color="gray" size="md">
-              Delete
-            </Button>
+            <ButtonDeleteProject id={datum._id} fetchData={fetchData} />
           )}
         </DialogFooter>
       </Dialog>

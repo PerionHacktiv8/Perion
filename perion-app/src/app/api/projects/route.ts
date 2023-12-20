@@ -105,7 +105,7 @@ export const GET = async () => {
 export const DELETE = async (req: NextRequest) => {
   try {
     const data = await req.json()
-    const id = data._id
+    const id = data.id
 
     await Project.deleteProject(id)
     return NextResponse.json<MyResponse<ProjectModel>>(

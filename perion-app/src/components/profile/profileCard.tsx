@@ -15,8 +15,6 @@ import { usePathname } from 'next/navigation'
 export function ProfileCard({ profData }: { profData: UserModel }) {
   const path = usePathname().split('profile/')[1]
 
-  console.log(profData)
-
   return (
     <Card placeholder={''} className="w-96 mb-10">
       <CardHeader

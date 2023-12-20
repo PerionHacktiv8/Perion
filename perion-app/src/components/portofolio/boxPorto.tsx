@@ -16,7 +16,7 @@ type inputPortfolio = {
   link: string
 }
 
-export function CreateBoxPorto() {
+export function CreateBoxPorto({ fetchData }: { fetchData: () => void }) {
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
@@ -33,11 +33,10 @@ export function CreateBoxPorto() {
       [e.target.name]: e.target.value,
     })
   }
-  console.log(input)
 
   const onSubmitInput = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    await fetch(`http://localhost:3000/api/portfolios`, {
+    const response = await fetch(`http://localhost:3000/api/portfolios`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -46,6 +45,10 @@ export function CreateBoxPorto() {
         input,
       }),
     })
+    if (response.ok) {
+      fetchData()
+      handleClose()
+    }
   }
   return (
     <>
