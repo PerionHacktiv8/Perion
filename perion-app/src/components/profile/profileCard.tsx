@@ -64,14 +64,14 @@ export function ProfileCard({ profData }: { profData: UserModel }) {
         ) : (
           <p>You didn't put your CV yet</p>
         )}
-        <p className="mt-3 font-semibold">Your Top 4 Skills: </p>
+        {/* <p className="mt-3 font-semibold">Your Top 4 Skills: </p>
         {profData.cvData ? (
           profData.cvData.skills
             .slice(0, 4)
             .map((el) => <p className="mt-3">- {el}</p>)
         ) : (
           <p>Please Input Your CV to Get Your List of Skills</p>
-        )}
+        )} */}
       </CardHeader>
       <CardBody placeholder={''}>
         <Link

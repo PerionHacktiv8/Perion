@@ -6,10 +6,12 @@ import { useEffect, useState } from 'react'
 
 const useProfile = () => {
   const [profData, setProfData] = useState<UserModel>()
-  const [refresh, setRefresh] = useState<Boolean>()
+  const [refresh, setRefresh] = useState<Boolean>(false)
 
   const profile = async () => {
-    const res = await fetch('http://localhost:3000/api/user')
+    const res = await fetch('http://localhost:3000/api/user', {
+      cache: 'no-cache',
+    })
     const resJson = (await res.json()) as ResponseAPIType<UserModel>
 
     if (res && resJson && resJson.data) {

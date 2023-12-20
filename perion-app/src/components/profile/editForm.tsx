@@ -14,8 +14,6 @@ export function EditForm({ router }: { router: AppRouterInstance }) {
   const [pdf, setPdf] = useState<File>()
   const { setRefresh, refresh } = useProfile()
 
-  // console.log(profData)
-
   const profileData = async () => {
     const res = await fetch('http://localhost:3000/api/user')
     const resJson = (await res.json()) as ResponseAPIType<UserModel>
@@ -63,11 +61,13 @@ export function EditForm({ router }: { router: AppRouterInstance }) {
   return (
     <div className="p-5">
       <form
-        onSubmit={() => {
+        onSubmit={(e) => {
+          e.preventDefault()
           updateImage()
           updatePDF()
           updateProfile()
           setRefresh(!refresh)
+          router.refresh()
         }}
         className="flex flex-col gap-2 mb-5"
       >
