@@ -3,7 +3,7 @@ import {
   GoogleAuthProvider,
   GithubAuthProvider,
   FacebookAuthProvider,
-  signInWithRedirect,
+  signInWithEmailAndPassword
 } from 'firebase/auth'
 import { authN } from './firebaseConfig'
 import { redirect } from 'next/navigation'
@@ -34,7 +34,10 @@ export const signInWithFacebook = async () => {
       }),
     })
 
-    const responseJson: MyResponse<unknown> = await response.json()
+    console.log(response);
+
+
+    const responseJson: MyResponse<unknown> = await response.json();
 
     console.log(responseJson)
 
@@ -75,13 +78,14 @@ export const signInWithGithub = async () => {
     if (!response.ok) {
       let message = responseJson.error ?? 'Something went wrong!'
 
-      return redirect(`/error?message=${message}`)
+      return redirect(`/error?message=${message}`);
     }
 
-    return responseJson
+    return responseJson;
+
   } catch (error) {
-    console.error('Error during Github Sign-In:', error)
-    throw error
+    console.error('Error during Github Sign-In:', error);
+    throw error;
   }
 }
 
@@ -115,6 +119,39 @@ export const signInWithGoogle = async () => {
     return responseJson
   } catch (error) {
     console.error('Error during Google Sign-In:', error)
+    throw error
+  }
+}
+
+export const signInWithEmail = async (email: string, password: string) => {
+  try {
+    const result = await signInWithEmailAndPassword(authN, email, password)
+    const user = result.user
+    const token = await user.getIdToken()
+
+    const response = await fetch('http://localhost:3000/api/auth', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        email: user.email,
+        uid: user.uid,
+      }),
+    })
+
+    const responseJson: MyResponse<unknown> = await response.json()
+
+    if (!response.ok) {
+      let message = responseJson.error ?? 'Something went wrong!'
+
+      return redirect(`/error?message=${message}`)
+    }
+
+    return responseJson
+  } catch (error) {
+    console.error('Error during Email/Password Sign-In:', error)
     throw error
   }
 }

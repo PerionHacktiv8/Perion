@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react'
 import { Dialog, DialogHeader, DialogBody } from '@material-tailwind/react'
 import { ResponseAPIType, SetupData } from '@/app/api/user/route'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 export function DialogDefault() {

@@ -11,11 +11,13 @@ import { cookies } from 'next/headers'
 
 const Home = async () => {
   const data = await Project.readProjects()
+  const cookie = cookies()
+  const token = cookie.get('token')
 
   const res = await fetch('http://localhost:3000/api/projects/apply')
   const resJson = (await res.json()) as ResponseAPIType<AppliersModel>
-  const profData = resJson.data
-  // console.log(profData)
+  // const profData = resJson.data
+  // console.log(resJson)
 
   return (
     <div className="flex flex-col bg-[#f5f5f5] min-h-screen">

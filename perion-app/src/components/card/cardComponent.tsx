@@ -184,7 +184,7 @@ export function CardComponent({ datum }: { datum: ProjectModel }) {
               </Typography>
             </div>
           </div>
-          {!path.includes('applied') && (
+          {!path.includes('applied') && !path.includes('/profile/project') && (
             <Button onClick={apply} placeholder={''} color="gray" size="md">
               {applied ? 'Applied' : 'Join Project'}
             </Button>

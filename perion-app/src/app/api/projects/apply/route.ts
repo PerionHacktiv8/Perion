@@ -51,6 +51,8 @@ export const GET = async (req: NextRequest) => {
   try {
     const userId = req.headers.get('x-user-id') as string
 
+    console.log(userId)
+
     const appliers = await Appliers.getApplied(userId)
 
     return NextResponse.json<MyResponse<AppliersModel[]>>(

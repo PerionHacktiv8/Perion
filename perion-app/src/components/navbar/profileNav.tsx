@@ -12,6 +12,7 @@ import {
 import { useEffect, useState } from 'react'
 import { signOut } from './signOut'
 import Link from 'next/link'
+import { authN } from '../../db/config/firebaseConfig'
 
 export function ProfileMenu({ textColor }: { textColor: string }) {
   const [data, setData] = useState<SetupData>()
@@ -87,7 +88,7 @@ export function ProfileMenu({ textColor }: { textColor: string }) {
               </Link>
             </MenuItem>
             <MenuItem placeholder={''} className="flex items-center gap-2">
-              <Link href={'chats'} className="flex items-center w-full gap-2">
+              <Link href={'chat'} className="flex items-center w-full gap-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
@@ -137,6 +138,7 @@ export function ProfileMenu({ textColor }: { textColor: string }) {
               onClick={() => {
                 signOut()
                 setData(undefined)
+                authN.signOut()
               }}
               placeholder={''}
               className="flex items-center gap-2 "

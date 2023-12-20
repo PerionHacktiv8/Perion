@@ -1,5 +1,6 @@
 'use client'
 
+import React, { useState, useEffect } from 'react'
 import { UserModel } from '@/db/models/user'
 import {
   Card,
@@ -10,6 +11,8 @@ import {
   Button,
   Avatar,
 } from '@material-tailwind/react'
+import { authN } from '../../db/config/firebaseConfig'
+import { sendPrivateMessage } from '../../db/config/firestoreService'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
@@ -41,7 +44,23 @@ export function CardUser({
 }) {
   const router = useRouter()
 
-  const url = datum.username
+  const handleChat = async () => {
+    if (!authN.currentUser?.uid || !datum._id) {
+      console.error('Invalid sender or recipient ID')
+      return
+    }
+
+    const data = {
+      from: authN.currentUser.uid,
+      to: datum._id,
+      message: 'Hi, I want to hire you!',
+      createdAt: new Date().toISOString(),
+      read: false,
+    }
+
+    await sendPrivateMessage(data.to, data.from, data.message)
+    router.push('/chat')
+  }
 
   return (
     <Card
@@ -90,7 +109,9 @@ export function CardUser({
             <span className="rounded-full border border-white/20 bg-white/20 p-1">
               <CheckIcon />
             </span>
-            <p className="font-normal">{datum.cvData.numOfProjects}</p>
+            <p className="font-normal">
+              {datum.cvData.numOfProjects.split(' ')[0]} Projects
+            </p>
           </li>
           <li className="flex items-center gap-4">
             <span className="rounded-full border border-white/20 bg-white/20 p-1">
@@ -111,10 +132,9 @@ export function CardUser({
           placeholder={''}
           size="lg"
           color="white"
-          onClick={() => {
-            router.push(`/${url}`)
-          }}
+          variant="outlined"
           className="hover:bg-black hover:text-white"
+          onClick={() => handleChat()}
         >
           Hire {datum.username}
         </Button>

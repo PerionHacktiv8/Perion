@@ -4,6 +4,7 @@ import {
   GoogleAuthProvider,
   GithubAuthProvider,
   FacebookAuthProvider,
+  createUserWithEmailAndPassword
 } from 'firebase/auth'
 import { redirect } from 'next/navigation'
 import { data } from '../api/login/route'
@@ -119,3 +120,38 @@ export const signInWithGoogle = async () => {
     throw error
   }
 }
+
+export const signInWithEmail = async (email: string, password: string) => {
+  try {
+    const result = await createUserWithEmailAndPassword(authN, email, password);
+    const user = result.user;
+    const token = await user.getIdToken();
+
+    const response = await fetch('http://localhost:3000/api/auth/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        email: user.email,
+        uid: user.uid,
+      }),
+    });
+
+    console.log(response, 'ini response');
+
+
+    const responseJson: MyResponse<unknown> = await response.json();
+
+    if (!response.ok) {
+      let message = responseJson.error ?? 'Something went wrong!';
+      return redirect(`/error?message=${message}`);
+    }
+
+    return responseJson;
+  } catch (error) {
+    console.error('Error during Email/Password Sign-In:', error);
+    throw error;
+  }
+};

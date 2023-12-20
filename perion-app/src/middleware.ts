@@ -17,7 +17,8 @@ export const middleware = async (req: NextRequest) => {
     (req.url.includes('/api/image') && req.method === 'POST') ||
     (req.url.includes('/api/pdf') && req.method === 'POST') ||
     (req.url.includes('/api/projects') && req.method !== 'GET') ||
-    (req.url.includes('/api/portfolios') && req.method !== 'GET')
+    (req.url.includes('/api/portfolios') && req.method !== 'GET') ||
+    (req.url.includes('/api/chatRooms') && req.method === 'POST')
   ) {
     const cookiesStore = cookies()
     const token = cookiesStore.get('token')

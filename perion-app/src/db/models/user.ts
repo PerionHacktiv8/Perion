@@ -8,7 +8,7 @@ import { PdfReader } from 'pdfreader'
 import { openai } from '../config/openai'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { ProfilesModel } from './profiles'
-import fireStorage from '../config/firebase'
+import storage from '../config/firebase'
 
 const COLLECTION_NAME = 'users'
 
@@ -345,7 +345,7 @@ export class Users {
     try {
       const collection = await this.connection()
 
-      const storageRef = ref(fireStorage, file.name)
+      const storageRef = ref(storage, file.name)
       const upload = uploadBytes(storageRef, file)
 
       const data = await upload.then(async (snapshot) => {
@@ -373,7 +373,7 @@ export class Users {
     try {
       const collection = await this.connection()
 
-      const storageRef = ref(fireStorage, userId)
+      const storageRef = ref(storage, userId)
       const upload = uploadBytes(storageRef, file)
 
       const data = await upload.then(async (snapshot) => {
