@@ -33,7 +33,6 @@ export function CreateBoxPorto() {
       [e.target.name]: e.target.value,
     })
   }
-  console.log(input)
 
   const onSubmitInput = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
