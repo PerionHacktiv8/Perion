@@ -38,7 +38,12 @@ export default function Profile() {
 
       {data &&
         data.map((datum, idx) => (
-          <CardComponent key={idx} datum={datum} rec={recData} />
+          <CardComponent
+            key={idx}
+            datum={datum}
+            rec={recData}
+            fetchData={fetchData}
+          />
         ))}
     </div>
   )
