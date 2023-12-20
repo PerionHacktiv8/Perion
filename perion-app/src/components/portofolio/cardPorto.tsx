@@ -191,7 +191,11 @@ export function CardPortfolio({
           </div>
           <div className="flex items center gap-3">
             {/* <Link href={'/profile/project/edit-project'}> */}
-            <ButtonDeletePortfolio _id={datum._id} fetchData={fetchData} />
+            <ButtonDeletePortfolio
+              _id={datum._id}
+              handleClose={handleClose}
+              fetchData={fetchData}
+            />
             {/* </Link> */}
             {/* <Button placeholder={''} color="gray" size="md">
               Join Project

@@ -53,7 +53,7 @@ export function CreateBoxPorto({ fetchData }: { fetchData: () => void }) {
   return (
     <>
       <div
-        className="w-80 h-52 flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-lg my-8"
+        className="w-80 h-52 flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-lg "
         style={{ minWidth: '300px', maxWidth: '500px' }}
         onClick={handleOpen}
       >

@@ -28,7 +28,7 @@ export function CardComponent({
 }: {
   datum: ProjectModel
   rec?: UserModel[]
-  fetchData: () => void
+  fetchData?: () => void
 }) {
   const path = usePathname()
   const [open, setOpen] = React.useState(false)
@@ -235,7 +235,7 @@ export function CardComponent({
               {applied ? 'Applied' : 'Join Project'}
             </Button>
           )}{' '}
-          {path.includes('/profile/project') && (
+          {fetchData && path.includes('/profile/project') && (
             <ButtonDeleteProject id={datum._id} fetchData={fetchData} />
           )}
         </DialogFooter>

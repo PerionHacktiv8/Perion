@@ -12,7 +12,7 @@ export function EditForm({ router }: { router: AppRouterInstance }) {
   const [preview, setPreview] = useState<string>()
   const [image, setImage] = useState<File>()
   const [pdf, setPdf] = useState<File>()
-  const { setRefresh, refresh } = useProfile()
+  const { setRefresh, refresh, profile } = useProfile()
 
   const profileData = async () => {
     const res = await fetch('http://localhost:3000/api/user')
@@ -68,6 +68,7 @@ export function EditForm({ router }: { router: AppRouterInstance }) {
           updateProfile()
           setRefresh(!refresh)
           router.refresh()
+          profile()
         }}
         className="flex flex-col gap-2 mb-5"
       >

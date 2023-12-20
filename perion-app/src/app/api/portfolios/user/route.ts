@@ -13,48 +13,14 @@ export type MyResponse<T> = {
   error?: string
 }
 
-export const POST = async (req: NextRequest) => {
-  try {
-    const userId = req.headers.get('x-user-id') as string
-
-    let inputs = await req.json()
-    let input = inputs.input as inputPortfolio
-
-    await Portfolio.createPortfolio(input, userId)
-    return NextResponse.json<MyResponse<string>>(
-      {
-        statusCode: 201,
-        message: 'A Portfolio Has Created',
-      },
-      {
-        status: 201,
-      },
-    )
-  } catch (err) {
-    let errCode = 500
-    let errMsg = 'INTERNAL SERVER ERROR'
-
-    if (err instanceof z.ZodError) {
-      errCode = 400
-      errMsg = err.issues[0].message
-    }
-    return NextResponse.json<MyResponse<unknown>>(
-      {
-        statusCode: errCode,
-        error: errMsg,
-      },
-      {
-        status: errCode,
-      },
-    )
-  }
-}
-
 export const GET = async (req: NextRequest) => {
   try {
     const userId = req.headers.get('x-user-id') as string
 
-    const portfolios = await Portfolio.readPortfolios()
+    const portfolios = (await Portfolio.readPortfolios()).filter(
+      (el) => el.userId.toString() === userId,
+    )
+
     if (!portfolios) {
       throw new Error('Porfolios Not Found')
     }

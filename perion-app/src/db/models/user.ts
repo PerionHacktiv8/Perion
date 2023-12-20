@@ -121,7 +121,7 @@ export class Users {
     try {
       const collection = await this.connection()
 
-      const users = await collection.find().toArray()
+      const users = (await collection.find().toArray()) as UserModel[]
 
       return users
     } catch (err) {

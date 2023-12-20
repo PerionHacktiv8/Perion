@@ -3,10 +3,15 @@ import { ObjectId } from 'mongodb'
 
 type Props = {
   _id: ObjectId
-  fetchData: () => void
+  fetchData?: () => void
+  handleClose?: () => void
 }
 
-export const ButtonDeletePortfolio = ({ _id, fetchData }: Props) => {
+export const ButtonDeletePortfolio = ({
+  _id,
+  fetchData,
+  handleClose,
+}: Props) => {
   const deleteProject = async () => {
     await fetch(`http://localhost:3000/api/portfolios`, {
       method: 'DELETE',
@@ -17,11 +22,19 @@ export const ButtonDeletePortfolio = ({ _id, fetchData }: Props) => {
         _id,
       }),
     })
-    fetchData()
+    if (fetchData) fetchData()
   }
   return (
     <div>
-      <Button onClick={deleteProject} placeholder={''} color="gray" size="md">
+      <Button
+        onClick={() => {
+          deleteProject()
+          if (handleClose) handleClose()
+        }}
+        placeholder={''}
+        color="gray"
+        size="md"
+      >
         Delete
       </Button>
     </div>

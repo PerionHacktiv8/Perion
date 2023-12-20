@@ -23,7 +23,7 @@ const useProfile = () => {
     profile()
   }, [refresh])
 
-  return { profData, setRefresh, refresh }
+  return { profData, setRefresh, refresh, profile }
 }
 
 export default useProfile
