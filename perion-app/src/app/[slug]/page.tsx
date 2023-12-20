@@ -31,7 +31,7 @@ export default function Profile({ params }: { params: { slug: string } }) {
 
   return (
     <div
-      className="p-16"
+      className="p-16 h-screen"
       style={{
         backgroundImage:
           'url(https://images.unsplash.com/photo-1696523844375-ad5f6177f5e0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)',

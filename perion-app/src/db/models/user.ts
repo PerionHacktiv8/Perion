@@ -26,6 +26,7 @@ export type UserModel = {
   cvData: CVData
   location: string
   createdAt: string
+  uid?: string
 }
 
 export type CVData = {

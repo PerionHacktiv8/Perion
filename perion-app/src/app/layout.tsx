@@ -30,7 +30,7 @@ export default function RootLayout({
         )}
 
         {children}
-        <FooterComponent />
+        {!path.includes('chat') && <FooterComponent />}
       </body>
     </html>
   )

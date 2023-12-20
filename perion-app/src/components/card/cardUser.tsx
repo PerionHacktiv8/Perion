@@ -42,26 +42,6 @@ export function CardUser({
   datum: UserModel
   skills: string
 }) {
-  const router = useRouter()
-
-  const handleChat = async () => {
-    if (!authN.currentUser?.uid || !datum._id) {
-      console.error('Invalid sender or recipient ID')
-      return
-    }
-
-    const data = {
-      from: authN.currentUser.uid,
-      to: datum._id,
-      message: 'Hi, I want to hire you!',
-      createdAt: new Date().toISOString(),
-      read: false,
-    }
-
-    await sendPrivateMessage(data.to, data.from, data.message)
-    router.push('/chat')
-  }
-
   return (
     <Card
       placeholder={''}
@@ -110,14 +90,14 @@ export function CardUser({
               <CheckIcon />
             </span>
             <p className="font-normal">
-              {datum.cvData.numOfProjects.split(' ')[0]} Projects
+              {/* {datum.cvData.numOfProjects.split(' ')[0]} Projects */}
             </p>
           </li>
           <li className="flex items-center gap-4">
             <span className="rounded-full border border-white/20 bg-white/20 p-1">
               <CheckIcon />
             </span>
-            <p className="font-normal">{datum.cvData.expYear} of Experience</p>
+            {/* <p className="font-normal">{datum.cvData.expYear} of Experience</p> */}
           </li>
           <li className="flex items-center gap-4">
             <span className="rounded-full border border-white/20 bg-white/20 p-1">

@@ -33,11 +33,9 @@ const ChatComponent: React.FC = () => {
   const [rooms, setRooms] = useState<Room[]>([])
   const [messages, setMessages] = useState<Message[]>([])
   const [newMessage, setNewMessage] = useState<string>('')
-  const [roomName, setRoomName] = useState<string>('')
   const [typing, setTyping] = useState<Record<string, boolean>>({})
   const user = authN.currentUser
-  const [mongoObjectId, setMongoObjectId] = useState<string | null>(null)
-  const messagesEndRef = useRef(null)
+  const messagesEndRef = useRef<null | HTMLDivElement>(null)
   const [userDetails, setUserDetails] = useState<UserDetails>({})
 
   // Functions
@@ -48,18 +46,18 @@ const ChatComponent: React.FC = () => {
     }
   }
 
-  useEffect(() => {
-    messages.forEach((message) => {
-      fetchUserDetails(message.userId)
-    })
-  }, [messages])
+  // useEffect(() => {
+  //   messages.forEach((message) => {
+  //     fetchUserDetails(message.userId)
+  //   })
+  // }, [messages])
 
-  useEffect(() => {
-    if (user?.uid) {
-      const unsubscribe = subscribeToRoomMessages(user.uid, handleNewMessage)
-      return () => unsubscribe()
-    }
-  }, [user?.uid])
+  // useEffect(() => {
+  //   if (user?.uid) {
+  //     const unsubscribe = subscribeToRoomMessages(user.uid, handleNewMessage)
+  //     return () => unsubscribe()
+  //   }
+  // }, [user?.uid])
 
   useEffect(() => {
     if (user?.uid) {
@@ -71,7 +69,7 @@ const ChatComponent: React.FC = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
-  const handleNewMessage = (message: Message, roomId: string) => {
+  const handleNewMessage = (message: Message) => {
     setMessages((prevMessages) => [...prevMessages, message])
   }
 
@@ -90,21 +88,21 @@ const ChatComponent: React.FC = () => {
     if (currentRoom) {
       setMessages([])
       const unsubscribe = subscribeToChat(currentRoom, setMessages)
-      const unsubscribeTyping = subscribeToTyping(currentRoom, setTyping)
+      // const unsubscribeTyping = subscribeToTyping(currentRoom, setTyping)
       return () => {
-        unsubscribe()
-        unsubscribeTyping()
+        // unsubscribe()
+        // unsubscribeTyping()
       }
     }
   }, [currentRoom])
 
   const handleSendMessage = useCallback(async () => {
-    const userId = mongoObjectId || user?.uid
+    const userId = user?.uid
     if (newMessage.trim() && currentRoom && userId) {
       await postMessage(currentRoom, userId, newMessage)
       setNewMessage('')
     }
-  }, [newMessage, currentRoom, mongoObjectId, user?.uid])
+  }, [newMessage, currentRoom, user?.uid])
 
   const handleKeyDown = async (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && currentRoom) {
@@ -117,17 +115,6 @@ const ChatComponent: React.FC = () => {
     setNewMessage(e.target.value)
     if (currentRoom && user?.uid) {
       setTypingStatus(currentRoom, user.uid, e.target.value !== '')
-    }
-  }
-
-  const handleRoomCreation = async () => {
-    if (roomName.trim()) {
-      const roomId = await addUserToRoom(roomName)
-      if (roomId) {
-        setCurrentRoom(roomId)
-        setRoomName('')
-        getChatRooms(user?.uid || '').then(setRooms)
-      }
     }
   }
 
@@ -144,30 +131,12 @@ const ChatComponent: React.FC = () => {
       {/* Main Content */}
       <div className="flex flex-1 overflow-hidden">
         {/* Room Creation */}
-        <aside className="w-1/4 bg-gray-900 overflow-y-auto">
-          <h2 className="text-lg font-semibold mb-4 text-white">
-            Create a Room
-          </h2>
-          <div className="p-3">
-            <input
-              type="text"
-              placeholder="Room Name"
-              className="border p-2 w-full rounded focus:outline-none focus:ring-2 focus:ring-gray-600"
-              value={roomName}
-              onChange={(e) => setRoomName(e.target.value)}
-            />
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
-              onClick={handleRoomCreation}
-            >
-              Create
-            </button>
-          </div>
-        </aside>
 
         {/* Room List */}
         <aside className="w-1/4 bg-gray-900 overflow-y-auto">
-          <h2 className="text-lg font-semibold mb-4 text-white">Rooms</h2>
+          <h2 className="text-lg font-semibold mb-4 text-white">
+            Your Messages
+          </h2>
           <ul className="overflow-auto">
             {rooms.map((room) => (
               <li
@@ -191,7 +160,7 @@ const ChatComponent: React.FC = () => {
 
         {/* Chat Area */}
         <main className="flex-1 flex flex-col bg-gray-200">
-          <div className="flex-1 overflow-y-auto">
+          <div className="flex flex-col gap-4 p-2 h-full overflow-y-auto">
             {/* Chat Messages with User Display Names */}
             {messages.map((message, index) => (
               <div
@@ -207,11 +176,11 @@ const ChatComponent: React.FC = () => {
                       : 'bg-gray-300 text-gray-800'
                   }`}
                 >
-                  {message.userId !== user?.uid && (
+                  {/* {message.userId !== user?.uid && (
                     <div className="text-xs mb-1">
                       {userDetails[message.userId]?.displayName}
                     </div>
-                  )}
+                  )} */}
                   {message.text}
                 </div>
               </div>

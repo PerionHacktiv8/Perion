@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
   try {
     const decodedToken = await admin.auth().verifyIdToken(token)
 
-    const { email, picture, name } = decodedToken
+    const { email, picture, name, uid } = decodedToken
     const db = await getMongoClientInstance()
 
     const username = email?.split('@')[0]
@@ -52,6 +52,7 @@ export async function POST(request: NextRequest) {
           createdAt: new Date(),
           updatedAt: new Date(),
           picture,
+          uid,
         },
       },
       { upsert: true, returnDocument: 'after' },

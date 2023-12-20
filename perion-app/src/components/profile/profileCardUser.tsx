@@ -10,8 +10,33 @@ import {
 } from '@material-tailwind/react'
 import { format } from 'date-fns'
 import Link from 'next/link'
+import { authN } from '../../db/config/firebaseConfig'
+import { useState } from 'react'
+import { Room, addUserToRoom, getChatRooms } from '@/db/config/firestoreService'
 
 export function ProfileCardUser({ datum }: { datum: UserModel }) {
+  const [currentRoom, setCurrentRoom] = useState<string | null>(null)
+  const [roomName, setRoomName] = useState<string>('')
+  const [rooms, setRooms] = useState<Room[]>([])
+
+  let user2: string
+  if (datum && datum.uid) user2 = datum.uid
+
+  const user1 = authN.currentUser?.uid
+
+  const handleRoomCreation = async () => {
+    const roomId = await addUserToRoom(
+      `${datum.username}_${authN.currentUser?.email?.split('@')[0]}`,
+      user2,
+    )
+    console.log(roomId)
+    if (roomId && user1 && user2) {
+      setCurrentRoom(roomId)
+      setRoomName('')
+      getChatRooms(user1).then(setRooms)
+    }
+  }
+
   return (
     <Card placeholder={''} className="w-96 mb-10">
       <CardHeader
@@ -66,23 +91,24 @@ export function ProfileCardUser({ datum }: { datum: UserModel }) {
           </svg>
           Hire Naufal Rafi
         </Button>
-        <Link href="/chats">
-          <Button
-            placeholder={''}
-            className="rounded-full w-full flex justify-center items-center gap-2 mx-auto mb-2"
+        {/* <Link href="/chats"> */}
+        <Button
+          onClick={handleRoomCreation}
+          placeholder={''}
+          className="rounded-full w-full flex justify-center items-center gap-2 mx-auto mb-2"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="w-6 h-6"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-6 h-6"
-            >
-              <path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z" />
-              <path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z" />
-            </svg>
-            Message
-          </Button>
-        </Link>
+            <path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z" />
+            <path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z" />
+          </svg>
+          Message
+        </Button>
+        {/* </Link> */}
       </CardBody>
       <CardFooter placeholder={''} className="flex justify-center gap-7 pt-2">
         <div className="bg-white rounded-lg p-6 shadow-md max-w-sm mx-auto w-full">
