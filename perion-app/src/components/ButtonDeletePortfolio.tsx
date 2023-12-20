@@ -2,19 +2,19 @@ import { Button } from '@material-tailwind/react'
 import { ObjectId } from 'mongodb'
 
 type Props = {
-  id: ObjectId
+  _id: ObjectId
   fetchData: () => void
 }
 
-export const ButtonDeleteProject = ({ id, fetchData }: Props) => {
+export const ButtonDeletePortfolio = ({ _id, fetchData }: Props) => {
   const deleteProject = async () => {
-    await fetch(`http://localhost:3000/api/projects`, {
+    await fetch(`http://localhost:3000/api/portfolios`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        id,
+        _id,
       }),
     })
     fetchData()
