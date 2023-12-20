@@ -60,7 +60,6 @@ const ProjectFormDialog = ({
       [e.target.name]: e.target.value,
     })
   }
-  console.log('wowoo')
 
   const onSubmitInput = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
