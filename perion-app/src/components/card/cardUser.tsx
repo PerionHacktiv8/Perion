@@ -128,16 +128,17 @@ export function CardUser({
         </ul>
       </CardBody>
       <CardFooter placeholder={''} className="flex justify-center p-4">
-        <Button
-          placeholder={''}
-          size="lg"
-          color="white"
-          variant="outlined"
-          className="hover:bg-black hover:text-white"
-          onClick={() => handleChat()}
-        >
-          Hire {datum.username}
-        </Button>
+        <Link href={`/${datum.username}`}>
+          <Button
+            placeholder={''}
+            size="lg"
+            color="white"
+            variant="outlined"
+            className="hover:bg-black hover:text-white"
+          >
+            Hire {datum.username}
+          </Button>
+        </Link>
       </CardFooter>
     </Card>
   )
