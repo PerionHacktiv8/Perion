@@ -92,7 +92,7 @@ export function DialogDefault() {
               <ul className="flex flex-col gap-4 text-sm text-white">
                 <li>✓ Access to Parion, our most capable model</li>
                 <li>✓ Browse, create, and use Parion</li>
-                <li>✓ Access to additional tools like DALL-E, Browsing</li>
+                <li>✓ Access to our hiring recommendation on your projects</li>
               </ul>
             </div>
           </div>

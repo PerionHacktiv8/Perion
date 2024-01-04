@@ -9,13 +9,17 @@ import { ResponseAPIType } from '../api/image/route'
 export default async function Recruit() {
   const cookie = cookies()
 
+  const data = await Users.findRecruits()
+
   const res = await fetch('http://localhost:3000/api/recruits', {
     headers: {
       Cookie: cookie.toString(),
     },
   })
   const resJson = (await res.json()) as ResponseAPIType<UserModel[]>
-  const recruits = resJson.data?.filter((el) => el.cvLink)
+  const recruits = cookie.toString()
+    ? resJson.data?.filter((el) => el.cvLink)
+    : data.filter((el) => el.cvLink)
 
   return (
     <div className="flex flex-col bg-[#f5f5f5] min-h-screen">
